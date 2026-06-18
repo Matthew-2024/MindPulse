@@ -1,0 +1,21 @@
+{
+  "name": "mindpulse",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:rules": "node tests/run-rule-tests.js",
+    "test:ui": "node tests/ui-smoke.js",
+    "demo:smoke": "node tests/demo-flow-smoke.js",
+    "capture:evidence": "node tests/capture-review-evidence.js",
+    "analyze:synthetic": "node tools/analyze-synthetic-records.js",
+    "audit:copy": "node tools/copy-safety-audit.js",
+    "audit:self": "node tools/self-audit.js",
+    "audit:docx": "node tools/run-python-tool.js tools/docx-consistency-audit.py",
+    "preflight": "npm run audit:copy && npm run audit:self && npm run audit:docx && npm run demo:smoke && npm run verify",
+    "verify": "npm run test:rules && npm run analyze:synthetic && npm run test:ui"
+  },
+  "devDependencies": {
+    "playwright": "^1.60.0"
+  }
+}

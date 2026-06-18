@@ -1,0 +1,1040 @@
+{
+  "generatedAt": "2026-06-18T14:13:49.272Z",
+  "note": "This file is generated from synthetic demo records. It must not be presented as real user research data.",
+  "totalRecords": 30,
+  "averageRecoveryScore": 73,
+  "riskDistribution": {
+    "稳定观察": 11,
+    "普通波动": 6,
+    "中度关注": 12,
+    "高风险": 1
+  },
+  "analyzed": [
+    {
+      "id": "SYN-001",
+      "date": "2026-05-01",
+      "mood": "calm",
+      "sleepHours": 7.2,
+      "steps": 7800,
+      "socialScore": 68,
+      "recoveryScore": 94,
+      "scoreBreakdown": {
+        "mood": 48,
+        "sleep": 16,
+        "steps": 14,
+        "social": 8,
+        "intervention": 8
+      },
+      "riskLevel": "稳定观察",
+      "riskTag": "保持记录",
+      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskEvidence": [
+        "未触发危机词、连续低睡眠或连续负面状态规则"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "顺势完成小目标，保留稳定节奏。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-002",
+      "date": "2026-05-02",
+      "mood": "happy",
+      "sleepHours": 7.6,
+      "steps": 9200,
+      "socialScore": 82,
+      "recoveryScore": 100,
+      "scoreBreakdown": {
+        "mood": 60,
+        "sleep": 17,
+        "steps": 14,
+        "social": 10,
+        "intervention": 8
+      },
+      "riskLevel": "稳定观察",
+      "riskTag": "保持记录",
+      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskEvidence": [
+        "未触发危机词、连续低睡眠或连续负面状态规则"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "根据精力较高调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-003",
+      "date": "2026-05-03",
+      "mood": "calm",
+      "sleepHours": 6.8,
+      "steps": 6500,
+      "socialScore": 61,
+      "recoveryScore": 81,
+      "scoreBreakdown": {
+        "mood": 48,
+        "sleep": 15,
+        "steps": 11,
+        "social": 7,
+        "intervention": 0
+      },
+      "riskLevel": "稳定观察",
+      "riskTag": "保持记录",
+      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskEvidence": [
+        "未触发危机词、连续低睡眠或连续负面状态规则"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "顺势完成小目标，保留稳定节奏。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-004",
+      "date": "2026-05-04",
+      "mood": "anxious",
+      "sleepHours": 5.7,
+      "steps": 4300,
+      "socialScore": 45,
+      "recoveryScore": 70,
+      "scoreBreakdown": {
+        "mood": 36,
+        "sleep": 13,
+        "steps": 8,
+        "social": 5,
+        "intervention": 8
+      },
+      "riskLevel": "普通波动",
+      "riskTag": "先做轻干预",
+      "riskReason": "当前更像日常压力波动，可先完成一个低负担行动。",
+      "riskEvidence": [
+        "当前情绪: anxious"
+      ],
+      "recommendedPath": [
+        "breathe",
+        "sleep",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "先把身体降下来",
+        "今晚先收住",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "根据睡眠低于 6 小时调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-005",
+      "date": "2026-05-05",
+      "mood": "tired",
+      "sleepHours": 5.1,
+      "steps": 3100,
+      "socialScore": 38,
+      "recoveryScore": 45,
+      "scoreBreakdown": {
+        "mood": 24,
+        "sleep": 11,
+        "steps": 5,
+        "social": 5,
+        "intervention": 0
+      },
+      "riskLevel": "普通波动",
+      "riskTag": "先做轻干预",
+      "riskReason": "当前更像日常压力波动，可先完成一个低负担行动。",
+      "riskEvidence": [
+        "当前情绪: tired"
+      ],
+      "recommendedPath": [
+        "breathe",
+        "journal",
+        "sleep"
+      ],
+      "recommendedLabels": [
+        "先把身体降下来",
+        "把脑子里的话倒出来",
+        "今晚先收住"
+      ],
+      "recommendationReason": "根据用户暂时不想联系别人、睡眠明显不足、精力偏低调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-006",
+      "date": "2026-05-06",
+      "mood": "sad",
+      "sleepHours": 5,
+      "steps": 2400,
+      "socialScore": 24,
+      "recoveryScore": 50,
+      "scoreBreakdown": {
+        "mood": 24,
+        "sleep": 11,
+        "steps": 4,
+        "social": 3,
+        "intervention": 8
+      },
+      "riskLevel": "中度关注",
+      "riskTag": "建议连接他人",
+      "riskReason": "最近低睡眠或负面状态连续出现，建议联系可信任的人或校内支持资源。",
+      "riskEvidence": [
+        "近 4 次记录中 3 次睡眠低于 6 小时",
+        "近 4 次记录中 3 次为负向状态"
+      ],
+      "recommendedPath": [
+        "breathe",
+        "journal",
+        "sleep"
+      ],
+      "recommendedLabels": [
+        "先把身体降下来",
+        "把脑子里的话倒出来",
+        "今晚先收住"
+      ],
+      "recommendationReason": "根据用户主动表达需要连接、睡眠明显不足、精力偏低调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-007",
+      "date": "2026-05-07",
+      "mood": "anxious",
+      "sleepHours": 5.4,
+      "steps": 3900,
+      "socialScore": 35,
+      "recoveryScore": 67,
+      "scoreBreakdown": {
+        "mood": 36,
+        "sleep": 12,
+        "steps": 7,
+        "social": 4,
+        "intervention": 8
+      },
+      "riskLevel": "中度关注",
+      "riskTag": "建议连接他人",
+      "riskReason": "最近低睡眠或负面状态连续出现，建议联系可信任的人或校内支持资源。",
+      "riskEvidence": [
+        "近 4 次记录中 4 次睡眠低于 6 小时",
+        "近 4 次记录中 4 次为负向状态"
+      ],
+      "recommendedPath": [
+        "breathe",
+        "sleep",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "先把身体降下来",
+        "今晚先收住",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "根据睡眠低于 6 小时调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-008",
+      "date": "2026-05-08",
+      "mood": "calm",
+      "sleepHours": 6.5,
+      "steps": 6100,
+      "socialScore": 50,
+      "recoveryScore": 88,
+      "scoreBreakdown": {
+        "mood": 48,
+        "sleep": 15,
+        "steps": 11,
+        "social": 6,
+        "intervention": 8
+      },
+      "riskLevel": "中度关注",
+      "riskTag": "建议连接他人",
+      "riskReason": "最近低睡眠或负面状态连续出现，建议联系可信任的人或校内支持资源。",
+      "riskEvidence": [
+        "近 4 次记录中 3 次睡眠低于 6 小时",
+        "近 4 次记录中 3 次为负向状态"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "顺势完成小目标，保留稳定节奏。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-009",
+      "date": "2026-05-09",
+      "mood": "happy",
+      "sleepHours": 7.3,
+      "steps": 8400,
+      "socialScore": 76,
+      "recoveryScore": 100,
+      "scoreBreakdown": {
+        "mood": 60,
+        "sleep": 16,
+        "steps": 14,
+        "social": 9,
+        "intervention": 8
+      },
+      "riskLevel": "稳定观察",
+      "riskTag": "保持记录",
+      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskEvidence": [
+        "未触发危机词、连续低睡眠或连续负面状态规则"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "根据精力较高调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-010",
+      "date": "2026-05-10",
+      "mood": "angry",
+      "sleepHours": 6,
+      "steps": 5200,
+      "socialScore": 41,
+      "recoveryScore": 60,
+      "scoreBreakdown": {
+        "mood": 24,
+        "sleep": 14,
+        "steps": 9,
+        "social": 5,
+        "intervention": 8
+      },
+      "riskLevel": "普通波动",
+      "riskTag": "先做轻干预",
+      "riskReason": "当前更像日常压力波动，可先完成一个低负担行动。",
+      "riskEvidence": [
+        "当前情绪: angry"
+      ],
+      "recommendedPath": [
+        "walk",
+        "breathe",
+        "friend"
+      ],
+      "recommendedLabels": [
+        "离开原地 10 分钟",
+        "先把身体降下来",
+        "让一个人知道你"
+      ],
+      "recommendationReason": "根据用户暂时不想联系别人、烦躁状态更适合先离开原地调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-011",
+      "date": "2026-05-11",
+      "mood": "calm",
+      "sleepHours": 6.9,
+      "steps": 7200,
+      "socialScore": 58,
+      "recoveryScore": 84,
+      "scoreBreakdown": {
+        "mood": 48,
+        "sleep": 16,
+        "steps": 13,
+        "social": 7,
+        "intervention": 0
+      },
+      "riskLevel": "稳定观察",
+      "riskTag": "保持记录",
+      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskEvidence": [
+        "未触发危机词、连续低睡眠或连续负面状态规则"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "顺势完成小目标，保留稳定节奏。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-012",
+      "date": "2026-05-12",
+      "mood": "anxious",
+      "sleepHours": 5.8,
+      "steps": 4600,
+      "socialScore": 42,
+      "recoveryScore": 70,
+      "scoreBreakdown": {
+        "mood": 36,
+        "sleep": 13,
+        "steps": 8,
+        "social": 5,
+        "intervention": 8
+      },
+      "riskLevel": "普通波动",
+      "riskTag": "先做轻干预",
+      "riskReason": "当前更像日常压力波动，可先完成一个低负担行动。",
+      "riskEvidence": [
+        "当前情绪: anxious"
+      ],
+      "recommendedPath": [
+        "breathe",
+        "sleep",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "先把身体降下来",
+        "今晚先收住",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "根据睡眠低于 6 小时调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-013",
+      "date": "2026-05-13",
+      "mood": "tired",
+      "sleepHours": 4.8,
+      "steps": 2100,
+      "socialScore": 30,
+      "recoveryScore": 51,
+      "scoreBreakdown": {
+        "mood": 24,
+        "sleep": 11,
+        "steps": 4,
+        "social": 4,
+        "intervention": 8
+      },
+      "riskLevel": "中度关注",
+      "riskTag": "建议连接他人",
+      "riskReason": "最近低睡眠或负面状态连续出现，建议联系可信任的人或校内支持资源。",
+      "riskEvidence": [
+        "近 4 次记录中 3 次为负向状态"
+      ],
+      "recommendedPath": [
+        "breathe",
+        "journal",
+        "sleep"
+      ],
+      "recommendedLabels": [
+        "先把身体降下来",
+        "把脑子里的话倒出来",
+        "今晚先收住"
+      ],
+      "recommendationReason": "根据用户暂时不想联系别人、睡眠明显不足、精力偏低调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-014",
+      "date": "2026-05-14",
+      "mood": "sad",
+      "sleepHours": 4.9,
+      "steps": 1900,
+      "socialScore": 18,
+      "recoveryScore": 48,
+      "scoreBreakdown": {
+        "mood": 24,
+        "sleep": 11,
+        "steps": 3,
+        "social": 2,
+        "intervention": 8
+      },
+      "riskLevel": "中度关注",
+      "riskTag": "建议连接他人",
+      "riskReason": "最近低睡眠或负面状态连续出现，建议联系可信任的人或校内支持资源。",
+      "riskEvidence": [
+        "近 4 次记录中 3 次睡眠低于 6 小时",
+        "近 4 次记录中 3 次为负向状态"
+      ],
+      "recommendedPath": [
+        "breathe",
+        "journal",
+        "sleep"
+      ],
+      "recommendedLabels": [
+        "先把身体降下来",
+        "把脑子里的话倒出来",
+        "今晚先收住"
+      ],
+      "recommendationReason": "根据用户主动表达需要连接、睡眠明显不足、精力偏低调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-015",
+      "date": "2026-05-15",
+      "mood": "anxious",
+      "sleepHours": 5.2,
+      "steps": 3600,
+      "socialScore": 34,
+      "recoveryScore": 66,
+      "scoreBreakdown": {
+        "mood": 36,
+        "sleep": 12,
+        "steps": 6,
+        "social": 4,
+        "intervention": 8
+      },
+      "riskLevel": "中度关注",
+      "riskTag": "建议连接他人",
+      "riskReason": "最近低睡眠或负面状态连续出现，建议联系可信任的人或校内支持资源。",
+      "riskEvidence": [
+        "近 4 次记录中 4 次睡眠低于 6 小时",
+        "近 4 次记录中 4 次为负向状态"
+      ],
+      "recommendedPath": [
+        "breathe",
+        "sleep",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "先把身体降下来",
+        "今晚先收住",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "根据睡眠低于 6 小时调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-016",
+      "date": "2026-05-16",
+      "mood": "calm",
+      "sleepHours": 6.4,
+      "steps": 5800,
+      "socialScore": 48,
+      "recoveryScore": 86,
+      "scoreBreakdown": {
+        "mood": 48,
+        "sleep": 14,
+        "steps": 10,
+        "social": 6,
+        "intervention": 8
+      },
+      "riskLevel": "中度关注",
+      "riskTag": "建议连接他人",
+      "riskReason": "最近低睡眠或负面状态连续出现，建议联系可信任的人或校内支持资源。",
+      "riskEvidence": [
+        "近 4 次记录中 3 次睡眠低于 6 小时",
+        "近 4 次记录中 3 次为负向状态"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "顺势完成小目标，保留稳定节奏。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-017",
+      "date": "2026-05-17",
+      "mood": "happy",
+      "sleepHours": 7.5,
+      "steps": 9900,
+      "socialScore": 84,
+      "recoveryScore": 100,
+      "scoreBreakdown": {
+        "mood": 60,
+        "sleep": 17,
+        "steps": 14,
+        "social": 10,
+        "intervention": 8
+      },
+      "riskLevel": "稳定观察",
+      "riskTag": "保持记录",
+      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskEvidence": [
+        "未触发危机词、连续低睡眠或连续负面状态规则"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "根据精力较高调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-018",
+      "date": "2026-05-18",
+      "mood": "calm",
+      "sleepHours": 7,
+      "steps": 6900,
+      "socialScore": 62,
+      "recoveryScore": 83,
+      "scoreBreakdown": {
+        "mood": 48,
+        "sleep": 16,
+        "steps": 12,
+        "social": 7,
+        "intervention": 0
+      },
+      "riskLevel": "稳定观察",
+      "riskTag": "保持记录",
+      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskEvidence": [
+        "未触发危机词、连续低睡眠或连续负面状态规则"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "顺势完成小目标，保留稳定节奏。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-019",
+      "date": "2026-05-19",
+      "mood": "anxious",
+      "sleepHours": 5.9,
+      "steps": 4100,
+      "socialScore": 39,
+      "recoveryScore": 69,
+      "scoreBreakdown": {
+        "mood": 36,
+        "sleep": 13,
+        "steps": 7,
+        "social": 5,
+        "intervention": 8
+      },
+      "riskLevel": "普通波动",
+      "riskTag": "先做轻干预",
+      "riskReason": "当前更像日常压力波动，可先完成一个低负担行动。",
+      "riskEvidence": [
+        "当前情绪: anxious"
+      ],
+      "recommendedPath": [
+        "breathe",
+        "sleep",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "先把身体降下来",
+        "今晚先收住",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "根据睡眠低于 6 小时调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-020",
+      "date": "2026-05-20",
+      "mood": "sad",
+      "sleepHours": 5.6,
+      "steps": 2800,
+      "socialScore": 21,
+      "recoveryScore": 53,
+      "scoreBreakdown": {
+        "mood": 24,
+        "sleep": 13,
+        "steps": 5,
+        "social": 3,
+        "intervention": 8
+      },
+      "riskLevel": "普通波动",
+      "riskTag": "先做轻干预",
+      "riskReason": "当前更像日常压力波动，可先完成一个低负担行动。",
+      "riskEvidence": [
+        "当前情绪: sad"
+      ],
+      "recommendedPath": [
+        "breathe",
+        "journal",
+        "sleep"
+      ],
+      "recommendedLabels": [
+        "先把身体降下来",
+        "把脑子里的话倒出来",
+        "今晚先收住"
+      ],
+      "recommendationReason": "根据用户主动表达需要连接、睡眠低于 6 小时、精力偏低调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-021",
+      "date": "2026-05-21",
+      "mood": "tired",
+      "sleepHours": 5.3,
+      "steps": 3300,
+      "socialScore": 36,
+      "recoveryScore": 54,
+      "scoreBreakdown": {
+        "mood": 24,
+        "sleep": 12,
+        "steps": 6,
+        "social": 4,
+        "intervention": 8
+      },
+      "riskLevel": "中度关注",
+      "riskTag": "建议连接他人",
+      "riskReason": "最近低睡眠或负面状态连续出现，建议联系可信任的人或校内支持资源。",
+      "riskEvidence": [
+        "近 4 次记录中 3 次睡眠低于 6 小时",
+        "近 4 次记录中 3 次为负向状态"
+      ],
+      "recommendedPath": [
+        "breathe",
+        "journal",
+        "sleep"
+      ],
+      "recommendedLabels": [
+        "先把身体降下来",
+        "把脑子里的话倒出来",
+        "今晚先收住"
+      ],
+      "recommendationReason": "根据睡眠低于 6 小时、精力偏低调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-022",
+      "date": "2026-05-22",
+      "mood": "calm",
+      "sleepHours": 6.7,
+      "steps": 6400,
+      "socialScore": 55,
+      "recoveryScore": 89,
+      "scoreBreakdown": {
+        "mood": 48,
+        "sleep": 15,
+        "steps": 11,
+        "social": 7,
+        "intervention": 8
+      },
+      "riskLevel": "中度关注",
+      "riskTag": "建议连接他人",
+      "riskReason": "最近低睡眠或负面状态连续出现，建议联系可信任的人或校内支持资源。",
+      "riskEvidence": [
+        "近 4 次记录中 3 次睡眠低于 6 小时",
+        "近 4 次记录中 3 次为负向状态"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "顺势完成小目标，保留稳定节奏。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-023",
+      "date": "2026-05-23",
+      "mood": "angry",
+      "sleepHours": 5.9,
+      "steps": 5600,
+      "socialScore": 44,
+      "recoveryScore": 60,
+      "scoreBreakdown": {
+        "mood": 24,
+        "sleep": 13,
+        "steps": 10,
+        "social": 5,
+        "intervention": 8
+      },
+      "riskLevel": "中度关注",
+      "riskTag": "建议连接他人",
+      "riskReason": "最近低睡眠或负面状态连续出现，建议联系可信任的人或校内支持资源。",
+      "riskEvidence": [
+        "近 4 次记录中 3 次睡眠低于 6 小时",
+        "近 4 次记录中 3 次为负向状态"
+      ],
+      "recommendedPath": [
+        "walk",
+        "breathe",
+        "sleep"
+      ],
+      "recommendedLabels": [
+        "离开原地 10 分钟",
+        "先把身体降下来",
+        "今晚先收住"
+      ],
+      "recommendationReason": "根据用户暂时不想联系别人、睡眠低于 6 小时、烦躁状态更适合先离开原地调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-024",
+      "date": "2026-05-24",
+      "mood": "anxious",
+      "sleepHours": 6.1,
+      "steps": 4700,
+      "socialScore": 46,
+      "recoveryScore": 72,
+      "scoreBreakdown": {
+        "mood": 36,
+        "sleep": 14,
+        "steps": 8,
+        "social": 6,
+        "intervention": 8
+      },
+      "riskLevel": "中度关注",
+      "riskTag": "建议连接他人",
+      "riskReason": "最近低睡眠或负面状态连续出现，建议联系可信任的人或校内支持资源。",
+      "riskEvidence": [
+        "近 4 次记录中 3 次为负向状态"
+      ],
+      "recommendedPath": [
+        "breathe",
+        "walk",
+        "journal"
+      ],
+      "recommendedLabels": [
+        "先把身体降下来",
+        "离开原地 10 分钟",
+        "把脑子里的话倒出来"
+      ],
+      "recommendationReason": "先降低生理唤醒，再把注意力从压力源中移开。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-025",
+      "date": "2026-05-25",
+      "mood": "calm",
+      "sleepHours": 6.9,
+      "steps": 7200,
+      "socialScore": 64,
+      "recoveryScore": 93,
+      "scoreBreakdown": {
+        "mood": 48,
+        "sleep": 16,
+        "steps": 13,
+        "social": 8,
+        "intervention": 8
+      },
+      "riskLevel": "稳定观察",
+      "riskTag": "保持记录",
+      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskEvidence": [
+        "未触发危机词、连续低睡眠或连续负面状态规则"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "顺势完成小目标，保留稳定节奏。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-026",
+      "date": "2026-05-26",
+      "mood": "sad",
+      "sleepHours": 4.6,
+      "steps": 1500,
+      "socialScore": 12,
+      "recoveryScore": 38,
+      "scoreBreakdown": {
+        "mood": 24,
+        "sleep": 10,
+        "steps": 3,
+        "social": 1,
+        "intervention": 0
+      },
+      "riskLevel": "高风险",
+      "riskTag": "优先求助",
+      "riskReason": "文本中出现危机信号（high级），停止普通自助建议，优先连接热线、老师、家人或专业资源。",
+      "riskEvidence": [
+        "Safety Gate: high",
+        "pattern: 绝望|看不到希望|没有任何希望"
+      ],
+      "recommendedPath": [
+        "help"
+      ],
+      "recommendedLabels": [
+        "打开求助入口"
+      ],
+      "recommendationReason": "高风险场景停止普通自助干预，优先进入求助入口。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-027",
+      "date": "2026-05-27",
+      "mood": "tired",
+      "sleepHours": 5,
+      "steps": 2600,
+      "socialScore": 28,
+      "recoveryScore": 51,
+      "scoreBreakdown": {
+        "mood": 24,
+        "sleep": 11,
+        "steps": 5,
+        "social": 3,
+        "intervention": 8
+      },
+      "riskLevel": "中度关注",
+      "riskTag": "建议连接他人",
+      "riskReason": "最近低睡眠或负面状态连续出现，建议联系可信任的人或校内支持资源。",
+      "riskEvidence": [
+        "近 4 次记录中 3 次为负向状态"
+      ],
+      "recommendedPath": [
+        "breathe",
+        "journal",
+        "sleep"
+      ],
+      "recommendedLabels": [
+        "先把身体降下来",
+        "把脑子里的话倒出来",
+        "今晚先收住"
+      ],
+      "recommendationReason": "根据睡眠明显不足、精力偏低调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-028",
+      "date": "2026-05-28",
+      "mood": "calm",
+      "sleepHours": 6.3,
+      "steps": 6000,
+      "socialScore": 52,
+      "recoveryScore": 87,
+      "scoreBreakdown": {
+        "mood": 48,
+        "sleep": 14,
+        "steps": 11,
+        "social": 6,
+        "intervention": 8
+      },
+      "riskLevel": "稳定观察",
+      "riskTag": "保持记录",
+      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskEvidence": [
+        "未触发危机词、连续低睡眠或连续负面状态规则"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "顺势完成小目标，保留稳定节奏。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-029",
+      "date": "2026-05-29",
+      "mood": "happy",
+      "sleepHours": 7.4,
+      "steps": 8800,
+      "socialScore": 79,
+      "recoveryScore": 100,
+      "scoreBreakdown": {
+        "mood": 60,
+        "sleep": 17,
+        "steps": 14,
+        "social": 9,
+        "intervention": 8
+      },
+      "riskLevel": "稳定观察",
+      "riskTag": "保持记录",
+      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskEvidence": [
+        "未触发危机词、连续低睡眠或连续负面状态规则"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "根据精力较高调整推荐顺序。",
+      "dataSource": "synthetic-demo"
+    },
+    {
+      "id": "SYN-030",
+      "date": "2026-05-30",
+      "mood": "calm",
+      "sleepHours": 7.1,
+      "steps": 7300,
+      "socialScore": 67,
+      "recoveryScore": 93,
+      "scoreBreakdown": {
+        "mood": 48,
+        "sleep": 16,
+        "steps": 13,
+        "social": 8,
+        "intervention": 8
+      },
+      "riskLevel": "稳定观察",
+      "riskTag": "保持记录",
+      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskEvidence": [
+        "未触发危机词、连续低睡眠或连续负面状态规则"
+      ],
+      "recommendedPath": [
+        "focus",
+        "journal",
+        "walk"
+      ],
+      "recommendedLabels": [
+        "只做一件小事",
+        "把脑子里的话倒出来",
+        "离开原地 10 分钟"
+      ],
+      "recommendationReason": "顺势完成小目标，保留稳定节奏。",
+      "dataSource": "synthetic-demo"
+    }
+  ]
+}

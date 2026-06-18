@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>零成本 iOS 开发路线 — Windows 环境下开发心晴 MindPulse</title>
+  <style>
+    :root {
+      --primary: #6C5CE7;
+      --primary-light: #A29BFE;
+      --accent: #00CEC9;
+      --warm: #FDCB6E;
+      --danger: #FF7675;
+      --bg: #F8F9FD;
+      --card: #FFFFFF;
+      --text: #2D3436;
+      --muted: #636E72;
+      --border: #E8E8F0;
+      --shadow: 0 2px 16px rgba(108,92,231,0.08);
+      --shadow-lg: 0 8px 32px rgba(108,92,231,0.12);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'PingFang SC', 'Helvetica Neue', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+    .hero {
+      background: linear-gradient(135deg, #2D3436 0%, #6C5CE7 100%);
+      color: white;
+      padding: 60px 24px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 30px 30px;
+      animation: drift 20s linear infinite;
+    }
+    @keyframes drift { to { transform: translate(30px, 30px); } }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+    .hero h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+    .hero .subtitle { font-size: 16px; opacity: 0.85; }
+    .badge-row { display: flex; gap: 12px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+    .badge {
+      background: rgba(255,255,255,0.15);
+      padding: 5px 14px; border-radius: 100px;
+      font-size: 13px; border: 1px solid rgba(255,255,255,0.2);
+    }
+    .nav-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      overflow-x: auto; white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .nav-bar::-webkit-scrollbar { display: none; }
+    .nav-inner { max-width: 900px; margin: 0 auto; display: flex; gap: 4px; padding: 8px 0; }
+    .nav-btn {
+      background: none; border: none;
+      padding: 8px 16px; border-radius: 100px;
+      font-size: 14px; font-weight: 500;
+      color: var(--muted); cursor: pointer;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .nav-btn:hover { background: #F0EDFF; color: var(--primary); }
+    .nav-btn.active { background: var(--primary); color: white; }
+    .main { max-width: 900px; margin: 0 auto; padding: 32px 20px 80px; }
+    .section { display: none; animation: fadeIn 0.3s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+    .card {
+      background: var(--card); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 32px; margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+    .card h2 {
+      font-size: 22px; font-weight: 700; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card h2 .icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .card h3 { font-size: 17px; font-weight: 600; margin: 24px 0 12px; color: var(--primary); }
+
+    /* Strategy cards */
+    .strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 16px 0; }
+    @media (max-width: 700px) { .strategy-grid { grid-template-columns: 1fr; } }
+
+    .strategy-card {
+      border: 2px solid var(--border); border-radius: var(--radius);
+      padding: 24px; position: relative; transition: all 0.2s;
+    }
+    .strategy-card:hover { border-color: var(--primary-light); box-shadow: var(--shadow-lg); }
+    .strategy-card.recommended { border-color: var(--accent); background: #F8FFFE; }
+    .strategy-card .rank {
+      position: absolute; top: -14px; left: 20px;
+      background: var(--primary); color: white;
+      padding: 4px 14px; border-radius: 100px;
+      font-size: 12px; font-weight: 700;
+    }
+    .strategy-card.recommended .rank { background: var(--accent); color: #1a1a1a; }
+    .strategy-card h4 { font-size: 17px; margin-bottom: 8px; margin-top: 8px; }
+    .strategy-card p { font-size: 14px; color: var(--muted); margin-bottom: 6px; }
+    .strategy-card .cost { font-weight: 700; }
+    .strategy-card .cost.free { color: #00A896; }
+    .strategy-card .cost.paid { color: #E17055; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 12px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(180deg, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+    .tl-item {
+      position: relative; margin-bottom: 20px;
+      padding: 14px 18px; background: #FAFAFE;
+      border-radius: var(--radius-sm); border: 1px solid var(--border);
+    }
+    .tl-item::before {
+      content: ''; position: absolute; left: -28px; top: 18px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--primary); border: 2px solid white;
+      box-shadow: 0 0 0 2px var(--primary-light);
+    }
+    .tl-item h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .tl-item p { font-size: 14px; color: #555; }
+
+    /* Code block */
+    .code-block {
+      background: #2D2D3F; color: #E0E0E0;
+      border-radius: var(--radius-sm); padding: 20px;
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 13px; line-height: 1.7; margin: 12px 0;
+      overflow-x: auto;
+    }
+    .code-block .kw { color: #C792EA; }
+    .code-block .fn { color: #82AAFF; }
+    .code-block .str { color: #C3E88D; }
+    .code-block .cmt { color: #546E7A; font-style: italic; }
+
+    .highlight {
+      background: linear-gradient(135deg, #F0EDFF 0%, #E8FAF9 100%);
+      border: 1px solid var(--primary-light);
+      border-radius: var(--radius-sm); padding: 18px 22px; margin: 14px 0;
+    }
+    .highlight strong { color: var(--primary); }
+
+    .warning {
+      background: #FFF5F5; border: 1px solid #FFD0D0;
+      border-radius: var(--radius-sm); padding: 18px 22px; margin: 14px 0;
+    }
+    .warning strong { color: var(--danger); }
+
+    table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+    th {
+      background: #F0EDFF; font-weight: 600; text-align: left;
+      padding: 10px 14px; border-bottom: 2px solid var(--primary-light);
+    }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    tr:hover td { background: #FAFAFE; }
+
+    .tag {
+      display: inline-block; padding: 3px 10px; border-radius: 100px;
+      font-size: 12px; font-weight: 600;
+    }
+    .tag-green { background: #E8FAF9; color: #00A896; }
+    .tag-purple { background: #F0EDFF; color: var(--primary); }
+    .tag-orange { background: #FFF4E0; color: #E17055; }
+    .tag-red { background: #FFF0F0; color: #D63031; }
+
+    .step-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--primary); color: white;
+      font-size: 13px; font-weight: 700; margin-right: 8px;
+      flex-shrink: 0;
+    }
+
+    .footer { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>零成本 · 无 Mac · 开发 iOS App</h1>
+    <div class="subtitle">Windows 环境下完成"心晴 MindPulse"的完整技术路线</div>
+    <div class="badge-row">
+      <span class="badge">Windows 电脑</span>
+      <span class="badge">零预算</span>
+      <span class="badge">无学校 Mac 实验室</span>
+      <span class="badge">SwiftUI 原生</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showSection('reality', this)">现实评估</button>
+    <button class="nav-btn" onclick="showSection('strategies', this)">可行方案</button>
+    <button class="nav-btn" onclick="showSection('roadmap', this)">12周路线</button>
+    <button class="nav-btn" onclick="showSection('setup', this)">环境搭建</button>
+    <button class="nav-btn" onclick="showSection('build', this)">远程构建</button>
+    <button class="nav-btn" onclick="showSection('prototype', this)">先做原型</button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ===== 现实评估 ===== -->
+<div class="section active" id="reality">
+  <div class="card">
+    <h2><span class="icon" style="background:#FFF0F0">🎯</span> 先说实话：无 Mac 开发 iOS App 有多难</h2>
+    <table>
+      <tr><th>方案</th><th>可行性</th><th>原因</th></tr>
+      <tr>
+        <td>Hackintosh 黑苹果</td>
+        <td><span class="tag tag-orange">中等</span></td>
+        <td>需要兼容硬件、折腾时间多、稳定性差，且法律灰色地带。不推荐给竞赛用途。</td>
+      </tr>
+      <tr>
+        <td>虚拟机装 macOS</td>
+        <td><span class="tag tag-red">困难</span></td>
+        <td>AMD CPU 几乎不可行，Intel 需要特定型号，性能损失严重，GPU 加速缺失导致预览卡死。</td>
+      </tr>
+      <tr>
+        <td>云 Mac 免费版</td>
+        <td><span class="tag tag-green">可行</span></td>
+        <td>多家提供小时计费或免费试用，按需使用，开发期总成本很低。</td>
+      </tr>
+      <tr>
+        <td>GitHub Actions macOS</td>
+        <td><span class="tag tag-green">可行</span></td>
+        <td>免费额度对公开仓库充足，可做 CI 构建和测试。</td>
+      </tr>
+      <tr>
+        <td>Swift on Windows 学习</td>
+        <td><span class="tag tag-orange">辅助</span></td>
+        <td>Swift 语言本身可在 Windows 运行，但 SwiftUI/UIKit 不行，只能用于学习语法和写业务逻辑。</td>
+      </tr>
+      <tr>
+        <td>借/共用 Mac</td>
+        <td><span class="tag tag-green">现实</span></td>
+        <td>同学、朋友、社团、二手市场短期租用。最直接有效的方案。</td>
+      </tr>
+    </table>
+
+    <div class="highlight" style="margin-top:20px">
+      <strong>结论：</strong>零成本、纯 Windows 条件下<strong>确实可以做</strong>，但需要组合策略——不能只依赖一种方案。下面给出三种经过验证的可行路径。
+    </div>
+  </div>
+</div>
+
+<!-- ===== 可行方案 ===== -->
+<div class="section" id="strategies">
+  <div class="card">
+    <h2><span class="icon" style="background:#E8FAF9">🗺️</span> 三种可行方案对比</h2>
+
+    <div class="strategy-grid">
+      <div class="strategy-card recommended">
+        <div class="rank">最推荐</div>
+        <h4>方案 A：云构建 + Windows 编码</h4>
+        <p>在 Windows 上用 VS Code / Cursor 写 Swift 代码，通过 Git 推送到 GitHub，用 <strong>GitHub Actions macOS runner</strong> 自动构建并在模拟器中截图验证。需要真机测试时，租用<strong>按小时计费的云 Mac</strong>（约 3-8 元/小时），只在必须用 Xcode 时才使用。</p>
+        <p><strong>总成本：¥0-100</strong>（GitHub Actions 免费额度足够，云 Mac 仅用于关键操作）</p>
+        <p><span class="tag tag-green">适合</span> 团队有 Git 使用经验、愿意学命令行</p>
+      </div>
+
+      <div class="strategy-card">
+        <div class="rank">方案 B</div>
+        <h4>方案 B：集中冲刺 + 借设备</h4>
+        <p>前 6 周在 Windows 上完成<strong>全部原型设计</strong>（Figma）和<strong>方案文档</strong>。第 7-12 周集中借一台 Mac（找同学、社团、或闲鱼短期租用），集中进行代码开发和调试。</p>
+        <p><strong>总成本：¥0-300</strong>（短期租 Mac 约 200-300 元/月）</p>
+        <p><span class="tag tag-orange">适合</span> 团队有人能借到设备、愿意集中冲刺</p>
+      </div>
+
+      <div class="strategy-card">
+        <div class="rank">方案 C</div>
+        <h4>方案 C：Flutter 跨平台 + 云构建</h4>
+        <p>用 Flutter 在 Windows 上完成 90% 的 UI 和逻辑开发（VS Code + Android 模拟器），利用 Flutter 的 iOS Cupertino 组件做苹果风格 UI。最后 2 周租云 Mac 做 Xcode 打包和 iOS 特性（Widget/HealthKit）接入。</p>
+        <p><strong>总成本：¥0-80</strong>（云 Mac 仅用于打包和原生桥接）</p>
+        <p><span class="tag tag-orange">注意</span> 启迪赛道的"苹果特色"评分项可能受影响，需在 Widget/HealthKit 等原生特性上额外下功夫</p>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:20px">
+      <strong>我的推荐：</strong>方案 A 为主 + 方案 B 为辅。用 GitHub Actions 做日常构建验证，关键阶段（真机调试、Widget 开发、HealthKit 集成）集中借或租 Mac 用 2-3 天。这样既保证了 SwiftUI 原生开发的评分优势，又把成本压到最低。
+    </div>
+  </div>
+</div>
+
+<!-- ===== 12周路线 ===== -->
+<div class="section" id="roadmap">
+  <div class="card">
+    <h2><span class="icon" style="background:#F0EDFF">📅</span> 12 周开发路线（Windows + 云 Mac）</h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <h4><span class="step-num">1</span> Week 1-2：原型设计（Windows 完成）</h4>
+        <p>Figma 画全部页面原型，确定数据模型、交互流程、色彩体系。产出：完整 Figma 原型文件 + 方案书初稿。无需任何 Mac。</p>
+      </div>
+      <div class="tl-item">
+        <h4><span class="step-num">2</span> Week 3：环境搭建（Windows + 云）</h4>
+        <p>在 Windows 装 VS Code + Swift 插件 + Git。注册 GitHub，创建仓库。申请一个云 Mac 试用（MacStadium/MacinCloud），在云 Mac 上创建 Xcode 项目模板，写好基础架构，推送到 GitHub。租用时间约 2-3 小时。</p>
+      </div>
+      <div class="tl-item">
+        <h4><span class="step-num">3</span> Week 4-5：核心功能编码（Windows 为主）</h4>
+        <p>在 Windows VS Code 中写情绪打卡页面、数据模型、本地存储逻辑。代码推送到 GitHub 后，GitHub Actions macOS runner 自动编译验证。每 2-3 天集中修一次编译错误。</p>
+      </div>
+      <div class="tl-item">
+        <h4><span class="step-num">4</span> Week 6-7：苹果特性开发（借/租 Mac 3 天）</h4>
+        <p>这是关键阶段。租用云 Mac 或借一台 Mac，集中 3 天完成：WidgetKit 小组件、Live Activities 配置、App Intents 集成、HealthKit 权限和读取。这些必须在 Xcode 中配置和调试。预计云 Mac 使用 20-30 小时。</p>
+      </div>
+      <div class="tl-item">
+        <h4><span class="step-num">5</span> Week 8-9：情绪地图 + 可视化（Windows + GH Actions）</h4>
+        <p>回到 Windows 写 SwiftUI 可视化组件（情绪时间线、周报、多维关联图）。纯 SwiftUI 代码，不需要 Xcode 特殊功能。通过 GitHub Actions 验证编译。</p>
+      </div>
+      <div class="tl-item">
+        <h4><span class="step-num">6</span> Week 10：整合测试（云 Mac 2 天）</h4>
+        <p>所有模块联调、Core ML 模型集成、语音转写测试。真机安装和体验测试。修 Bug。</p>
+      </div>
+      <div class="tl-item">
+        <h4><span class="step-num">7</span> Week 11-12：答辩准备（Windows）</h4>
+        <p>准备 7 天测试数据、录制 Demo 视频、制作答辩 PPT、排练演示流程。用云 Mac 做最后版本确认和打包。</p>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:20px">
+      <strong>总结：</strong>12 周中，只有 Week 6-7 和 Week 10 需要真正的 Mac（约 4-5 天，总计 30-40 小时）。其余时间全部在 Windows 上完成。云 Mac 按小时计费，总计约 ¥100-200（按 5 元/小时算）。如果借到设备，这笔钱也省了。
+    </div>
+  </div>
+</div>
+
+<!-- ===== 环境搭建 ===== -->
+<div class="section" id="setup">
+  <div class="card">
+    <h2><span class="icon" style="background:#E8FAF9">🛠️</span> Windows 上搭建 Swift 开发环境</h2>
+
+    <h3>第一步：安装基础工具</h3>
+    <div class="code-block">
+<span class="cmt"># 1. 安装 VS Code（免费）</span>
+<span class="cmt"># 下载地址：https://code.visualstudio.com/</span>
+
+<span class="cmt"># 2. VS Code 中安装这些插件：</span>
+<span class="cmt"># - Swift (by Swift Server Workgroup)  — 语法高亮 + 补全</span>
+<span class="cmt"># - Swift Language (by Jin Kim)        — 更好的语法支持</span>
+<span class="cmt"># - CodeLLDB                            — 调试器</span>
+<span class="cmt"># - GitLens                             — Git 增强</span>
+
+<span class="cmt"># 3. 安装 Git</span>
+<span class="cmt"># 下载地址：https://git-scm.com/download/win</span>
+
+<span class="cmt"># 4. 安装 Swift for Windows（用于本地语法检查）</span>
+<span class="cmt"># 下载地址：https://www.swift.org/download/</span>
+<span class="cmt"># 选 Windows 版本，安装后在 VS Code 中配置 Swift 路径</span>
+    </div>
+
+    <h3>第二步：创建 GitHub 仓库 + 配置 Actions</h3>
+    <div class="code-block">
+<span class="cmt"># 在 GitHub 创建仓库 mindpulse-ios</span>
+<span class="cmt"># 在仓库根目录创建 .github/workflows/build.yml：</span>
+
+<span class="kw">name</span>: <span class="str">iOS Build</span>
+
+<span class="kw">on</span>:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+<span class="kw">jobs</span>:
+  build:
+    <span class="kw">runs-on</span>: <span class="str">macos-latest</span>   <span class="cmt"># 这就是免费的 macOS runner！</span>
+    <span class="kw">steps</span>:
+      - <span class="kw">uses</span>: <span class="str">actions/checkout@v4</span>
+      - <span class="kw">name</span>: <span class="str">Build</span>
+        <span class="kw">run</span>: <span class="str">|</span>
+          xcodebuild -scheme MindPulse \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+            build
+    </div>
+
+    <div class="highlight">
+      <strong>关键点：</strong>GitHub Actions 的 <code>macos-latest</code> runner 是免费的（公开仓库无限用，私有仓库每月 2000 分钟）。每次你 push 代码，它自动在 macOS 上编译，告诉你有没有编译错误。这就是你在 Windows 上写 iOS 代码的"编译器"。
+    </div>
+
+    <h3>第三步：在云 Mac 上创建 Xcode 项目（一次性操作）</h3>
+    <ol style="padding-left:20px;font-size:15px;line-height:2">
+      <li>找一个云 Mac 服务（推荐 MacinCloud 的 Pay-As-You-Go，最低 $1/hour）</li>
+      <li>远程连接后，打开 Xcode，新建 iOS App 项目，选择 SwiftUI + SwiftData</li>
+      <li>配置好项目结构（文件目录、Target、Info.plist）</li>
+      <li>创建基础文件夹结构：Models / Views / Services / Resources</li>
+      <li><code>git init &amp;&amp; git add . &amp;&amp; git commit -m "init"</code></li>
+      <li><code>git remote add origin &lt;你的 GitHub 仓库地址&gt;</code></li>
+      <li><code>git push -u origin main</code></li>
+      <li>至此完成。后续 90% 代码可以在 Windows VS Code 中写了。</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ===== 远程构建 ===== -->
+<div class="section" id="build">
+  <div class="card">
+    <h2><span class="icon" style="background:#F0EDFF">⚙️</span> 远程构建工作流（日常开发循环）</h2>
+
+    <div class="highlight">
+      <strong>每日工作流：</strong>
+      <ol style="margin-top:8px;padding-left:20px;font-size:15px;line-height:2">
+        <li><strong>Windows VS Code：</strong>写代码 → 本地 Swift 语法检查</li>
+        <li><strong>Git push：</strong>推送到 GitHub</li>
+        <li><strong>GitHub Actions：</strong>自动触发 macOS 编译 → 看到结果</li>
+        <li><strong>修 Bug：</strong>如果有编译错误，在 Windows 上改 → 再 push</li>
+        <li><strong>集中验证：</strong>每周末，连接云 Mac 1-2 小时，在 Xcode 模拟器上跑一下，看实际效果</li>
+      </ol>
+    </div>
+
+    <h3>增强版 GitHub Actions：自动截图 + 归档</h3>
+    <div class="code-block">
+<span class="kw">name</span>: <span class="str">iOS Build + Screenshot</span>
+
+<span class="kw">on</span>:
+  push:
+    branches: [main]
+
+<span class="kw">jobs</span>:
+  build-and-screenshot:
+    <span class="kw">runs-on</span>: <span class="str">macos-latest</span>
+    <span class="kw">steps</span>:
+      - <span class="kw">uses</span>: <span class="str">actions/checkout@v4</span>
+
+      - <span class="kw">name</span>: <span class="str">Build App</span>
+        <span class="kw">run</span>: <span class="str">|</span>
+          xcodebuild -scheme MindPulse \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+            build
+
+      <span class="cmt"># 启动模拟器 + 安装 App + 截图</span>
+      - <span class="kw">name</span>: <span class="str">Take Screenshots</span>
+        <span class="kw">run</span>: <span class="str">|</span>
+          xcrun simctl boot "iPhone 16 Pro"
+          xcrun simctl install booted build/Release-iphonesimulator/MindPulse.app
+          xcrun simctl launch booted com.mindpulse.app
+          sleep 3
+          xcrun simctl io booted screenshot screenshot1.png
+
+      <span class="cmt"># 把截图上传到 Action artifacts</span>
+      - <span class="kw">uses</span>: <span class="str">actions/upload-artifact@v4</span>
+        <span class="kw">with</span>:
+          <span class="kw">name</span>: <span class="str">screenshots</span>
+          <span class="kw">path</span>: <span class="str">screenshot1.png</span>
+    </div>
+
+    <h3>云 Mac 服务对比</h3>
+    <table>
+      <tr><th>服务</th><th>价格</th><th>特点</th><th>适合</th></tr>
+      <tr>
+        <td>MacinCloud</td>
+        <td>~$1/小时（按需）</td>
+        <td>远程桌面，预装 Xcode，即时可用</td>
+        <td><span class="tag tag-green">推荐</span> 灵活按需使用</td>
+      </tr>
+      <tr>
+        <td>MacStadium</td>
+        <td>~$109/月起</td>
+        <td>专用 Mac mini，性能好但贵</td>
+        <td>预算允许时</td>
+      </tr>
+      <tr>
+        <td>GitHub Codespaces</td>
+        <td>有限免费</td>
+        <td>不支持 macOS，只有 Linux/Windows</td>
+        <td><span class="tag tag-red">不适用</span></td>
+      </tr>
+      <tr>
+        <td>Xcode Cloud</td>
+        <td>25 计算小时/月免费</td>
+        <td>Apple 官方 CI，需要 Apple Developer 账号</td>
+        <td><span class="tag tag-orange">辅助</span> 需要付费 Dev 账号</td>
+      </tr>
+      <tr>
+        <td>国内云 Mac 服务</td>
+        <td>¥3-8/小时</td>
+        <td>延迟低，中文支持好，支付宝付款</td>
+        <td><span class="tag tag-green">推荐</span> 搜索"云 Mac 租用"</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ===== 先做原型 ===== -->
+<div class="section" id="prototype">
+  <div class="card">
+    <h2><span class="icon" style="background:#E8FAF9">🎨</span> 前 2 周：在 Windows 上完成的事（零 Mac）</h2>
+    <p style="font-size:15px">即使你现在一台 Mac 都没有，前两周可以在 Windows 上完成以下全部工作。这些事情做完，项目已经完成 30%，而且完全不需要苹果设备。</p>
+
+    <h3>1. Figma 高保真原型</h3>
+    <table>
+      <tr><th>页面</th><th>说明</th></tr>
+      <tr><td>情绪打卡主页</td><td>表情选择器 + 一句话输入 + 语音按钮</td></tr>
+      <tr><td>打卡完成页</td><td>确认动画 + 今日情绪色块</td></tr>
+      <tr><td>情绪时间线</td><td>一周 7 天情绪色块横向排列</td></tr>
+      <tr><td>干预建议页</td><td>卡片式推荐 + 呼吸/散步/专注三个 Tab</td></tr>
+      <tr><td>呼吸训练页</td><td>4-7-8 动画引导 + 灵动岛预览</td></tr>
+      <tr><td>情绪地图（iPad）</td><td>左侧时间线 + 右侧多维雷达图</td></tr>
+      <tr><td>求助卡片页</td><td>状态摘要 + 一键分享 + 资源链接</td></tr>
+      <tr><td>设置页</td><td>隐私说明 + HealthKit 授权 + 提醒设置</td></tr>
+    </table>
+
+    <h3>2. 方案书撰写</h3>
+    <p>在上一份方案 HTML 的基础上，补充：数据模型 ER 图、API 设计（虽然没有云端，但本地数据模型要完整）、技术架构图、创新点详述、竞品分析（市面上类似 App 的对比表格）。</p>
+
+    <h3>3. 数据模型设计</h3>
+    <div class="code-block">
+<span class="cmt">// 在 Windows 上就能用 Swift 写数据模型（纯语法，不需要编译）</span>
+
+<span class="kw">import</span> <span class="fn">SwiftData</span>
+<span class="kw">import</span> <span class="fn">Foundation</span>
+
+<span class="kw">@Model</span>
+<span class="kw">final class</span> <span class="fn">EmotionRecord</span> {
+    <span class="kw">var</span> id: <span class="fn">UUID</span>
+    <span class="kw">var</span> date: <span class="fn">Date</span>
+    <span class="kw">var</span> emotionType: <span class="fn">String</span>       <span class="cmt">// "happy", "calm", "anxious", "sad", "angry", "tired"</span>
+    <span class="kw">var</span> intensity: <span class="fn">Int</span>           <span class="cmt">// 1-5</span>
+    <span class="kw">var</span> textNote: <span class="fn">String?</span>       <span class="cmt">// 可选文字描述</span>
+    <span class="kw">var</span> audioTranscript: <span class="fn">String?</span> <span class="cmt">// 语音转写结果</span>
+    <span class="kw">var</span> keywords: [<span class="fn">String</span>]    <span class="cmt">// NLP 提取的关键词</span>
+    <span class="kw">var</span> sleepHours: <span class="fn">Double?</span>    <span class="cmt">// 从 HealthKit 读取</span>
+    <span class="kw">var</span> stepCount: <span class="fn">Int?</span>        <span class="cmt">// 从 HealthKit 读取</span>
+
+    <span class="kw">init</span>(emotionType: <span class="fn">String</span>, intensity: <span class="fn">Int</span>) {
+        <span class="kw">self</span>.id = <span class="fn">UUID</span>()
+        <span class="kw">self</span>.date = <span class="fn">Date</span>()
+        <span class="kw">self</span>.emotionType = emotionType
+        <span class="kw">self</span>.intensity = intensity
+    }
+}
+    </div>
+
+    <h3>4. Swift 语法学习 + 基础代码</h3>
+    <p>在 Windows 上安装 Swift 后，可以写并运行纯逻辑代码（命令行程序），练习 SwiftUI 的核心概念：</p>
+    <ul style="padding-left:20px;font-size:15px;line-height:2">
+      <li>State / Binding / ObservedObject 数据流</li>
+      <li>List / ForEach / NavigationStack 导航</li>
+      <li>自定义 ViewModifier 和动画</li>
+      <li>SwiftData @Model 和 @Query</li>
+      <li>async/await 异步编程</li>
+    </ul>
+    <p>这些在 Windows 的命令行 Swift 中完全可学，虽然不能跑 UI，但逻辑代码可以写和测。</p>
+
+    <div class="highlight" style="margin-top:20px">
+      <strong>前两周结束后，你应该有：</strong>完整 Figma 原型 + 方案书 + 数据模型代码 + 团队 Swift 基础过关。这时候你只需要一个云 Mac 花 2-3 小时创建 Xcode 项目，后续就能在 Windows 上并行开发了。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon" style="background:#FFF4E0">💡</span> 额外建议：比赛之外的路径</h2>
+
+    <div class="strategy-grid">
+      <div style="border:2px solid var(--border);border-radius:var(--radius);padding:24px;background:#FAFAFE">
+        <h3 style="color:var(--primary);margin-bottom:10px">短期：为比赛服务</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8">
+          按上面的 12 周路线走。核心策略是<strong>最小化 Mac 使用时间</strong>，在 Windows 上完成尽可能多的工作。只在必须用 Xcode 的时候（项目创建、Widget 配置、证书签名、真机测试）才租用云 Mac。整个开发周期实际需要 Mac 的时间不超过 40 小时。
+        </p>
+      </div>
+      <div style="border:2px solid var(--border);border-radius:var(--radius);padding:24px;background:#FAFAFE">
+        <h3 style="color:var(--accent);margin-bottom:10px">长期：团队能力建设</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8">
+          比赛结束后，考虑团队众筹一台 Mac mini（M4 芯片约 ¥4,499，二手 M1 约 ¥2,000）。或者团队约定好，每人分担不同方向——会 Mac 的同学做 iOS，其他人做跨平台或后端。不要因为一次比赛就否定 iOS 开发的长期学习价值。
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">心晴 MindPulse — 零成本 iOS 开发技术路线 · 启迪赛道</div>
+
+<script>
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

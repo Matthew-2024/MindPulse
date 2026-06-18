@@ -1,0 +1,52 @@
+[
+  {
+    "date": "6/1",
+    "mood": "calm",
+    "moodScore": 4,
+    "sleepHours": 7.2,
+    "steps": 7600,
+    "socialScore": 66,
+    "note": "今天整体比较稳，晚上准备早点休息。",
+    "completedInterventions": ["journal"]
+  },
+  {
+    "date": "6/2",
+    "mood": "anxious",
+    "moodScore": 3,
+    "sleepHours": 5.4,
+    "steps": 3800,
+    "socialScore": 42,
+    "note": "复习进度慢，一想到ddl就紧张。",
+    "completedInterventions": ["breathe"]
+  },
+  {
+    "date": "6/3",
+    "mood": "sad",
+    "moodScore": 2,
+    "sleepHours": 4.9,
+    "steps": 2100,
+    "socialScore": 25,
+    "note": "今天不太想说话，感觉有点低落。",
+    "completedInterventions": []
+  },
+  {
+    "date": "6/4",
+    "mood": "tired",
+    "moodScore": 2,
+    "sleepHours": 5.1,
+    "steps": 2600,
+    "socialScore": 38,
+    "note": "昨晚没睡踏实，白天一直很累。",
+    "completedInterventions": ["sleep"]
+  },
+  {
+    "date": "6/5",
+    "mood": "anxious",
+    "moodScore": 3,
+    "sleepHours": 5.8,
+    "steps": 4200,
+    "socialScore": 45,
+    "note": "还是有点紧张，但出去走了一会儿。",
+    "completedInterventions": ["walk"]
+  }
+]

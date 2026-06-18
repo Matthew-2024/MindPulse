@@ -1,0 +1,10 @@
+node_modules/
+.codex-plugin-validation-yaml/
+.edge-soft-profile/
+
+*.zip
+review_*.png
+
+.DS_Store
+Thumbs.db
+npm-debug.log*

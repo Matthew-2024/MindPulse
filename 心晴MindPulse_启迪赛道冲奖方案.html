@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>心晴 MindPulse — 启迪赛道冲奖方案</title>
+  <style>
+    :root {
+      --primary: #6C5CE7;
+      --primary-light: #A29BFE;
+      --accent: #00CEC9;
+      --warm: #FDCB6E;
+      --danger: #FF7675;
+      --bg: #F8F9FD;
+      --card: #FFFFFF;
+      --text: #2D3436;
+      --muted: #636E72;
+      --border: #E8E8F0;
+      --shadow: 0 2px 16px rgba(108,92,231,0.08);
+      --shadow-lg: 0 8px 32px rgba(108,92,231,0.12);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'PingFang SC', 'Helvetica Neue', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    .hero {
+      background: linear-gradient(135deg, #6C5CE7 0%, #A29BFE 50%, #00CEC9 100%);
+      color: white;
+      padding: 80px 24px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 30px 30px;
+      animation: drift 20s linear infinite;
+    }
+    @keyframes drift { to { transform: translate(30px, 30px); } }
+    .hero-content { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+    .hero h1 { font-size: 42px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
+    .hero .subtitle { font-size: 18px; opacity: 0.9; margin-bottom: 24px; }
+    .hero .tagline {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      padding: 10px 28px;
+      border-radius: 100px;
+      font-size: 15px;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .badge-row { display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+    .badge {
+      background: rgba(255,255,255,0.15);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .nav-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      overflow-x: auto; white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .nav-bar::-webkit-scrollbar { display: none; }
+    .nav-inner { max-width: 960px; margin: 0 auto; display: flex; gap: 4px; padding: 8px 0; }
+    .nav-btn {
+      background: none; border: none;
+      padding: 8px 18px; border-radius: 100px;
+      font-size: 14px; font-weight: 500;
+      color: var(--muted); cursor: pointer;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .nav-btn:hover { background: #F0EDFF; color: var(--primary); }
+    .nav-btn.active { background: var(--primary); color: white; }
+    .main { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+    .section { display: none; animation: fadeIn 0.3s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    .card {
+      background: var(--card); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 32px; margin-bottom: 24px;
+      border: 1px solid var(--border); transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: var(--shadow-lg); }
+    .card h2 {
+      font-size: 22px; font-weight: 700; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card h2 .icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .card h3 { font-size: 17px; font-weight: 600; margin: 20px 0 10px; color: var(--primary); }
+    .card p, .card li { font-size: 15px; color: #444; }
+    .card ul { padding-left: 20px; }
+    .card li { margin-bottom: 6px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 700px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 28px; }
+    }
+    .mini-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 20px;
+      text-align: center; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .mini-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .mini-card .emoji { font-size: 32px; margin-bottom: 10px; }
+    .mini-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .mini-card p { font-size: 13px; color: var(--muted); }
+    .flow-container { display: flex; gap: 0; overflow-x: auto; padding: 20px 0; }
+    .flow-step {
+      flex: 1; min-width: 200px; position: relative;
+      text-align: center; padding: 0 16px;
+    }
+    .flow-step .num {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white; display: inline-flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 18px; margin-bottom: 12px;
+    }
+    .flow-step h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .flow-step p { font-size: 13px; color: var(--muted); }
+    .flow-step::after {
+      content: '→'; position: absolute; right: -8px; top: 18px;
+      font-size: 20px; color: var(--primary-light); font-weight: 700;
+    }
+    .flow-step:last-child::after { display: none; }
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 12px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(180deg, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+    .tl-item {
+      position: relative; margin-bottom: 24px;
+      padding: 16px 20px; background: #FAFAFE;
+      border-radius: var(--radius-sm); border: 1px solid var(--border);
+    }
+    .tl-item::before {
+      content: ''; position: absolute; left: -28px; top: 20px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--primary); border: 2px solid white;
+      box-shadow: 0 0 0 2px var(--primary-light);
+    }
+    .tl-item h4 { font-size: 15px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+    .tl-item p { font-size: 14px; color: #555; }
+    .highlight {
+      background: linear-gradient(135deg, #F0EDFF 0%, #E8FAF9 100%);
+      border: 1px solid var(--primary-light);
+      border-radius: var(--radius-sm); padding: 20px 24px; margin: 16px 0;
+    }
+    .highlight strong { color: var(--primary); }
+    .warning {
+      background: #FFF5F5; border: 1px solid #FFD0D0;
+      border-radius: var(--radius-sm); padding: 20px 24px; margin: 16px 0;
+    }
+    .warning strong { color: var(--danger); }
+    .script-block {
+      background: #2D2D3F; color: #E0E0E0;
+      border-radius: var(--radius-sm); padding: 24px; margin: 16px 0;
+      font-size: 14px; line-height: 1.8;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      overflow-x: auto;
+    }
+    .script-block .time { color: var(--accent); font-weight: 600; }
+    .script-block .direction { color: var(--warm); font-style: italic; }
+    .script-block .line {
+      margin-bottom: 12px; padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .script-block .line:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    th {
+      background: #F0EDFF; font-weight: 600; text-align: left;
+      padding: 10px 14px; border-bottom: 2px solid var(--primary-light);
+    }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    tr:hover td { background: #FAFAFE; }
+    .tag {
+      display: inline-block; padding: 3px 10px;
+      border-radius: 100px; font-size: 12px; font-weight: 600;
+    }
+    .tag-purple { background: #F0EDFF; color: var(--primary); }
+    .tag-green { background: #E8FAF9; color: #00A896; }
+    .tag-orange { background: #FFF4E0; color: #E17055; }
+    .checklist { list-style: none; padding: 0; }
+    .checklist li {
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .check { color: var(--accent); font-weight: 700; font-size: 16px; flex-shrink: 0; }
+    .persona {
+      display: flex; gap: 20px; align-items: flex-start;
+      padding: 20px; background: #FAFAFE;
+      border-radius: var(--radius-sm); border: 1px solid var(--border); margin: 12px 0;
+    }
+    .persona-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; flex-shrink: 0;
+    }
+    .persona-info h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .persona-info p { font-size: 13px; color: var(--muted); }
+    .footer { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>心晴 MindPulse</h1>
+    <div class="subtitle">面向大学生情绪识别与非侵入式陪伴的成长支持 App</div>
+    <div class="tagline">发现 · 陪伴 · 干预 · 连接 — 做有温度的自我觉察</div>
+    <div class="badge-row">
+      <span class="badge">中国高校计算机大赛 · 启迪赛道</span>
+      <span class="badge">iOS / iPadOS 原生</span>
+      <span class="badge">SwiftUI + Swift</span>
+    </div>
+  </div>
+</div>
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showSection('overview', this)">项目概览</button>
+    <button class="nav-btn" onclick="showSection('features', this)">核心功能</button>
+    <button class="nav-btn" onclick="showSection('innovation', this)">创新亮点</button>
+    <button class="nav-btn" onclick="showSection('tech', this)">技术方案</button>
+    <button class="nav-btn" onclick="showSection('persona', this)">用户画像</button>
+    <button class="nav-btn" onclick="showSection('demo', this)">Demo 脚本</button>
+    <button class="nav-btn" onclick="showSection('defense', this)">答辩策略</button>
+    <button class="nav-btn" onclick="showSection('checklist', this)">评委对标</button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- 项目概览 -->
+<div class="section active" id="overview">
+  <div class="card">
+    <h2><span class="icon" style="background:#F0EDFF">📋</span> 项目概览</h2>
+    <p style="font-size:16px;margin-bottom:20px;">
+      <strong>一句话定位：</strong>不是心理问诊，而是帮大学生在压力、拖延、孤独、社交退缩这些高频场景里，被及时发现、被温和接住。
+    </p>
+    <div class="highlight">
+      <strong>赛道核心要求：</strong>原创性 · 问题价值 · 完成度 · 苹果平台特色 —— 我们的方案逐条对标。
+    </div>
+    <h3>为什么选这个方向</h3>
+    <div class="grid-3" style="margin-top:12px">
+      <div class="mini-card"><div class="emoji">🤝</div><h4>共情力强</h4><p>大学生压力、孤独、作息混乱是真问题，评委容易代入</p></div>
+      <div class="mini-card"><div class="emoji">🌍</div><h4>社会价值</h4><p>不是娱乐、不是工具堆砌，是真实的关怀场景</p></div>
+      <div class="mini-card"><div class="emoji">📱</div><h4>iOS 天然适配</h4><p>情绪卡片、Widget、Live Activities、Siri 全都能用</p></div>
+      <div class="mini-card"><div class="emoji">💡</div><h4>创新空间大</h4><p>"轻干预"而非"重诊断"，更高级也更克制</p></div>
+      <div class="mini-card"><div class="emoji">🎤</div><h4>答辩好讲</h4><p>"发现-陪伴-干预-连接资源"闭环，叙事清晰</p></div>
+      <div class="mini-card"><div class="emoji">🛡️</div><h4>隐私优先</h4><p>端侧分析、本地存储、不上传，符合苹果价值观</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon" style="background:#E8FAF9">🔄</span> 产品闭环</h2>
+    <div class="flow-container">
+      <div class="flow-step"><div class="num">1</div><h4>情绪捕捉</h4><p>10秒打卡 · 语音/文字/表情 · 本地分析</p></div>
+      <div class="flow-step"><div class="num">2</div><h4>温和干预</h4><p>微行动推荐 · 呼吸/散步/专注 · 克制关怀</p></div>
+      <div class="flow-step"><div class="num">3</div><h4>风险预警</h4><p>趋势检测 · 求助卡片 · 授权联系</p></div>
+      <div class="flow-step"><div class="num">4</div><h4>自我觉察</h4><p>情绪地图 · 多维关联 · 周报洞察</p></div>
+      <div class="flow-step"><div class="num">5</div><h4>资源连接</h4><p>校园心理 · 辅导员 · 朋友 · 专业引导</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 核心功能 -->
+<div class="section" id="features">
+  <div class="card">
+    <h2><span class="icon" style="background:#F0EDFF">✨</span> 核心功能架构</h2>
+    <h3>模块一：情绪捕捉（核心体验）</h3>
+    <table>
+      <tr><th>功能</th><th>说明</th><th>技术要点</th></tr>
+      <tr><td><strong>10秒情绪打卡</strong></td><td>选择表情 + 一句话描述，不填问卷</td><td>SwiftUI 快速卡片，本地存储 SwiftData</td></tr>
+      <tr><td><strong>语音情绪日记</strong></td><td>录音 30-60 秒，自动转文字 + 情绪关键词提取</td><td>Speech Framework + 端侧 NLP</td></tr>
+      <tr><td><strong>手写情绪涂鸦</strong></td><td>用 Apple Pencil 自由涂写当日心情</td><td>PencilKit (iPadOS)</td></tr>
+      <tr><td><strong>表情情绪轨迹</strong></td><td>主屏用表情色块展示一周情绪流</td><td>自定义 SwiftUI 视图</td></tr>
+    </table>
+
+    <h3>模块二：温和干预（差异化亮点）</h3>
+    <table>
+      <tr><th>场景</th><th>微行动</th><th>苹果特性</th></tr>
+      <tr><td>焦虑高压</td><td>呼吸训练 4-7-8 法（动画引导）</td><td>Live Activity 灵岛呼吸动画</td></tr>
+      <tr><td>拖延无力</td><td>专注陪伴 10 分钟（番茄钟变体）</td><td>Live Activity 倒计时 + 动态岛</td></tr>
+      <tr><td>孤独低落</td><td>"给朋友发一条消息"温和引导</td><td>Messages API 快速转发</td></tr>
+      <tr><td>昼夜颠倒</td><td>睡前放松引导（白噪音 + 呼吸）</td><td>HealthKit 睡眠数据关联</td></tr>
+    </table>
+    <div class="highlight">
+      <strong>设计原则：</strong>不做"你有病"的判断，只做"你现在可能需要一点支持"的温和关怀。措辞永远是建议，不是警告。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon" style="background:#FFF4E0">⚠️</span> 模块三：风险预警与求助</h2>
+    <ul class="checklist">
+      <li><span class="check">✓</span><div><strong>连续负面检测：</strong>连续 3 天以上负面情绪状态，App 主动提醒"最近似乎有些辛苦，要不要试试这些方法"</div></li>
+      <li><span class="check">✓</span><div><strong>作息异常提醒：</strong>连续多日昼夜颠倒、睡眠不足，触发温和建议</div></li>
+      <li><span class="check">✓</span><div><strong>社交退缩识别：</strong>连续多日情绪打卡中社交相关关键词消失</div></li>
+      <li><span class="check">✓</span><div><strong>求助卡片：</strong>用户授权后可一键生成包含近期状态摘要的卡片，快速发给辅导员/朋友/家人</div></li>
+      <li><span class="check">✓</span><div><strong>校园资源对接：</strong>整合学校心理咨询中心预约入口、24 小时心理热线</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon" style="background:#E8FAF9">🍎</span> 模块四：苹果平台特性深度利用</h2>
+    <div class="grid-2">
+      <div>
+        <h3>📱 iPhone</h3>
+        <ul>
+          <li><strong>Widget：</strong>主屏显示今日情绪 + 一句支持语</li>
+          <li><strong>Live Activities：</strong>呼吸训练 / 专注陪伴 / 睡前放松倒计时</li>
+          <li><strong>Dynamic Island：</strong>情绪打卡提醒 + 进行中的微行动状态</li>
+          <li><strong>App Intents / Siri：</strong>"Hey Siri，记录今天状态"快捷触发</li>
+          <li><strong>Notification：</strong>基于时间段的温和提醒</li>
+        </ul>
+      </div>
+      <div>
+        <h3>📟 iPadOS</h3>
+        <ul>
+          <li><strong>周报视图：</strong>大屏展示情绪地图、多维关联分析</li>
+          <li><strong>PencilKit：</strong>手写情绪日记、自由涂鸦</li>
+          <li><strong>Split View：</strong>左侧情绪时间线 + 右侧干预建议</li>
+          <li><strong>HealthKit：</strong>关联睡眠、步数数据做轻量分析</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 创新亮点 -->
+<div class="section" id="innovation">
+  <div class="card">
+    <h2><span class="icon" style="background:#F0EDFF">💡</span> 创新点写法（答辩材料）</h2>
+    <p>以下是四个可直接用于答辩 PPT 和方案书的创新点表述：</p>
+    <div style="margin-top:20px">
+      <div class="highlight">
+        <strong>创新点一：情绪地图 — 从"打卡"到"自我觉察"</strong>
+        <p style="margin-top:8px;font-size:14px">不是简单折线图，而是把课程安排、作息节律、社交频次、运动步数、睡眠质量和情绪状态可视化关联。一周结束后，用户看到的不是"你周一很焦虑"，而是"你周三熬夜后周四情绪明显下降，社交活动也减少了"。这让 App 从工具变成了镜子。</p>
+      </div>
+      <div class="highlight">
+        <strong>创新点二：轻干预而非重诊断 — "关怀"而非"问诊"</strong>
+        <p style="margin-top:8px;font-size:14px">拒绝做 AI 心理聊天机器人。我们的设计哲学是"克制"：不贴标签、不做诊断、不说教。只在用户需要时给出一个微小的、可执行的行动建议。这种"温柔的技术"更符合大学生的心理需求，也更符合苹果"Technology should be humane"的价值观。</p>
+      </div>
+      <div class="highlight">
+        <strong>创新点三：端侧隐私优先 — 数据不上云的安全感</strong>
+        <p style="margin-top:8px;font-size:14px">情绪数据是极度隐私的。所有分析在设备端完成，使用 Core ML + 自然语言框架，不依赖云端 API。用户的情绪日记、语音转写、关键词提取全部本地处理。这既是技术方案，也是产品态度：我们不卖数据，我们保护你。</p>
+      </div>
+      <div class="highlight">
+        <strong>创新点四：Apple 生态深度集成 — 真正的 iOS 原生体验</strong>
+        <p style="margin-top:8px;font-size:14px">Widget 主屏陪伴、Live Activities 呼吸倒计时、Dynamic Island 状态显示、Siri 快捷指令、PencilKit 手写日记、HealthKit 数据关联 —— 每一个功能都依托苹果平台原生能力，不是 Web 套壳，是真正的 Apple 原生应用。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 技术方案 -->
+<div class="section" id="tech">
+  <div class="card">
+    <h2><span class="icon" style="background:#F0EDFF">🔧</span> 技术实现方案</h2>
+    <h3>整体架构</h3>
+    <div class="script-block">
+      <div class="line">
+        <span class="direction">├── Presentation Layer</span><br>
+        &nbsp;&nbsp;├── SwiftUI（主界面 + 动画）<br>
+        &nbsp;&nbsp;├── WidgetKit（主屏小组件）<br>
+        &nbsp;&nbsp;├── Live Activities（灵动岛 + 锁屏）<br>
+        &nbsp;&nbsp;└── App Intents（Siri 集成）
+      </div>
+      <div class="line">
+        <span class="direction">├── Business Logic</span><br>
+        &nbsp;&nbsp;├── EmotionEngine（情绪分析引擎）<br>
+        &nbsp;&nbsp;├── InterventionScheduler（干预调度）<br>
+        &nbsp;&nbsp;├── RiskDetector（风险检测）<br>
+        &nbsp;&nbsp;└── InsightGenerator（情绪地图生成）
+      </div>
+      <div class="line">
+        <span class="direction">├── Intelligence Layer</span><br>
+        &nbsp;&nbsp;├── Core ML（端侧情绪分类模型）<br>
+        &nbsp;&nbsp;├── NaturalLanguage（关键词提取）<br>
+        &nbsp;&nbsp;├── Speech（语音转文字）<br>
+        &nbsp;&nbsp;└── CreateML（用户习惯学习）
+      </div>
+      <div class="line">
+        <span class="direction">└── Data Layer</span><br>
+        &nbsp;&nbsp;├── SwiftData（本地持久化）<br>
+        &nbsp;&nbsp;├── Keychain（敏感信息加密）<br>
+        &nbsp;&nbsp;└── HealthKit（健康数据读取）
+      </div>
+    </div>
+
+    <h3>核心技术选型</h3>
+    <table>
+      <tr><th>模块</th><th>技术方案</th><th>说明</th></tr>
+      <tr><td>UI 框架</td><td><span class="tag tag-purple">SwiftUI</span></td><td>声明式 UI，动画丰富，WidgetKit 原生支持</td></tr>
+      <tr><td>本地情绪分析</td><td><span class="tag tag-green">Core ML + NaturalLanguage</span></td><td>情感分析模型，关键词提取，全部端侧运行</td></tr>
+      <tr><td>语音处理</td><td><span class="tag tag-green">Speech Framework</span></td><td>离线语音转文字，支持中文</td></tr>
+      <tr><td>数据持久化</td><td><span class="tag tag-purple">SwiftData</span></td><td>iOS 17+ 新一代数据框架，Swift 原生集成</td></tr>
+      <tr><td>手写输入</td><td><span class="tag tag-orange">PencilKit</span></td><td>Apple Pencil 手写日记涂鸦</td></tr>
+      <tr><td>小组件</td><td><span class="tag tag-purple">WidgetKit</span></td><td>主屏情绪展示 + 支持语</td></tr>
+      <tr><td>灵动岛</td><td><span class="tag tag-purple">ActivityKit</span></td><td>Live Activity 呼吸/专注倒计时</td></tr>
+      <tr><td>健康数据</td><td><span class="tag tag-green">HealthKit</span></td><td>睡眠、步数关联分析</td></tr>
+    </table>
+
+    <h3>情绪地图数据模型</h3>
+    <div class="script-block">
+      <div class="line">
+        <span class="direction">// 核心数据模型</span><br>
+        <span style="color:#C792EA">struct</span> EmotionRecord: <span style="color:#FFCB6B">Identifiable</span> {<br>
+        &nbsp;&nbsp;<span style="color:#C792EA">let</span> id: <span style="color:#FFCB6B">UUID</span><br>
+        &nbsp;&nbsp;<span style="color:#C792EA">let</span> date: <span style="color:#FFCB6B">Date</span><br>
+        &nbsp;&nbsp;<span style="color:#C792EA">let</span> emotion: <span style="color:#FFCB6B">EmotionType</span> &nbsp;&nbsp;<span class="direction">// happy, calm, anxious, sad, angry, tired</span><br>
+        &nbsp;&nbsp;<span style="color:#C792EA">let</span> intensity: <span style="color:#FFCB6B">Int</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="direction">// 1-5</span><br>
+        &nbsp;&nbsp;<span style="color:#C792EA">let</span> textNote: <span style="color:#FFCB6B">String?</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="direction">// 文字描述</span><br>
+        &nbsp;&nbsp;<span style="color:#C792EA">let</span> audioTranscript: <span style="color:#FFCB6B">String?</span> <span class="direction">// 语音转写</span><br>
+        &nbsp;&nbsp;<span style="color:#C792EA">let</span> keywords: [<span style="color:#FFCB6B">String</span>] &nbsp;&nbsp;&nbsp;&nbsp;<span class="direction">// NLP 提取关键词</span><br>
+        &nbsp;&nbsp;<span style="color:#C792EA">let</span> sleepHours: <span style="color:#FFCB6B">Double?</span> &nbsp;&nbsp;&nbsp;<span class="direction">// HealthKit</span><br>
+        &nbsp;&nbsp;<span style="color:#C792EA">let</span> stepCount: <span style="color:#FFCB6B">Int?</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="direction">// HealthKit</span><br>
+        &nbsp;&nbsp;<span style="color:#C792EA">let</span> socialScore: <span style="color:#FFCB6B">Int</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="direction">// 社交互动指数</span><br>
+        }
+      </div>
+    </div>
+
+    <h3>开发分工建议（3-4 人团队）</h3>
+    <table>
+      <tr><th>角色</th><th>负责模块</th><th>工作量占比</th></tr>
+      <tr><td><strong>负责人 / 产品设计</strong></td><td>整体架构、情绪地图可视化、周报、答辩 PPT</td><td>30%</td></tr>
+      <tr><td><strong>前端开发 A</strong></td><td>SwiftUI 主界面、情绪打卡卡片、干预建议页面</td><td>30%</td></tr>
+      <tr><td><strong>前端开发 B</strong></td><td>WidgetKit 小组件、Live Activities、App Intents</td><td>25%</td></tr>
+      <tr><td><strong>AI / 数据</strong></td><td>Core ML 模型训练、NLP 关键词提取、HealthKit 集成</td><td>15%</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 用户画像 -->
+<div class="section" id="persona">
+  <div class="card">
+    <h2><span class="icon" style="background:#FFF4E0">👥</span> 目标用户画像</h2>
+    <div class="persona">
+      <div class="persona-avatar">🎓</div>
+      <div class="persona-info">
+        <h4>小陈 · 大三计算机系</h4>
+        <p>考研压力大，经常熬夜，情绪起伏明显但不想和人说。希望有个"不用开口就能被理解"的出口。</p>
+        <p style="margin-top:6px"><span class="tag tag-purple">核心场景</span> 考研焦虑、作息紊乱、孤独感</p>
+      </div>
+    </div>
+    <div class="persona">
+      <div class="persona-avatar">🎨</div>
+      <div class="persona-info">
+        <h4>小林 · 大二设计系</h4>
+        <p>社交能力强但偶尔感到"社交疲惫"，想记录自己的情绪变化，做自我了解。</p>
+        <p style="margin-top:6px"><span class="tag tag-green">核心场景</span> 情绪记录、自我觉察、创意涂鸦</p>
+      </div>
+    </div>
+    <div class="persona">
+      <div class="persona-avatar">📚</div>
+      <div class="persona-info">
+        <h4>小王 · 大一新生</h4>
+        <p>刚入学不适应，拖延严重，害怕和辅导员交流。需要一个"安全的、不会被评判的"空间。</p>
+        <p style="margin-top:6px"><span class="tag tag-orange">核心场景</span> 入学适应、拖延、社交退缩</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon" style="background:#F0EDFF">📊</span> 用户旅程（典型一天）</h2>
+    <div class="timeline">
+      <div class="tl-item"><h4>08:30 · 早晨打卡</h4><p>打开 App，选择表情 + 写一句"昨晚又熬夜了，有点累"。整个过程 10 秒完成。</p></div>
+      <div class="tl-item"><h4>12:00 · 午间推送</h4><p>Widget 显示"今天可以对自己温柔一点"。App 推送一条轻量建议："下午试试专注 10 分钟？"</p></div>
+      <div class="tl-item"><h4>20:00 · 晚间记录</h4><p>用语音说了一段今天发生的事，App 自动转写并提取关键词"论文""截止日期""焦虑"。</p></div>
+      <div class="tl-item"><h4>22:00 · 睡前放松</h4><p>开启"睡前呼吸"，Live Activity 显示在锁屏，白噪音播放 5 分钟后自动停止。</p></div>
+      <div class="tl-item"><h4>周日 · 情绪地图</h4><p>打开周报，看到本周情绪与睡眠的关联图："周三熬夜后情绪明显下降"。点击生成求助卡片发给好友。</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Demo 脚本 -->
+<div class="section" id="demo">
+  <div class="card">
+    <h2><span class="icon" style="background:#F0EDFF">🎬</span> 3 分钟 Demo 演示脚本</h2>
+    <p style="margin-bottom:16px;color:var(--muted)">以下脚本按时间线编排，每段标注画面操作和话术。建议安排两人配合：一人讲解，一人操作设备。</p>
+    <div class="script-block">
+      <div class="line">
+        <span class="time">[0:00 - 0:15] 开场</span><br><br>
+        <span class="direction">画面：主屏 Widget 展示今日情绪 + 支持语</span><br><br>
+        "大家好，我们是心晴 MindPulse。"<br>
+        "你有没有过这样的时刻——明明很累，却不知道怎么说出来？"<br>
+        "我们做的，就是一个帮你'看见自己'的小空间。"
+      </div>
+      <div class="line">
+        <span class="time">[0:15 - 0:50] 情绪打卡</span><br><br>
+        <span class="direction">操作：点击 App 图标 → 情绪打卡卡片 → 选择表情 + 输入文字</span><br><br>
+        "每天只需要 10 秒。选一个表情，写一句话。"<br>
+        "比如今天：'昨晚熬夜赶论文，有点焦虑。'"<br>
+        "我们支持语音、文字、甚至 iPad 上用手写涂鸦。"<br>
+        "所有数据都存在本地，我们不上传、不泄露。"
+      </div>
+      <div class="line">
+        <span class="time">[0:50 - 1:30] 温和干预</span><br><br>
+        <span class="direction">操作：展示干预建议页 → 点击"呼吸训练" → 灵动岛展示动画</span><br><br>
+        "App 看到你今天压力比较大，会温柔地建议：'要不要试试呼吸训练？'"<br>
+        "不是说'你有病'，而是'你现在可能需要一点支持'。"<br>
+        "看，灵动岛上的呼吸动画，随时可以看到进度。"<br>
+        "我们还有专注陪伴、散步建议、给朋友发消息等微行动。"
+      </div>
+      <div class="line">
+        <span class="time">[1:30 - 2:10] 情绪地图</span><br><br>
+        <span class="direction">操作：切换到 iPad → 打开情绪地图周报视图</span><br><br>
+        "这是情绪地图，一周的状态一目了然。"<br>
+        "它不是简单折线图——它把你的课程、作息、社交、步数和情绪关联起来。"<br>
+        "你看：周三熬夜后，周四情绪明显下降，社交也减少了。"<br>
+        "这不是在打卡，这是在'看见自己'。"
+      </div>
+      <div class="line">
+        <span class="time">[2:10 - 2:40] 风险预警 + 求助</span><br><br>
+        <span class="direction">操作：展示连续负面提醒 → 求助卡片生成界面</span><br><br>
+        "如果连续几天状态不好，App 会温和提醒你关注自己。"<br>
+        "你也可以生成一张'求助卡片'，一键发给辅导员或朋友。"<br>
+        "我们整合了学校心理咨询中心预约入口，让帮助真正触达。"
+      </div>
+      <div class="line">
+        <span class="time">[2:40 - 3:00] 结尾</span><br><br>
+        <span class="direction">画面：回到主界面，展示 Widget + 完整闭环</span><br><br>
+        "心晴不是心理咨询师，而是一个安静的陪伴者。"<br>
+        "我们相信：被看见，本身就是一种力量。"<br>
+        "谢谢大家。"
+      </div>
+    </div>
+    <div class="highlight">
+      <strong>Demo 演示要点：</strong>
+      <ul style="margin-top:8px">
+        <li>设备准备：iPhone + iPad 各一台，提前登录测试数据</li>
+        <li>演示数据：准备 7 天完整数据（包含 2 天负面状态，1 天恢复）</li>
+        <li>节奏控制：每个模块 30-40 秒，不超时</li>
+        <li>关键一击：情绪地图是视觉高潮，要给足 40 秒展示时间</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 答辩策略 -->
+<div class="section" id="defense">
+  <div class="card">
+    <h2><span class="icon" style="background:#FFF4E0">🎤</span> 答辩策略与话术</h2>
+    <h3>核心叙事线："发现 → 陪伴 → 干预 → 连接"</h3>
+    <p>答辩的核心不是展示技术多牛，而是讲一个让评委感动的故事。建议按以下结构组织：</p>
+    <div class="timeline" style="margin-top:16px">
+      <div class="tl-item"><h4>第一幕：痛点共鸣（30秒）</h4><p>"中国大学生心理健康调查显示，超过 30% 的学生存在不同程度的心理困扰，但真正寻求帮助的不到 10%。不是不想说，是不知道怎么开口，或者怕被贴标签。"</p></div>
+      <div class="tl-item"><h4>第二幕：解决方案（1分钟）</h4><p>"我们做了一个'轻量级情绪陪伴'App。不是聊天机器人，不是问诊工具。它只做一件事：帮你在日常中'看见自己'。10 秒打卡、温和干预、情绪地图、一键求助。"</p></div>
+      <div class="tl-item"><h4>第三幕：苹果特色（30秒）</h4><p>"这个 App 只能在苹果生态里做。Widget 主屏陪伴、灵动岛呼吸动画、Siri 快捷记录、PencilKit 手写日记、HealthKit 睡眠关联——每一个功能都依托苹果原生能力。"</p></div>
+      <div class="tl-item"><h4>第四幕：创新亮点（30秒）</h4><p>"我们的创新不在技术堆料，而在设计哲学：轻干预而非重诊断、端侧隐私优先、情绪地图多维关联。我们相信，最好的技术是让人感觉不到技术。"</p></div>
+      <div class="tl-item"><h4>第五幕：价值升华（30秒）</h4><p>"心晴不是要替代专业心理服务，而是成为'第一道温柔的防线'。被看见，本身就是一种力量。谢谢。"</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon" style="background:#FFF0F0">⚡</span> 评委常见问题 & 应对</h2>
+    <table>
+      <tr><th style="width:35%">评委可能问</th><th>建议回答</th></tr>
+      <tr><td>"这和市面上的心理健康 App 有什么区别？"</td><td>"市面上的产品大多偏向'重诊断'或'AI 聊天'。我们做的是'轻干预'——不贴标签、不说教，只在你需要时给出一个微小的行动建议。我们更像一面镜子，而不是一个医生。"</td></tr>
+      <tr><td>"情绪分析的准确率怎么保证？"</td><td>"我们不追求'准确诊断'，而是做'趋势感知'。端侧 NLP 提取关键词和情绪倾向，用 Core ML 做本地分类，关键是'看见变化'而不是'给出结论'。"</td></tr>
+      <tr><td>"数据安全怎么保证？"</td><td>"所有分析在设备端完成，不依赖云端 API。SwiftData 本地持久化，Keychain 加密存储。我们不上传任何用户数据。这是产品态度，也是苹果的价值观。"</td></tr>
+      <tr><td>"如果用户真的有严重心理问题怎么办？"</td><td>"我们明确不做医疗级干预。但我们会提供'求助卡片'功能，整合学校心理咨询中心预约入口和 24 小时热线。我们是'第一道防线'，不是终点。"</td></tr>
+      <tr><td>"为什么不做 visionOS？"</td><td>"我们选择'深度'而非'广度'。在 iPhone + iPad 上做到完成度 100%，比在三个平台上各做 30% 更有价值。这也是我们对比赛'完成度'要求的回应。"</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 评委对标 -->
+<div class="section" id="checklist">
+  <div class="card">
+    <h2><span class="icon" style="background:#E8FAF9">✅</span> 评委四维对标检查表</h2>
+    <p style="margin-bottom:16px">以下是启迪赛道四个评审维度的逐条对标，确保不丢分：</p>
+    <h3>维度一：原创性</h3>
+    <ul class="checklist">
+      <li><span class="check">✓</span><div>不是校园管理系统换皮，不是信息聚合平台</div></li>
+      <li><span class="check">✓</span><div>不做 AI 聊天机器人，做"轻干预 + 情绪地图"</div></li>
+      <li><span class="check">✓</span><div>"情绪地图"可视化是核心差异化亮点</div></li>
+      <li><span class="check">✓</span><div>设计哲学独特："关怀而非问诊，克制而非堆砌"</div></li>
+    </ul>
+    <h3>维度二：问题价值</h3>
+    <ul class="checklist">
+      <li><span class="check">✓</span><div>大学生心理健康是真实、高频、社会关注的问题</div></li>
+      <li><span class="check">✓</span><div>"不知道怎么开口"是真实痛点，不只是功能需求</div></li>
+      <li><span class="check">✓</span><div>有社会价值，不是娱乐或工具堆砌</div></li>
+      <li><span class="check">✓</span><div>目标用户画像清晰，痛点可共情</div></li>
+    </ul>
+    <h3>维度三：完成度</h3>
+    <ul class="checklist">
+      <li><span class="check">✓</span><div>完整闭环：打卡 → 分析 → 干预 → 求助 → 资源连接</div></li>
+      <li><span class="check">✓</span><div>评委现场能看到真实交互，不是概念图</div></li>
+      <li><span class="check">✓</span><div>Demo 脚本完整，3 分钟展示全流程</div></li>
+      <li><span class="check">✓</span><div>准备 7 天完整测试数据，包含正负面状态</div></li>
+    </ul>
+    <h3>维度四：苹果平台特色</h3>
+    <ul class="checklist">
+      <li><span class="check">✓</span><div>Widget 主屏情绪展示 + 支持语</div></li>
+      <li><span class="check">✓</span><div>Live Activities 呼吸/专注倒计时</div></li>
+      <li><span class="check">✓</span><div>App Intents / Siri 快捷触发</div></li>
+      <li><span class="check">✓</span><div>HealthKit 睡眠/步数关联</div></li>
+      <li><span class="check">✓</span><div>PencilKit 手写日记（iPadOS）</div></li>
+      <li><span class="check">✓</span><div>SwiftUI + SwiftData 原生技术栈</div></li>
+      <li><span class="check">✓</span><div>端侧 Core ML 分析，体现苹果隐私价值观</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon" style="background:#FFF0F0">🚫</span> 避坑指南（启迪赛道大忌）</h2>
+    <div class="grid-2">
+      <div class="warning"><strong>大忌一：AI 聊天机器人</strong><p>评委会觉得你在做 ChatGPT 套壳。我们的做法是"轻干预"而非"重对话"。</p></div>
+      <div class="warning"><strong>大忌二：校园信息聚合</strong><p>课表 + 成绩 + 校园通知拼凑。这不是在解决情绪问题。</p></div>
+      <div class="warning"><strong>大忌三：功能多但每个都浅</strong><p>宁可做 4 个功能做到位，不要做 10 个功能都是半成品。</p></div>
+      <div class="warning"><strong>大忌四：只有想法没有闭环</strong><p>评委要看的是"能跑的 App"，不是 PPT 里的流程图。</p></div>
+      <div class="warning"><strong>大忌五：不能体现苹果特性</strong><p>如果删掉 iOS 特色功能 App 还能用，说明你没做对。</p></div>
+      <div class="warning"><strong>大忌六：硬上 visionOS</strong><p>3-4 人团队硬做三个平台，结果每个都粗糙，不如一个做精。</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon" style="background:#E8FAF9">📅</span> 开发里程碑建议</h2>
+    <table>
+      <tr><th>阶段</th><th>时间</th><th>产出</th></tr>
+      <tr><td><span class="tag tag-purple">Week 1-2</span></td><td>原型设计</td><td>Figma 原型、情绪地图视觉方案、数据模型设计</td></tr>
+      <tr><td><span class="tag tag-purple">Week 3-4</span></td><td>核心功能</td><td>情绪打卡 + 分析引擎 + 干预建议基础版</td></tr>
+      <tr><td><span class="tag tag-green">Week 5-6</span></td><td>苹果特性</td><td>Widget + Live Activities + App Intents</td></tr>
+      <tr><td><span class="tag tag-green">Week 7-8</span></td><td>情绪地图</td><td>可视化周报 + 多维关联分析 + iPad 版</td></tr>
+      <tr><td><span class="tag tag-orange">Week 9-10</span></td><td>测试打磨</td><td>真实用户测试、Bug 修复、交互优化</td></tr>
+      <tr><td><span class="tag tag-orange">Week 11-12</span></td><td>答辩准备</td><td>Demo 数据准备、PPT 制作、答辩演练</td></tr>
+    </table>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">心晴 MindPulse — 启迪赛道冲奖方案 · 中国高校计算机大赛</div>
+
+<script>
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>

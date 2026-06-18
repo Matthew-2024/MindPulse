@@ -1,0 +1,19 @@
+{
+  "name": "心晴 MindPulse",
+  "short_name": "心晴",
+  "description": "面向大学生心理压力早期觉察的端侧轻干预系统原型。",
+  "start_url": "./心晴MindPulse_Web原型.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eef6f2",
+  "theme_color": "#79bfae",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/mindpulse-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
