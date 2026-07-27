@@ -4,7 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "vite",
+    "dev:react": "vite --host 127.0.0.1 --port 5180",
     "test:rules": "node tests/run-rule-tests.js",
+    "build:rule-cases": "node tools/build-browser-rule-cases.js",
+    "test:security": "node tests/security-smoke.js",
+    "test:storage": "node tests/storage-smoke.js",
+    "test:safety": "node tests/safety-gate-smoke.js",
+    "test:profile": "node tests/profile-strategy-smoke.js",
+    "test:parity": "node tests/rule-parity.js",
     "test:ui": "node tests/ui-smoke.js",
     "demo:smoke": "node tests/demo-flow-smoke.js",
     "capture:evidence": "node tests/capture-review-evidence.js",
@@ -12,10 +20,33 @@
     "audit:copy": "node tools/copy-safety-audit.js",
     "audit:self": "node tools/self-audit.js",
     "audit:docx": "node tools/run-python-tool.js tools/docx-consistency-audit.py",
-    "preflight": "npm run audit:copy && npm run audit:self && npm run audit:docx && npm run demo:smoke && npm run verify",
-    "verify": "npm run test:rules && npm run analyze:synthetic && npm run test:ui"
+    "serve:web": "npx http-server . -p 4173 -c-1",
+    "build:browser-engine": "node tools/build-browser-engine.js",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "test:react:ui": "node tests/react-ui-smoke.js",
+    "test:react:security": "node tests/react-security-smoke.js",
+    "test:react:storage": "node tests/react-storage-smoke.js",
+    "test:react:visual": "node tests/react-visual-smoke.js",
+    "test:policy": "node tests/policy-basis-smoke.js",
+    "preflight": "npm run build:browser-engine && npm run build:rule-cases && npm run build && npm run typecheck && npm run audit:copy && npm run audit:self && npm run audit:docx && npm run demo:smoke && npm run verify:checks",
+    "verify": "npm run build:browser-engine && npm run build:rule-cases && npm run verify:checks",
+    "verify:checks": "npm run test:rules && npm run test:profile && npm run test:security && npm run test:storage && npm run test:safety && npm run test:parity && npm run test:policy && npm run analyze:synthetic && npm run test:ui"
   },
   "devDependencies": {
-    "playwright": "^1.60.0"
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "http-server": "^14.1.1",
+    "playwright": "^1.60.0",
+    "supabase": "^2.107.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.5",
+    "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.0.0"
   }
 }

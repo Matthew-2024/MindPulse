@@ -45,7 +45,7 @@ await page.reload({ waitUntil: "load" });
 
 await page.waitForSelector("#loginEnter");
 let body = await pageText();
-assert(body.includes("匿名档案") && body.includes("不需要手机号"), "demo should start with anonymous profile and data minimization");
+assert(body.includes("匿名档案") && body.includes("邮箱注册") && body.includes("vault_id"), "demo should start with anonymous profile, email code entry, and vault separation");
 await page.click("#loginEnter");
 await page.waitForSelector("#spotlightGo");
 
@@ -119,6 +119,8 @@ await page.click("#agentBack");
 
 await page.click("#goSettings");
 await page.waitForSelector("#exportRecords");
+body = await pageText();
+assert(body.includes("账号与加密同步") && body.includes("encrypted_items"), "demo settings should explain encrypted Supabase sync");
 const downloadPromise = page.waitForEvent("download");
 await page.click("#exportRecords");
 const download = await downloadPromise;
@@ -126,6 +128,8 @@ assert(download.suggestedFilename() === "mindpulse-records.json", "demo should e
 const downloadPath = await download.path();
 const exported = JSON.parse(readFileSync(downloadPath, "utf8"));
 assert(exported.profile && exported.profile.id, "demo export should include anonymous profile");
+assert(exported.vaultId && exported.vaultId.startsWith("vault_"), "demo export should include separated vault id");
+assert(String(exported.privacyBoundary).includes("密文"), "demo export should explain encrypted cloud boundary");
 assert(exported.risk && exported.risk.level === "高风险", "demo export should preserve the high-risk result");
 assert(exported.scoreBreakdown && typeof exported.scoreBreakdown.total === "number", "demo export should include the recovery score breakdown");
 assert(exported.dailyReport && exported.dailyReport.count >= 1, "demo export should include the daily report");

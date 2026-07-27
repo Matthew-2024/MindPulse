@@ -6,6 +6,7 @@ const root = process.cwd();
 const targets = [
   "心晴MindPulse_Web原型.html",
   "README.md",
+  "docs/Supabase云端同步方案.md",
   "docs/PPT与答辩自查口径同步稿.md",
   "docs/匿名试用执行包.md",
   "docs/专业审核执行包.md"

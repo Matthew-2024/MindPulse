@@ -26,11 +26,33 @@ function completePath(chain, mood) {
 
 export function recommendPath(record, risk) {
   record = record || {};
-  if (risk && risk.level === "高风险") {
+  if (risk && (risk.level === "高风险" || risk.mode === "help" || risk.riskCode === "high")) {
     return {
       path: ["help"],
-      reason: "高风险场景停止普通自助干预，优先进入求助入口。",
-      reasons: ["出现危机信号"]
+      reason: "遇到需要优先求助的情况，先联系一个真实的人。",
+      reasons: ["出现危机信号"],
+      mode: "help",
+      risk: risk.level || "高风险",
+      riskCode: "high",
+      allowedActions: ["help"],
+      blockedActions: ["breathe", "walk", "journal", "sleep", "focus", "friend", "self_check", "ordinary_intervention"],
+      evidence: risk.evidence || ["出现危机信号"],
+      explanation: "现在先联系一个真实的人，普通建议暂时暂停。"
+    };
+  }
+
+  if (risk && (risk.level === "数据不足" || risk.mode === "ask" || risk.riskCode === "insufficient")) {
+    return {
+      path: ["ask"],
+      reason: "记录还不够，先补充一点信息，再决定下一步。",
+      reasons: ["过去记录还不够或有项目没填"],
+      mode: "ask",
+      risk: risk.level || "数据不足",
+      riskCode: "insufficient",
+      allowedActions: ["checkin", "ask"],
+      blockedActions: ["ordinary_intervention", "self_check"],
+      evidence: risk.evidence || ["数据不足"],
+      explanation: "记录还不够，我先不急着下确定结论。"
     };
   }
 
@@ -77,7 +99,14 @@ export function recommendPath(record, risk) {
     reason: reasons.length
       ? `根据${reasons.join("、")}调整推荐顺序。`
       : PATH_REASONS[mood] || PATH_REASONS.calm,
-    reasons: reasons.length ? unique(reasons) : ["当前状态较平稳"]
+    reasons: reasons.length ? unique(reasons) : ["当前状态较平稳"],
+    mode: risk?.mode || "action",
+    risk: risk?.level || "普通波动",
+    riskCode: risk?.riskCode || "normal",
+    allowedActions: risk?.allowedActions || ["checkin", "light_intervention", "contact_support"],
+    blockedActions: risk?.blockedActions || [],
+    evidence: risk?.evidence || [],
+    explanation: risk?.explanation || PATH_REASONS[mood] || PATH_REASONS.calm
   };
 }
 
@@ -88,5 +117,6 @@ export const interventionLabels = {
   friend: "让一个人知道你",
   sleep: "今晚先收住",
   focus: "只做一件小事",
+  ask: "补充最少的一项记录",
   help: "打开求助入口"
 };

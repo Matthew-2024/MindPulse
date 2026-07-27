@@ -178,6 +178,81 @@ enum RISEEngine {
         )
     }
 
+    static func dailyReport(records: [MindPulseRecord], for date: Date) -> DailyReport {
+        let calendar = Calendar.current
+        let dayRecords = records.filter { calendar.isDate($0.date, inSameDayAs: date) }
+        guard !dayRecords.isEmpty else {
+            return DailyReport(
+                date: date,
+                records: [],
+                title: "今天还没有即时记录",
+                summary: "先记录一次此刻状态，日报会自动汇总今天的情绪时间线、风险证据和下一步建议。",
+                mainMood: "未记录",
+                averageScore: 0,
+                risk: .stable
+            )
+        }
+        let sorted = dayRecords.sorted { $0.date < $1.date }
+        let mood = dominantMood(in: sorted)
+        let averageScore = Int((Double(sorted.reduce(0) { $0 + calculateScore(record: $1, completed: $1.completedInterventions).total }) / Double(sorted.count)).rounded())
+        let risk = assessRisk(records: sorted).level
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "zh_CN")
+        formatter.dateFormat = "HH:mm"
+        let first = formatter.string(from: sorted.first?.date ?? date)
+        let last = formatter.string(from: sorted.last?.date ?? date)
+        return DailyReport(
+            date: date,
+            records: sorted,
+            title: risk == .high ? "今天优先进入求助入口" : "今天的状态已经形成时间线",
+            summary: "\(sorted.count) 条即时记录已汇总。从 \(first) 到 \(last)，主要情绪是\(mood.title)；\(risk == .high ? "日报不会继续把普通练习作为主路径。" : "当前建议仍保持低负担、可退出。")",
+            mainMood: mood.title,
+            averageScore: averageScore,
+            risk: risk
+        )
+    }
+
+    static func weeklyReport(records: [MindPulseRecord]) -> WeeklyReport {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "zh_CN")
+        formatter.dateFormat = "E"
+        let buckets: [WeekBucket] = (0..<7).reversed().map { offset in
+            let date = calendar.date(byAdding: .day, value: -offset, to: today) ?? today
+            let dayRecords = records.filter { calendar.isDate($0.date, inSameDayAs: date) }.sorted { $0.date < $1.date }
+            let high = dayRecords.enumerated().contains { index, _ in
+                assessRisk(records: Array(dayRecords.prefix(index + 1))).level == .high
+            }
+            return WeekBucket(
+                key: dateKey(date),
+                label: formatter.string(from: date),
+                date: date,
+                records: dayRecords,
+                hasHighRisk: high
+            )
+        }
+        let weeklyRecords = buckets.flatMap(\.records)
+        let highRisk = weeklyRecords.enumerated().filter { index, _ in
+            assessRisk(records: Array(weeklyRecords.prefix(index + 1))).level == .high
+        }.count
+        let lowSleep = buckets.filter { bucket in
+            guard let last = bucket.records.last else { return false }
+            return last.sleepHours < 6
+        }.count
+        let averageScore = weeklyRecords.isEmpty ? 0 : Int((Double(weeklyRecords.reduce(0) { $0 + calculateScore(record: $1, completed: $1.completedInterventions).total }) / Double(weeklyRecords.count)).rounded())
+        let mood = dominantMood(in: weeklyRecords)
+        return WeeklyReport(
+            buckets: buckets,
+            total: weeklyRecords.count,
+            title: highRisk > 0 ? "本周出现过高风险求助信号" : (lowSleep >= 3 ? "本周最明显的是睡眠消耗" : "本周状态可继续观察"),
+            summary: "\(weeklyRecords.count) 条记录形成周报。主要情绪为\(mood.title)；低睡眠日 \(lowSleep) 天；Safety Gate 触发 \(highRisk) 次。",
+            averageScore: averageScore,
+            lowSleepDays: lowSleep,
+            highRiskCount: highRisk
+        )
+    }
+
     static func helpText(target: HelpTarget, style: HelpStyle, record: MindPulseRecord, risk: RiskAssessment, extra: String) -> String {
         let intro: String
         switch target {
@@ -228,9 +303,10 @@ enum RISEEngine {
             (.calm, 6.2, 6120, 44, "晚上把几件事理顺了一点，心里没那么堵。"),
             (.anxious, 5.4, 4200, 38, "昨晚没睡踏实，今天还是有点紧，但至少愿意开始做第一步。")
         ]
-        return moods.enumerated().map { index, item in
+        var records = moods.enumerated().map { index, item in
             MindPulseRecord(
                 date: Calendar.current.date(byAdding: .day, value: index - moods.count + 1, to: Date()) ?? Date(),
+                entryType: "daily",
                 mood: item.0,
                 sleepHours: item.1,
                 steps: item.2,
@@ -242,6 +318,37 @@ enum RISEEngine {
                 completedInterventions: []
             )
         }
+        if let today = Calendar.current.date(bySettingHour: 13, minute: 20, second: 0, of: Date()) {
+            records.append(MindPulseRecord(
+                date: today,
+                entryType: "instant",
+                mood: .angry,
+                sleepHours: 5.4,
+                steps: 3900,
+                socialScore: 32,
+                energyLevel: .mid,
+                connectionNeed: .avoid,
+                note: "中午和同学沟通不顺，有一阵很烦。",
+                dataInputMode: "demo-instant",
+                completedInterventions: []
+            ))
+        }
+        if let today = Calendar.current.date(bySettingHour: 14, minute: 35, second: 0, of: Date()) {
+            records.append(MindPulseRecord(
+                date: today,
+                entryType: "instant",
+                mood: .happy,
+                sleepHours: 5.4,
+                steps: 4600,
+                socialScore: 52,
+                energyLevel: .mid,
+                connectionNeed: .ok,
+                note: "后来出去走了一圈，和朋友聊了几句，心情轻了一点。",
+                dataInputMode: "demo-instant",
+                completedInterventions: []
+            ))
+        }
+        return records.sorted { $0.date < $1.date }
     }
 
     private static func dangerSignal(in text: String) -> (level: String, pattern: String)? {
@@ -322,6 +429,20 @@ enum RISEEngine {
     private static func average(_ values: [Double], fallback: Double) -> Double {
         guard !values.isEmpty else { return fallback }
         return values.reduce(0, +) / Double(values.count)
+    }
+
+    private static func dominantMood(in records: [MindPulseRecord]) -> Mood {
+        guard !records.isEmpty else { return .calm }
+        let counts = Dictionary(grouping: records, by: \.mood).mapValues(\.count)
+        return Mood.allCases.max { (counts[$0] ?? 0) < (counts[$1] ?? 0) } ?? records.last?.mood ?? .calm
+    }
+
+    private static func dateKey(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: date)
     }
 
     private static func percentDelta(_ current: Double, _ baseline: Double) -> Int {

@@ -114,15 +114,47 @@ struct AnonymousProfile: Codable, Identifiable, Equatable {
     var id: String
     var name: String
     var createdAt: Date
+    var vaultID: String
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case createdAt
+        case vaultID
+    }
 
     static func demo() -> AnonymousProfile {
-        AnonymousProfile(id: "local-demo", name: "匿名同学 A", createdAt: Date())
+        AnonymousProfile(id: "local-demo", name: "匿名同学 A", createdAt: Date(), vaultID: "vault_\(UUID().uuidString.lowercased())")
+    }
+
+    init(id: String, name: String, createdAt: Date, vaultID: String = "vault_\(UUID().uuidString.lowercased())") {
+        self.id = id
+        self.name = name
+        self.createdAt = createdAt
+        self.vaultID = vaultID
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        createdAt = try container.decode(Date.self, forKey: .createdAt)
+        vaultID = try container.decodeIfPresent(String.self, forKey: .vaultID) ?? "vault_\(UUID().uuidString.lowercased())"
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(vaultID, forKey: .vaultID)
     }
 }
 
 struct MindPulseRecord: Codable, Identifiable, Equatable {
     var id: UUID = UUID()
     var date: Date
+    var entryType: String = "daily"
     var mood: Mood
     var sleepHours: Double
     var steps: Int
@@ -134,6 +166,81 @@ struct MindPulseRecord: Codable, Identifiable, Equatable {
     var completedInterventions: [InterventionID]
 
     var moodScore: Int { mood.level }
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case date
+        case entryType
+        case mood
+        case sleepHours
+        case steps
+        case socialScore
+        case energyLevel
+        case connectionNeed
+        case note
+        case dataInputMode
+        case completedInterventions
+    }
+
+    init(
+        id: UUID = UUID(),
+        date: Date,
+        entryType: String = "daily",
+        mood: Mood,
+        sleepHours: Double,
+        steps: Int,
+        socialScore: Int,
+        energyLevel: EnergyLevel,
+        connectionNeed: ConnectionNeed,
+        note: String,
+        dataInputMode: String,
+        completedInterventions: [InterventionID]
+    ) {
+        self.id = id
+        self.date = date
+        self.entryType = entryType
+        self.mood = mood
+        self.sleepHours = sleepHours
+        self.steps = steps
+        self.socialScore = socialScore
+        self.energyLevel = energyLevel
+        self.connectionNeed = connectionNeed
+        self.note = note
+        self.dataInputMode = dataInputMode
+        self.completedInterventions = completedInterventions
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        date = try container.decode(Date.self, forKey: .date)
+        entryType = try container.decodeIfPresent(String.self, forKey: .entryType) ?? "daily"
+        mood = try container.decode(Mood.self, forKey: .mood)
+        sleepHours = try container.decode(Double.self, forKey: .sleepHours)
+        steps = try container.decode(Int.self, forKey: .steps)
+        socialScore = try container.decode(Int.self, forKey: .socialScore)
+        energyLevel = try container.decode(EnergyLevel.self, forKey: .energyLevel)
+        connectionNeed = try container.decode(ConnectionNeed.self, forKey: .connectionNeed)
+        note = try container.decode(String.self, forKey: .note)
+        dataInputMode = try container.decode(String.self, forKey: .dataInputMode)
+        completedInterventions = try container.decodeIfPresent([InterventionID].self, forKey: .completedInterventions) ?? []
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(date, forKey: .date)
+        try container.encode(entryType, forKey: .entryType)
+        try container.encode(mood, forKey: .mood)
+        try container.encode(sleepHours, forKey: .sleepHours)
+        try container.encode(steps, forKey: .steps)
+        try container.encode(socialScore, forKey: .socialScore)
+        try container.encode(energyLevel, forKey: .energyLevel)
+        try container.encode(connectionNeed, forKey: .connectionNeed)
+        try container.encode(note, forKey: .note)
+        try container.encode(dataInputMode, forKey: .dataInputMode)
+        try container.encode(completedInterventions, forKey: .completedInterventions)
+    }
 }
 
 struct InterventionStat: Codable, Equatable {
@@ -248,6 +355,51 @@ struct ValidationReport: Codable, Equatable {
     var interventionCoverage: Int
     var safetyGateTriggers: Int
     var moderateAttentionCount: Int
+}
+
+struct DemoAccountState: Codable, Equatable {
+    var email: String = ""
+    var pendingEmail: String = ""
+    var emailVerified: Bool = false
+    var syncEnabled: Bool = false
+    var lastSyncAt: Date? = nil
+    var lastSyncStatus: String = "演示版验证码固定为 246810"
+
+    var maskedEmail: String {
+        guard let at = email.firstIndex(of: "@") else { return email.isEmpty ? "邮箱未验证" : email }
+        let name = String(email[..<at])
+        let domain = String(email[at...])
+        return "\(name.prefix(2))***\(domain)"
+    }
+}
+
+struct DailyReport: Equatable {
+    var date: Date
+    var records: [MindPulseRecord]
+    var title: String
+    var summary: String
+    var mainMood: String
+    var averageScore: Int
+    var risk: RiskLevel
+}
+
+struct WeekBucket: Identifiable, Equatable {
+    var id: String { key }
+    var key: String
+    var label: String
+    var date: Date
+    var records: [MindPulseRecord]
+    var hasHighRisk: Bool
+}
+
+struct WeeklyReport: Equatable {
+    var buckets: [WeekBucket]
+    var total: Int
+    var title: String
+    var summary: String
+    var averageScore: Int
+    var lowSleepDays: Int
+    var highRiskCount: Int
 }
 
 struct RuleCase: Identifiable {

@@ -1,12 +1,13 @@
 {
-  "generatedAt": "2026-06-18T14:13:49.272Z",
+  "generatedAt": "2026-07-25T08:29:09.805Z",
   "note": "This file is generated from synthetic demo records. It must not be presented as real user research data.",
   "totalRecords": 30,
-  "averageRecoveryScore": 73,
+  "averageRecoveryScore": 67,
   "riskDistribution": {
-    "稳定观察": 11,
+    "数据不足": 3,
     "普通波动": 6,
     "中度关注": 12,
+    "稳定观察": 8,
     "高风险": 1
   },
   "analyzed": [
@@ -17,7 +18,7 @@
       "sleepHours": 7.2,
       "steps": 7800,
       "socialScore": 68,
-      "recoveryScore": 94,
+      "recoveryScore": 84,
       "scoreBreakdown": {
         "mood": 48,
         "sleep": 16,
@@ -25,23 +26,20 @@
         "social": 8,
         "intervention": 8
       },
-      "riskLevel": "稳定观察",
-      "riskTag": "保持记录",
-      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskLevel": "数据不足",
+      "riskTag": "补充最少记录",
+      "riskReason": "现在记录还不够，先补充一点信息，再看看下一步。",
       "riskEvidence": [
-        "未触发危机词、连续低睡眠或连续负面状态规则"
+        "现在已有 4/4 项记录",
+        "过去已有 0/3 条记录"
       ],
       "recommendedPath": [
-        "focus",
-        "journal",
-        "walk"
+        "ask"
       ],
       "recommendedLabels": [
-        "只做一件小事",
-        "把脑子里的话倒出来",
-        "离开原地 10 分钟"
+        "补充最少的一项记录"
       ],
-      "recommendationReason": "顺势完成小目标，保留稳定节奏。",
+      "recommendationReason": "记录还不够，先补充一点信息，再决定下一步。",
       "dataSource": "synthetic-demo"
     },
     {
@@ -51,7 +49,7 @@
       "sleepHours": 7.6,
       "steps": 9200,
       "socialScore": 82,
-      "recoveryScore": 100,
+      "recoveryScore": 97,
       "scoreBreakdown": {
         "mood": 60,
         "sleep": 17,
@@ -59,23 +57,20 @@
         "social": 10,
         "intervention": 8
       },
-      "riskLevel": "稳定观察",
-      "riskTag": "保持记录",
-      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskLevel": "数据不足",
+      "riskTag": "补充最少记录",
+      "riskReason": "现在记录还不够，先补充一点信息，再看看下一步。",
       "riskEvidence": [
-        "未触发危机词、连续低睡眠或连续负面状态规则"
+        "现在已有 4/4 项记录",
+        "过去已有 1/3 条记录"
       ],
       "recommendedPath": [
-        "focus",
-        "journal",
-        "walk"
+        "ask"
       ],
       "recommendedLabels": [
-        "只做一件小事",
-        "把脑子里的话倒出来",
-        "离开原地 10 分钟"
+        "补充最少的一项记录"
       ],
-      "recommendationReason": "根据精力较高调整推荐顺序。",
+      "recommendationReason": "记录还不够，先补充一点信息，再决定下一步。",
       "dataSource": "synthetic-demo"
     },
     {
@@ -85,7 +80,7 @@
       "sleepHours": 6.8,
       "steps": 6500,
       "socialScore": 61,
-      "recoveryScore": 81,
+      "recoveryScore": 72,
       "scoreBreakdown": {
         "mood": 48,
         "sleep": 15,
@@ -93,23 +88,20 @@
         "social": 7,
         "intervention": 0
       },
-      "riskLevel": "稳定观察",
-      "riskTag": "保持记录",
-      "riskReason": "当前状态较平稳，继续保持记录和节奏观察。",
+      "riskLevel": "数据不足",
+      "riskTag": "补充最少记录",
+      "riskReason": "现在记录还不够，先补充一点信息，再看看下一步。",
       "riskEvidence": [
-        "未触发危机词、连续低睡眠或连续负面状态规则"
+        "现在已有 4/4 项记录",
+        "过去已有 2/3 条记录"
       ],
       "recommendedPath": [
-        "focus",
-        "journal",
-        "walk"
+        "ask"
       ],
       "recommendedLabels": [
-        "只做一件小事",
-        "把脑子里的话倒出来",
-        "离开原地 10 分钟"
+        "补充最少的一项记录"
       ],
-      "recommendationReason": "顺势完成小目标，保留稳定节奏。",
+      "recommendationReason": "记录还不够，先补充一点信息，再决定下一步。",
       "dataSource": "synthetic-demo"
     },
     {
@@ -119,7 +111,7 @@
       "sleepHours": 5.7,
       "steps": 4300,
       "socialScore": 45,
-      "recoveryScore": 70,
+      "recoveryScore": 63,
       "scoreBreakdown": {
         "mood": 36,
         "sleep": 13,
@@ -128,8 +120,8 @@
         "intervention": 8
       },
       "riskLevel": "普通波动",
-      "riskTag": "先做轻干预",
-      "riskReason": "当前更像日常压力波动，可先完成一个低负担行动。",
+      "riskTag": "先做一件小事",
+      "riskReason": "现在更像日常压力波动，可以先做一件不费力的小事。",
       "riskEvidence": [
         "当前情绪: anxious"
       ],
@@ -153,7 +145,7 @@
       "sleepHours": 5.1,
       "steps": 3100,
       "socialScore": 38,
-      "recoveryScore": 45,
+      "recoveryScore": 40,
       "scoreBreakdown": {
         "mood": 24,
         "sleep": 11,
@@ -162,8 +154,8 @@
         "intervention": 0
       },
       "riskLevel": "普通波动",
-      "riskTag": "先做轻干预",
-      "riskReason": "当前更像日常压力波动，可先完成一个低负担行动。",
+      "riskTag": "先做一件小事",
+      "riskReason": "现在更像日常压力波动，可以先做一件不费力的小事。",
       "riskEvidence": [
         "当前情绪: tired"
       ],
@@ -187,7 +179,7 @@
       "sleepHours": 5,
       "steps": 2400,
       "socialScore": 24,
-      "recoveryScore": 50,
+      "recoveryScore": 45,
       "scoreBreakdown": {
         "mood": 24,
         "sleep": 11,
@@ -222,7 +214,7 @@
       "sleepHours": 5.4,
       "steps": 3900,
       "socialScore": 35,
-      "recoveryScore": 67,
+      "recoveryScore": 60,
       "scoreBreakdown": {
         "mood": 36,
         "sleep": 12,
@@ -257,7 +249,7 @@
       "sleepHours": 6.5,
       "steps": 6100,
       "socialScore": 50,
-      "recoveryScore": 88,
+      "recoveryScore": 79,
       "scoreBreakdown": {
         "mood": 48,
         "sleep": 15,
@@ -292,7 +284,7 @@
       "sleepHours": 7.3,
       "steps": 8400,
       "socialScore": 76,
-      "recoveryScore": 100,
+      "recoveryScore": 96,
       "scoreBreakdown": {
         "mood": 60,
         "sleep": 16,
@@ -326,7 +318,7 @@
       "sleepHours": 6,
       "steps": 5200,
       "socialScore": 41,
-      "recoveryScore": 60,
+      "recoveryScore": 54,
       "scoreBreakdown": {
         "mood": 24,
         "sleep": 14,
@@ -335,8 +327,8 @@
         "intervention": 8
       },
       "riskLevel": "普通波动",
-      "riskTag": "先做轻干预",
-      "riskReason": "当前更像日常压力波动，可先完成一个低负担行动。",
+      "riskTag": "先做一件小事",
+      "riskReason": "现在更像日常压力波动，可以先做一件不费力的小事。",
       "riskEvidence": [
         "当前情绪: angry"
       ],
@@ -360,7 +352,7 @@
       "sleepHours": 6.9,
       "steps": 7200,
       "socialScore": 58,
-      "recoveryScore": 84,
+      "recoveryScore": 75,
       "scoreBreakdown": {
         "mood": 48,
         "sleep": 16,
@@ -394,7 +386,7 @@
       "sleepHours": 5.8,
       "steps": 4600,
       "socialScore": 42,
-      "recoveryScore": 70,
+      "recoveryScore": 63,
       "scoreBreakdown": {
         "mood": 36,
         "sleep": 13,
@@ -403,8 +395,8 @@
         "intervention": 8
       },
       "riskLevel": "普通波动",
-      "riskTag": "先做轻干预",
-      "riskReason": "当前更像日常压力波动，可先完成一个低负担行动。",
+      "riskTag": "先做一件小事",
+      "riskReason": "现在更像日常压力波动，可以先做一件不费力的小事。",
       "riskEvidence": [
         "当前情绪: anxious"
       ],
@@ -428,7 +420,7 @@
       "sleepHours": 4.8,
       "steps": 2100,
       "socialScore": 30,
-      "recoveryScore": 51,
+      "recoveryScore": 46,
       "scoreBreakdown": {
         "mood": 24,
         "sleep": 11,
@@ -462,7 +454,7 @@
       "sleepHours": 4.9,
       "steps": 1900,
       "socialScore": 18,
-      "recoveryScore": 48,
+      "recoveryScore": 43,
       "scoreBreakdown": {
         "mood": 24,
         "sleep": 11,
@@ -497,7 +489,7 @@
       "sleepHours": 5.2,
       "steps": 3600,
       "socialScore": 34,
-      "recoveryScore": 66,
+      "recoveryScore": 59,
       "scoreBreakdown": {
         "mood": 36,
         "sleep": 12,
@@ -532,7 +524,7 @@
       "sleepHours": 6.4,
       "steps": 5800,
       "socialScore": 48,
-      "recoveryScore": 86,
+      "recoveryScore": 77,
       "scoreBreakdown": {
         "mood": 48,
         "sleep": 14,
@@ -567,7 +559,7 @@
       "sleepHours": 7.5,
       "steps": 9900,
       "socialScore": 84,
-      "recoveryScore": 100,
+      "recoveryScore": 97,
       "scoreBreakdown": {
         "mood": 60,
         "sleep": 17,
@@ -601,7 +593,7 @@
       "sleepHours": 7,
       "steps": 6900,
       "socialScore": 62,
-      "recoveryScore": 83,
+      "recoveryScore": 74,
       "scoreBreakdown": {
         "mood": 48,
         "sleep": 16,
@@ -635,7 +627,7 @@
       "sleepHours": 5.9,
       "steps": 4100,
       "socialScore": 39,
-      "recoveryScore": 69,
+      "recoveryScore": 62,
       "scoreBreakdown": {
         "mood": 36,
         "sleep": 13,
@@ -644,8 +636,8 @@
         "intervention": 8
       },
       "riskLevel": "普通波动",
-      "riskTag": "先做轻干预",
-      "riskReason": "当前更像日常压力波动，可先完成一个低负担行动。",
+      "riskTag": "先做一件小事",
+      "riskReason": "现在更像日常压力波动，可以先做一件不费力的小事。",
       "riskEvidence": [
         "当前情绪: anxious"
       ],
@@ -669,7 +661,7 @@
       "sleepHours": 5.6,
       "steps": 2800,
       "socialScore": 21,
-      "recoveryScore": 53,
+      "recoveryScore": 47,
       "scoreBreakdown": {
         "mood": 24,
         "sleep": 13,
@@ -678,8 +670,8 @@
         "intervention": 8
       },
       "riskLevel": "普通波动",
-      "riskTag": "先做轻干预",
-      "riskReason": "当前更像日常压力波动，可先完成一个低负担行动。",
+      "riskTag": "先做一件小事",
+      "riskReason": "现在更像日常压力波动，可以先做一件不费力的小事。",
       "riskEvidence": [
         "当前情绪: sad"
       ],
@@ -703,7 +695,7 @@
       "sleepHours": 5.3,
       "steps": 3300,
       "socialScore": 36,
-      "recoveryScore": 54,
+      "recoveryScore": 48,
       "scoreBreakdown": {
         "mood": 24,
         "sleep": 12,
@@ -738,7 +730,7 @@
       "sleepHours": 6.7,
       "steps": 6400,
       "socialScore": 55,
-      "recoveryScore": 89,
+      "recoveryScore": 79,
       "scoreBreakdown": {
         "mood": 48,
         "sleep": 15,
@@ -773,7 +765,7 @@
       "sleepHours": 5.9,
       "steps": 5600,
       "socialScore": 44,
-      "recoveryScore": 60,
+      "recoveryScore": 54,
       "scoreBreakdown": {
         "mood": 24,
         "sleep": 13,
@@ -808,7 +800,7 @@
       "sleepHours": 6.1,
       "steps": 4700,
       "socialScore": 46,
-      "recoveryScore": 72,
+      "recoveryScore": 64,
       "scoreBreakdown": {
         "mood": 36,
         "sleep": 14,
@@ -842,7 +834,7 @@
       "sleepHours": 6.9,
       "steps": 7200,
       "socialScore": 64,
-      "recoveryScore": 93,
+      "recoveryScore": 83,
       "scoreBreakdown": {
         "mood": 48,
         "sleep": 16,
@@ -876,7 +868,7 @@
       "sleepHours": 4.6,
       "steps": 1500,
       "socialScore": 12,
-      "recoveryScore": 38,
+      "recoveryScore": 34,
       "scoreBreakdown": {
         "mood": 24,
         "sleep": 10,
@@ -886,10 +878,10 @@
       },
       "riskLevel": "高风险",
       "riskTag": "优先求助",
-      "riskReason": "文本中出现危机信号（high级），停止普通自助建议，优先连接热线、老师、家人或专业资源。",
+      "riskReason": "文字中出现了需要优先求助的内容。现在先联系热线、老师、家人或身边可信任的人。",
       "riskEvidence": [
-        "Safety Gate: high",
-        "pattern: 绝望|看不到希望|没有任何希望"
+        "需要优先求助",
+        "文字中出现了需要关注的内容"
       ],
       "recommendedPath": [
         "help"
@@ -897,7 +889,7 @@
       "recommendedLabels": [
         "打开求助入口"
       ],
-      "recommendationReason": "高风险场景停止普通自助干预，优先进入求助入口。",
+      "recommendationReason": "遇到需要优先求助的情况，先联系一个真实的人。",
       "dataSource": "synthetic-demo"
     },
     {
@@ -907,7 +899,7 @@
       "sleepHours": 5,
       "steps": 2600,
       "socialScore": 28,
-      "recoveryScore": 51,
+      "recoveryScore": 46,
       "scoreBreakdown": {
         "mood": 24,
         "sleep": 11,
@@ -941,7 +933,7 @@
       "sleepHours": 6.3,
       "steps": 6000,
       "socialScore": 52,
-      "recoveryScore": 87,
+      "recoveryScore": 78,
       "scoreBreakdown": {
         "mood": 48,
         "sleep": 14,
@@ -975,7 +967,7 @@
       "sleepHours": 7.4,
       "steps": 8800,
       "socialScore": 79,
-      "recoveryScore": 100,
+      "recoveryScore": 96,
       "scoreBreakdown": {
         "mood": 60,
         "sleep": 17,
@@ -1009,7 +1001,7 @@
       "sleepHours": 7.1,
       "steps": 7300,
       "socialScore": 67,
-      "recoveryScore": 93,
+      "recoveryScore": 83,
       "scoreBreakdown": {
         "mood": 48,
         "sleep": 16,

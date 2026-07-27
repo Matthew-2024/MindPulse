@@ -1,7 +1,13 @@
-const CACHE_NAME = "mindpulse-web-v1";
+const CACHE_NAME = "mindpulse-web-v2";
 const CORE_ASSETS = [
   "./心晴MindPulse_Web原型.html",
   "./src/rules/browser-engine.js",
+  "./src/rules/browser-cases.js",
+  "./src/storage/vault-store.js",
+  "./src/config/runtime-config.js",
+  "./src/state/store.js",
+  "./src/security/risk-gate.js",
+  "./src/selectors/score-selectors.js",
   "./manifest.webmanifest",
   "./assets/mindpulse-icon.svg"
 ];

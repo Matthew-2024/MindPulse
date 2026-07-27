@@ -3,6 +3,8 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject private var store: MindPulseStore
     @State private var newProfileName = ""
+    @State private var email = ""
+    @State private var code = ""
     @State private var showingDeleteConfirm = false
     @State private var showingRuleLab = false
 
@@ -23,6 +25,9 @@ struct SettingsView: View {
                                 Text(store.activeProfile.name)
                                     .font(.title2.bold())
                                 Text("ID：\(store.activeProfile.id)")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                Text("vault_id：\(store.activeProfile.vaultID)")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }
@@ -83,6 +88,51 @@ struct SettingsView: View {
                             .foregroundStyle(.secondary)
                         ForEach(store.learningRows()) { row in
                             InterventionRow(id: row.id, detail: "完成 \(row.stat.count) 次，平均提升 \(row.stat.averageDelta) 分，上次 \(row.stat.lastDelta >= 0 ? "+" : "")\(row.stat.lastDelta)")
+                        }
+                    }
+
+                    MPCard(tint: Color.blue.opacity(0.08)) {
+                        Text("账号与演示同步")
+                            .font(.headline)
+                        Text("当前为 demo 版，验证码固定为 \(MindPulseStore.demoEmailCode)。验证结果只保存在本地；心理文本仍归属 vault_id。")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+
+                        TextField("输入邮箱", text: $email)
+                            .textInputAutocapitalization(.never)
+                            .keyboardType(.emailAddress)
+                            .textFieldStyle(.roundedBorder)
+                        HStack {
+                            TextField("6 位验证码", text: $code)
+                                .keyboardType(.numberPad)
+                                .textFieldStyle(.roundedBorder)
+                            SecondaryButton(title: "发送验证码", systemImage: "paperplane") {
+                                if store.requestDemoEmailCode(email: email) {
+                                    code = MindPulseStore.demoEmailCode
+                                }
+                            }
+                        }
+                        PrimaryButton(title: store.accountState.emailVerified ? "重新验证邮箱" : "验证邮箱", systemImage: "checkmark.seal") {
+                            if store.verifyDemoEmail(email: email.isEmpty ? store.accountState.email : email, code: code) {
+                                email = store.accountState.email
+                            }
+                        }
+
+                        HStack(spacing: 10) {
+                            MetricTile(title: "账号", value: store.accountState.emailVerified ? store.accountState.maskedEmail : "本地")
+                            MetricTile(title: "同步", value: store.accountState.syncEnabled ? "演示已开" : "未开启")
+                        }
+                        Text(store.accountState.lastSyncStatus)
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+
+                        HStack(spacing: 12) {
+                            SecondaryButton(title: store.accountState.syncEnabled ? "重新演示同步" : "开启演示同步", systemImage: "lock.doc") {
+                                store.enableDemoSync()
+                            }
+                            SecondaryButton(title: "关闭同步", systemImage: "xmark.circle") {
+                                store.disableDemoSync()
+                            }
                         }
                     }
 

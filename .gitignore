@@ -8,3 +8,6 @@ review_*.png
 .DS_Store
 Thumbs.db
 npm-debug.log*
+
+supabase/.env
+supabase/.temp/
