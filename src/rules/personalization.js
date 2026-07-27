@@ -9,6 +9,8 @@ import {
   unique
 } from "./signals.js";
 
+export const PERSONALIZATION_MIN_SAFE_FEEDBACK = 3;
+
 const BASELINE_WINDOW = 7;
 const MIN_BASELINE_SAMPLES = 3;
 const MIN_LEARNING_SAMPLES = 3;
@@ -246,6 +248,10 @@ export function summarizeInterventionFeedback(events = [], interventionStats = {
 
 export function personalizeRecommendation(path, interventionStats = {}, events = []) {
   const learning = summarizeInterventionFeedback(events, interventionStats);
+  const status = personalizationStatus(interventionStats);
+  if (!status.formed && !Object.values(learning).some((item) => item.eligible)) {
+    return unique(path);
+  }
   return unique(path)
     .map((id, index) => {
       const stat = learning[id] || emptyLearningRow(id);
@@ -262,6 +268,44 @@ export function personalizeRecommendation(path, interventionStats = {}, events =
     })
     .sort((a, b) => a.score - b.score)
     .map((item) => item.id);
+}
+
+export function personalizationStatus(stats = {}) {
+  const safeFeedbackCount = Object.entries(stats).reduce((sum, [key, stat]) => {
+    if (key === "__meta" || !stat || typeof stat !== "object") return sum;
+    return sum + Math.max(0, Number(stat.safeCount ?? stat.count) || 0);
+  }, 0);
+  return {
+    formed: safeFeedbackCount >= PERSONALIZATION_MIN_SAFE_FEEDBACK,
+    safeFeedbackCount,
+    required: PERSONALIZATION_MIN_SAFE_FEEDBACK,
+    excludedHighRisk: Math.max(0, Number(stats.__meta?.excludedHighRisk) || 0)
+  };
+}
+
+export function recordSafeFeedback(stats = {}, feedback = {}) {
+  const next = Object.fromEntries(Object.entries(stats).map(([key, value]) => [
+    key,
+    value && typeof value === "object" ? { ...value } : value
+  ]));
+  next.__meta = { ...(next.__meta || {}) };
+  if (feedback.riskMode === "HIGH_RISK") {
+    next.__meta.excludedHighRisk = (Number(next.__meta.excludedHighRisk) || 0) + 1;
+    return next;
+  }
+  const actionId = String(feedback.actionId || "").trim();
+  if (!actionId) return next;
+  const current = next[actionId] && typeof next[actionId] === "object" ? next[actionId] : {};
+  const count = Math.max(0, Number(current.safeCount ?? current.count) || 0) + 1;
+  next[actionId] = {
+    ...current,
+    count,
+    safeCount: count,
+    totalDelta: (Number(current.totalDelta) || 0) + (Number(feedback.delta) || 0),
+    lastDelta: Number(feedback.delta) || 0,
+    lastAt: feedback.completedAt || new Date().toISOString()
+  };
+  return next;
 }
 
 export { MIN_BASELINE_SAMPLES, MIN_LEARNING_SAMPLES };

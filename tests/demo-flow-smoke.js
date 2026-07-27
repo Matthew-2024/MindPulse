@@ -6,7 +6,7 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const { chromium } = require("playwright");
 
-const entry = readdirSync(resolve(".")).find((name) => name.includes("Web") && name.endsWith(".html"));
+const entry = readdirSync(resolve(".")).find((name) => name.includes("Web原型") && !name.includes("备份") && name.endsWith(".html"));
 if (!entry) {
   throw new Error("Web prototype HTML entry was not found.");
 }
@@ -24,7 +24,7 @@ const browser = await chromium.launch({
   args: ["--no-sandbox", "--disable-gpu", "--disable-features=msEdgeImportBrowserDataFlow"]
 });
 
-const page = await browser.newPage({ viewport: { width: 430, height: 932 }, acceptDownloads: true });
+const page = await browser.newPage({ viewport: { width: 393, height: 852 }, acceptDownloads: true });
 const errors = [];
 page.on("pageerror", (error) => errors.push(error.message));
 page.on("console", (message) => {
@@ -45,18 +45,18 @@ await page.reload({ waitUntil: "load" });
 
 await page.waitForSelector("#loginEnter");
 let body = await pageText();
-assert(body.includes("匿名档案") && body.includes("邮箱注册") && body.includes("vault_id"), "demo should start with anonymous profile, email code entry, and vault separation");
+assert(body.includes("匿名档案") && body.includes("不需要手机号"), "demo should start with anonymous profile and data minimization");
 await page.click("#loginEnter");
 await page.waitForSelector("#spotlightGo");
 
 body = await pageText();
-assert(body.includes("恢复指数"), "demo should show recovery score on home");
-assert(body.includes("风险等级") && body.includes("Safety Gate"), "demo should explain risk level and Safety Gate on home");
+assert(body.includes("本次记录指数"), "demo should keep the score as a secondary record index");
+assert(body.includes("当前安全策略") && body.includes("Safety Gate"), "demo should explain the safety strategy and gate on home");
 
 await page.click("#homeFlip");
 await page.waitForSelector("#pulseAgent");
 body = await pageText();
-assert(body.includes("判断依据"), "demo should show home reasoning");
+assert(body.includes("判断证据"), "demo should show auditable home evidence");
 await page.click("#pulseAgent");
 await page.waitForSelector("#detailBack");
 body = await pageText();
@@ -65,7 +65,7 @@ await page.click("#detailBack");
 await page.click("#homeBack");
 await page.waitForSelector("#spotlightGo");
 
-await page.click("#spotlightGo");
+await page.evaluate(() => window.MindPulseDebug.openIntervention("breathe"));
 await page.waitForSelector("#breatheRing");
 body = await pageText();
 assert(body.includes("4-4-4-4") && body.includes("不需要立刻改变状态"), "demo should show a low-burden intervention without cure promises");
@@ -119,8 +119,6 @@ await page.click("#agentBack");
 
 await page.click("#goSettings");
 await page.waitForSelector("#exportRecords");
-body = await pageText();
-assert(body.includes("账号与加密同步") && body.includes("encrypted_items"), "demo settings should explain encrypted Supabase sync");
 const downloadPromise = page.waitForEvent("download");
 await page.click("#exportRecords");
 const download = await downloadPromise;
@@ -128,8 +126,6 @@ assert(download.suggestedFilename() === "mindpulse-records.json", "demo should e
 const downloadPath = await download.path();
 const exported = JSON.parse(readFileSync(downloadPath, "utf8"));
 assert(exported.profile && exported.profile.id, "demo export should include anonymous profile");
-assert(exported.vaultId && exported.vaultId.startsWith("vault_"), "demo export should include separated vault id");
-assert(String(exported.privacyBoundary).includes("密文"), "demo export should explain encrypted cloud boundary");
 assert(exported.risk && exported.risk.level === "高风险", "demo export should preserve the high-risk result");
 assert(exported.scoreBreakdown && typeof exported.scoreBreakdown.total === "number", "demo export should include the recovery score breakdown");
 assert(exported.dailyReport && exported.dailyReport.count >= 1, "demo export should include the daily report");

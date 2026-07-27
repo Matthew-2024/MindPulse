@@ -1,0 +1,106 @@
+import assert from "node:assert/strict";
+import {
+  personalizationStatus,
+  personalizeRecommendation,
+  recordSafeFeedback
+} from "../src/rules/personalization.js";
+
+await import("../src/domain/decision-policy.js");
+
+const policy = globalThis.MindPulseDecisionPolicy;
+assert(policy, "MindPulseDecisionPolicy should be exposed on globalThis");
+
+const insufficient = policy.evaluateState([
+  { mood: "calm", note: "第一次记录", dataSource: "self" }
+], { source: "自我记录", now: "2026-07-27T09:00:00.000Z" });
+
+assert.deepEqual(insufficient.reasonCodes, ["DATA_INSUFFICIENT"]);
+assert.equal(insufficient.mode, "DATA_INSUFFICIENT");
+assert.deepEqual(insufficient.allowedActions, ["checkin"]);
+assert(insufficient.blockedActions.includes("breathe"));
+assert.equal(insufficient.dataSource, "自我记录");
+assert.equal(insufficient.confidence, "低");
+
+const crisis = policy.evaluateState([
+  {
+    mood: "sad",
+    sleepHours: 4.4,
+    steps: 1200,
+    socialScore: 8,
+    note: "我很绝望，想从这个世界上消失",
+    dataSource: "self"
+  }
+], { source: "自我记录", now: "2026-07-27T10:00:00.000Z" });
+
+assert.equal(crisis.mode, "HIGH_RISK");
+assert.deepEqual(crisis.reasonCodes, ["TEXT_CRISIS_SIGNAL"]);
+assert.deepEqual(crisis.allowedActions, ["help"]);
+assert(crisis.blockedActions.includes("breathe"));
+assert(crisis.evidence.some((item) => item.includes("危机文本信号")));
+assert.throws(
+  () => policy.assertActionAllowed(crisis, "breathe"),
+  /SAFETY_GATE_BLOCKED: breathe/
+);
+assert.doesNotThrow(() => policy.assertActionAllowed(crisis, "help"));
+
+const stable = policy.evaluateState([
+  { mood: "calm", sleepHours: 7.2, steps: 6500, socialScore: 62 },
+  { mood: "calm", sleepHours: 7.1, steps: 6300, socialScore: 60 },
+  { mood: "happy", sleepHours: 7.4, steps: 6900, socialScore: 65 }
+], { source: "合成演示", now: "2026-07-27T11:00:00.000Z" });
+
+assert.equal(stable.mode, "STABLE");
+assert(stable.reasonCodes.includes("STABLE_BASELINE"));
+assert(stable.allowedActions.includes("focus"));
+assert.doesNotThrow(() => policy.assertActionAllowed(stable, "breathe"));
+
+for (const trace of [insufficient, crisis, stable]) {
+  assert.match(trace.decisionId, /^decision_/);
+  assert.equal(trace.evaluatedAt, trace.evaluatedAt.trim());
+  assert(Array.isArray(trace.reasonCodes));
+  assert(Array.isArray(trace.allowedActions));
+  assert(Array.isArray(trace.blockedActions));
+  assert(Array.isArray(trace.evidence));
+  assert.equal(trace.policyVersion, "mindpulse-policy-2.0");
+}
+
+assert.equal(policy.strategyLabel(insufficient), "补充一条记录");
+assert.equal(policy.strategyLabel(crisis), "只允许求助");
+
+const moderate = policy.evaluateState([
+  { mood: "sad", sleepHours: 5.1, steps: 2400, socialScore: 28 },
+  { mood: "anxious", sleepHours: 5.3, steps: 2600, socialScore: 24 },
+  { mood: "tired", sleepHours: 5.2, steps: 2200, socialScore: 22 }
+], { source: "合成演示", now: "2026-07-27T11:30:00.000Z" });
+assert.equal(moderate.mode, "MODERATE");
+assert.doesNotThrow(() => policy.assertActionAllowed(moderate, "breathe"));
+assert.equal(policy.strategyLabel(moderate), "连接一个可信任的人");
+
+const basePath = ["breathe", "walk", "journal"];
+assert.deepEqual(
+  personalizeRecommendation(basePath, { journal: { count: 2, totalDelta: 20 } }),
+  basePath,
+  "fewer than three safe feedback events must not reorder the path"
+);
+assert.equal(
+  personalizeRecommendation(basePath, { journal: { count: 3, totalDelta: 27 } })[0],
+  "journal"
+);
+assert.deepEqual(personalizationStatus({ journal: { count: 2 } }), {
+  formed: false,
+  safeFeedbackCount: 2,
+  required: 3,
+  excludedHighRisk: 0
+});
+assert.equal(personalizationStatus({ journal: { count: 3 } }).formed, true);
+
+const excluded = recordSafeFeedback({}, {
+  actionId: "breathe",
+  delta: 12,
+  riskMode: "HIGH_RISK",
+  completedAt: "2026-07-27T12:00:00.000Z"
+});
+assert.equal(excluded.breathe, undefined);
+assert.equal(excluded.__meta.excludedHighRisk, 1);
+
+console.log("Decision policy tests passed.");

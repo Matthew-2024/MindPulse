@@ -2,6 +2,10 @@ const CACHE_NAME = "mindpulse-web-v2";
 const CORE_ASSETS = [
   "./心晴MindPulse_Web原型.html",
   "./src/rules/browser-engine.js",
+  "./src/domain/decision-policy.js",
+  "./src/features/memo/memo-model.js",
+  "./src/features/schedule/schedule-model.js",
+  "./src/features/bottle/bottle-repository.js",
   "./src/rules/browser-cases.js",
   "./src/storage/vault-store.js",
   "./src/config/runtime-config.js",

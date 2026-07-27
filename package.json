@@ -7,6 +7,7 @@
     "dev": "vite",
     "dev:react": "vite --host 127.0.0.1 --port 5180",
     "test:rules": "node tests/run-rule-tests.js",
+    "test:domain": "node tests/decision-policy-tests.js && node tests/memo-model-tests.js && node tests/schedule-model-tests.js && node tests/bottle-repository-tests.js && node tests/pwa-assets-test.js",
     "build:rule-cases": "node tools/build-browser-rule-cases.js",
     "test:security": "node tests/security-smoke.js",
     "test:storage": "node tests/storage-smoke.js",
@@ -14,6 +15,8 @@
     "test:profile": "node tests/profile-strategy-smoke.js",
     "test:parity": "node tests/rule-parity.js",
     "test:ui": "node tests/ui-smoke.js",
+    "test:convergence:ui": "node tests/convergence-ui-smoke.js",
+    "test:convergence:visual": "node tests/convergence-visual-smoke.js",
     "demo:smoke": "node tests/demo-flow-smoke.js",
     "capture:evidence": "node tests/capture-review-evidence.js",
     "analyze:synthetic": "node tools/analyze-synthetic-records.js",
@@ -31,7 +34,7 @@
     "test:policy": "node tests/policy-basis-smoke.js",
     "preflight": "npm run build:browser-engine && npm run build:rule-cases && npm run build && npm run typecheck && npm run audit:copy && npm run audit:self && npm run audit:docx && npm run demo:smoke && npm run verify:checks",
     "verify": "npm run build:browser-engine && npm run build:rule-cases && npm run verify:checks",
-    "verify:checks": "npm run test:rules && npm run test:profile && npm run test:security && npm run test:storage && npm run test:safety && npm run test:parity && npm run test:policy && npm run analyze:synthetic && npm run test:ui"
+    "verify:checks": "npm run test:rules && npm run test:domain && npm run test:profile && npm run test:security && npm run test:storage && npm run test:safety && npm run test:parity && npm run test:policy && npm run analyze:synthetic && npm run test:ui && npm run test:convergence:ui && npm run test:convergence:visual"
   },
   "devDependencies": {
     "@types/react": "^19.2.17",

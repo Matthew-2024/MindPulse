@@ -38,8 +38,8 @@ a{text-decoration:none}
 button,input,textarea{font:inherit}
 button{border:none;background:none;cursor:pointer}
 textarea{resize:none}
-#app{max-width:430px;min-height:100vh;margin:0 auto;position:relative;--page-shift:0px}
-body.home-screen #app{min-height:100vh;overflow:visible}
+#app{width:min(100%,393px);max-width:393px;min-height:100vh;min-height:100dvh;margin:0 auto;position:relative;--page-shift:0px}
+body.home-screen #app{min-height:100vh;min-height:100dvh;overflow:visible}
 #app[data-dir="forward"]{--page-shift:22px}
 #app[data-dir="back"]{--page-shift:-22px}
 #app[data-dir="soft"]{--page-shift:0px}
@@ -83,7 +83,7 @@ color:#fff;box-shadow:0 18px 40px rgba(246,130,93,.26);position:relative;overflo
 .hero-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
 .hero-pill{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.16);font-size:12px;font-weight:600}
 .hero-actions{display:flex;gap:10px;margin-top:18px}
-.btn,.btn-lite,.btn-ghost{width:100%;border-radius:16px;padding:13px 16px;font-size:14px;font-weight:700;transition:transform .18s ease,box-shadow .18s ease}
+.btn,.btn-lite,.btn-ghost{width:100%;min-height:44px;border-radius:16px;padding:13px 16px;font-size:14px;font-weight:700;transition:transform .18s ease,box-shadow .18s ease}
 .btn{background:linear-gradient(135deg,#6eb6a6,#a7c88e);color:#fff;box-shadow:0 8px 20px rgba(96,166,150,.22)}
 .btn-lite{background:rgba(255,255,255,.62);color:#38544d;border:1px solid rgba(116,151,141,.22);backdrop-filter:blur(8px)}
 .btn-ghost{background:#fff4ea;color:#c9634f}
@@ -173,6 +173,70 @@ body.home-screen .wave-line{animation:none}
 .agent-command.scan-mode .agent-evidence-item{background:rgba(255,255,255,.68);border-color:rgba(117,151,141,.18)}
 .agent-command.scan-mode .agent-evidence-label{color:#71867f}
 .agent-command.scan-mode .agent-evidence-value{color:#253f39}
+.home-tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 16px}
+.home-tool{min-height:82px;padding:14px;border-radius:20px;background:rgba(255,254,250,.9);border:1px solid rgba(117,151,141,.18);box-shadow:0 10px 26px rgba(94,130,119,.08);text-align:left;color:var(--text)}
+.home-tool-icon{width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#eefaf6;font-size:17px}
+.home-tool-title{margin-top:10px;font-size:14px;font-weight:850}
+.home-tool-meta{margin-top:4px;font-size:11px;line-height:1.45;color:var(--muted)}
+.decision-signal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.decision-signal{padding:10px;border-radius:14px;background:rgba(255,255,255,.72);border:1px solid rgba(117,151,141,.18)}
+.decision-signal-label{font-size:10px;color:#71867f}
+.decision-signal-value{margin-top:4px;font-size:13px;font-weight:850}
+.decision-signal-delta{margin-top:3px;font-size:10px;color:#9a6954}
+.memo-search{margin:0 16px;position:relative}
+.memo-search .field{padding-left:42px;background:rgba(255,255,255,.92);border-radius:20px}
+.memo-search-icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--muted);pointer-events:none}
+.memo-list{display:flex;flex-direction:column;gap:10px;margin:0 16px}
+.memo-card{width:100%;padding:16px;border-radius:20px;background:var(--card);border:1px solid rgba(234,223,212,.9);box-shadow:var(--shadow);text-align:left;color:var(--text)}
+.memo-card-title{font-size:16px;font-weight:850;line-height:1.35}
+.memo-card-meta{margin-top:7px;font-size:12px;color:var(--muted);line-height:1.55;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.memo-card-match{margin-top:7px;font-size:10px;color:#4f8f80;font-weight:750}
+.memo-create{position:fixed;right:max(20px,calc((100vw - 393px)/2 + 20px));bottom:calc(96px + var(--bottom));width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#6eb6a6,#a7c88e);color:#fff;font-size:30px;line-height:1;box-shadow:0 12px 26px rgba(96,166,150,.3);z-index:25}
+.memo-title-input{width:100%;border:0;background:transparent;font-size:27px;line-height:1.25;font-weight:900;color:var(--text);outline:none}
+.memo-meta{margin-top:8px;font-size:12px;color:var(--muted)}
+.memo-editor{margin:0 16px;padding:16px;border-radius:22px;background:var(--card);border:1px solid rgba(234,223,212,.9);box-shadow:var(--shadow)}
+.memo-item{display:grid;grid-template-columns:28px minmax(0,1fr) 72px;gap:8px;align-items:start;padding:9px 0;border-bottom:1px solid rgba(219,231,223,.74)}
+.memo-item:last-child{border-bottom:0}
+.memo-number{width:26px;height:26px;border-radius:9px;background:#eefaf6;color:#4f8f80;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:850}
+.memo-item-input{width:100%;min-height:44px;border:0;background:transparent;outline:none;padding:3px 0;font-size:15px;line-height:1.7;color:var(--text);resize:none}
+.memo-item-actions{display:grid;grid-template-columns:repeat(2,32px);gap:5px;justify-content:end}
+.memo-icon-btn{width:32px;height:32px;border-radius:10px;background:#f4f7f5;color:#61766f;font-size:15px;display:flex;align-items:center;justify-content:center}
+.memo-empty,.schedule-empty{margin:0 16px;padding:22px;border-radius:20px;background:rgba(255,255,255,.62);border:1px dashed rgba(117,151,141,.3);text-align:center;color:var(--muted);font-size:13px;line-height:1.7}
+.segment-control{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:0 16px;padding:4px;border-radius:16px;background:rgba(64,83,77,.08)}
+.segment-control button{min-height:40px;border-radius:12px;color:var(--muted);font-size:13px;font-weight:750}
+.segment-control button.active{background:#fff;color:#397b6c;box-shadow:0 5px 14px rgba(94,130,119,.12)}
+.schedule-form{margin:0 16px;padding:15px;border-radius:20px;background:var(--card);border:1px solid rgba(234,223,212,.9);box-shadow:var(--shadow)}
+.schedule-form-row{display:grid;grid-template-columns:minmax(0,1fr) 126px;gap:8px;margin-top:8px}
+.schedule-form .field{min-height:44px}
+.week-calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin:0 16px}
+.calendar-day{min-width:0;min-height:82px;padding:8px 4px;border-radius:15px;background:rgba(255,255,255,.72);border:1px solid rgba(117,151,141,.16);text-align:center;color:var(--text)}
+.calendar-day.today{border-color:#70b7a6;background:#eefaf6}
+.calendar-day-label{font-size:10px;color:var(--muted)}
+.calendar-day-number{margin-top:4px;font-size:15px;font-weight:850}
+.calendar-day-count{margin:7px auto 0;width:22px;height:22px;border-radius:8px;background:#fff0e7;color:#b56a4e;font-size:11px;display:flex;align-items:center;justify-content:center}
+.schedule-range{display:flex;gap:6px;margin:0 16px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.schedule-range::-webkit-scrollbar{display:none}
+.schedule-range button{flex:0 0 auto;min-height:38px;padding:0 13px;border-radius:12px;background:rgba(255,255,255,.72);border:1px solid rgba(117,151,141,.18);font-size:12px;font-weight:750;color:var(--muted)}
+.schedule-range button.active{background:#eefaf6;color:#397b6c;border-color:#8bcdbc}
+.schedule-list{display:flex;flex-direction:column;gap:8px;margin:0 16px}
+.schedule-item{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:10px;align-items:center;padding:13px;border-radius:18px;background:var(--card);border:1px solid rgba(234,223,212,.9)}
+.schedule-check{width:32px;height:32px;border-radius:11px;background:#eefaf6;color:#4f8f80;font-weight:900}
+.schedule-item-title{font-size:14px;font-weight:800}
+.schedule-item-time{margin-top:4px;font-size:11px;color:var(--muted)}
+.schedule-item-actions{display:flex;gap:4px}
+.bottle-sea{margin:0 16px;padding:18px;border-radius:24px;background:linear-gradient(180deg,#eef8f5,#edf3f8);border:1px solid rgba(117,151,141,.2);box-shadow:var(--shadow)}
+.bottle-stage{text-align:center;padding:12px 4px}
+.bottle-icon{font-size:48px}
+.bottle-title{margin-top:9px;font-size:20px;font-weight:900}
+.bottle-copy{margin-top:8px;font-size:12px;line-height:1.7;color:var(--muted)}
+.bottle-card{margin-top:12px;padding:15px;border-radius:18px;background:rgba(255,255,255,.82);border:1px solid rgba(117,151,141,.17);text-align:left}
+.bottle-card-meta{font-size:11px;color:#598d81;font-weight:750}
+.bottle-card-text{margin-top:8px;font-size:14px;line-height:1.75}
+.lab-result{margin:0 16px;padding:16px;border-radius:20px;background:#f8fbf7;border:1px solid rgba(117,151,141,.2)}
+.lab-result-title{font-size:16px;font-weight:900}
+.lab-result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.lab-result-cell{padding:10px;border-radius:13px;background:#fff;font-size:11px;line-height:1.55;color:var(--muted)}
+.lab-result-cell strong{display:block;color:var(--text);font-size:12px;margin-bottom:3px}
 .agent-command-top{display:flex;gap:12px;align-items:flex-start}
 .agent-command-icon{width:48px;height:48px;border-radius:17px;background:#5f9b8d;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
 .agent-command-title{font-size:19px;line-height:1.35;font-weight:850}
@@ -465,21 +529,13 @@ linear-gradient(180deg,#f8fbf7 0%,#edf6f2 62%,#fffaf3 100%)}
 .login-profile-name{font-size:15px;font-weight:850}
 .login-profile-desc{margin-top:3px;font-size:12px;color:var(--muted);line-height:1.45}
 .login-privacy{margin-top:14px;padding:13px;border-radius:18px;background:#eefaf6;border:1px solid #d4ede5;color:#315f56;font-size:12px;line-height:1.7}
-.auth-grid{display:grid;gap:10px;margin-top:12px}
-.auth-row{display:grid;grid-template-columns:1fr 112px;gap:8px;align-items:center}
-.auth-status{margin-top:10px;padding:11px 12px;border-radius:16px;background:#f8fbf7;border:1px solid rgba(164,192,182,.34);font-size:12px;line-height:1.65;color:#526a63}
-.auth-status strong{color:#2f6f62}
-.sync-mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
-.sync-mini{padding:10px;border-radius:14px;background:#fff;border:1px solid var(--line)}
-.sync-mini-label{font-size:11px;color:var(--muted)}
-.sync-mini-value{margin-top:4px;font-size:13px;font-weight:850;color:#253f39;word-break:break-all}
 .toggle{width:48px;height:28px;border-radius:999px;background:#d7cec7;position:relative;flex-shrink:0}
 .toggle:after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.12);transition:left .2s ease}
 .toggle.on{background:#7bc9b7}
 .toggle.on:after{left:23px}
 .status-pill{padding:7px 10px;border-radius:999px;background:#eefaf6;border:1px solid #d4ede5;color:#3f8273;font-size:11px;font-weight:900;white-space:nowrap}
 .status-pill.muted{background:#f7f3ef;border-color:#e4d8cf;color:#7b6b63}
-.tb{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(430px,100%);padding:8px 8px calc(8px + var(--bottom));display:flex;justify-content:space-between;background:rgba(253,248,242,.92);backdrop-filter:blur(18px);border-top:1px solid rgba(234,223,212,.9);z-index:30}
+.tb{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(393px,100%);padding:8px 8px calc(8px + var(--bottom));display:flex;justify-content:space-between;background:rgba(253,248,242,.92);backdrop-filter:blur(18px);border-top:1px solid rgba(234,223,212,.9);z-index:30}
 body.home-screen .tb{background:rgba(250,253,249,.9);border-top:1px solid rgba(210,226,218,.9);box-shadow:0 -10px 24px rgba(91,124,115,.12);backdrop-filter:blur(18px)}
 .tab-item{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;color:#94857b;font-size:10px;font-weight:600;padding:5px 0 4px;border-radius:18px;transition:color .24s ease,transform .24s cubic-bezier(.16,1,.3,1)}
 .tab-item:before{content:"";position:absolute;top:4px;width:36px;height:28px;border-radius:999px;background:#fff0e7;opacity:0;transform:translateY(6px) scale(.72);transition:opacity .24s ease,transform .28s cubic-bezier(.16,1,.3,1)}
@@ -666,12 +722,10 @@ linear-gradient(180deg,#1f2740 0%,#25365a 48%,#1b2038 100%)}
 <body>
 <div id="app"></div>
 <script src="src/rules/browser-engine.js"></script>
-<script src="src/rules/browser-cases.js"></script>
-<script src="src/storage/vault-store.js"></script>
-<script src="src/config/runtime-config.js"></script>
-<script src="src/state/store.js"></script>
-<script src="src/security/risk-gate.js"></script>
-<script src="src/selectors/score-selectors.js"></script>
+<script src="src/domain/decision-policy.js"></script>
+<script src="src/features/memo/memo-model.js"></script>
+<script src="src/features/schedule/schedule-model.js"></script>
+<script src="src/features/bottle/bottle-repository.js"></script>
 <script>
 (function(){
 var EMO=[
@@ -689,7 +743,6 @@ var INTV=[
   {id:"journal",icon:"📝",bg:"#eef3ff",title:"把脑子里的话倒出来",desc:"不用完整表达，把最吵的那句话写下来就够了。"},
   {id:"sleep",icon:"🌙",bg:"#23263b",title:"今晚先收住",desc:"别把今天继续带进睡眠，先让神经慢慢安静下来。"},
   {id:"friend",icon:"💌",bg:"#fff1eb",title:"让一个人知道你",desc:"不需要解释清楚，先发一句“我有点撑不住”。"},
-  {id:"ask",icon:"⌁",bg:"#eef3ff",title:"补充最少的一项记录",desc:"数据还不够，先补一项最容易回答的信号。"},
   {id:"help",icon:"🆘",bg:"#fff0f0",title:"打开求助入口",desc:"高风险时优先联系热线、老师、家人或身边可信任的人。"}
 ];
 var RES=[
@@ -728,16 +781,6 @@ var ENERGY_STEP_DELTA={low:-900,mid:0,high:1200};
 var CONNECT_MAP={avoid:22,ok:48,need:72};
 var PROFILE_LIST_KEY="mindpulseProfiles";
 var ACTIVE_PROFILE_KEY="mindpulseActiveProfile";
-var ACCOUNT_STATE_KEY="mindpulseAccountState";
-var RUNTIME_CONFIG=window.MindPulseConfig||{};
-var DEFAULT_SUPABASE_FUNCTIONS_URL=RUNTIME_CONFIG.supabaseFunctionsUrl||"";
-var DEMO_AUTH_MODE=RUNTIME_CONFIG.demoAuthMode!==false;
-var DEMO_EMAIL_CODE=String(RUNTIME_CONFIG.demoEmailCode||"246810");
-var DB_NAME="mindpulse-local-vault";
-var DB_VERSION=2;
-var DB_STORE="vault_records";
-var SYNC_KEY_VERSION=2;
-var SYNC_KDF_ITERATIONS=120000;
 var SURVEYS=[
   {id:"phq",icon:"☁️",title:"PHQ-9 抑郁自查",short:"近两周低落、兴趣、睡眠和精力",range:"0-27",questions:["做事时提不起劲或没有兴趣","感到心情低落、沮丧或绝望","入睡困难、睡不安稳或睡太多","感觉疲倦或没有力气","食欲不振或吃太多","觉得自己很糟，或让自己/家人失望","难以集中注意力，例如看书或上课","动作或说话变慢，或坐立不安","出现伤害自己的念头"]},
   {id:"gad",icon:"🫧",title:"GAD-7 焦虑自查",short:"近两周担心、紧张和放松困难",range:"0-21",questions:["感到紧张、焦虑或急切","无法停止或控制担忧","对各种事情担忧过多","很难放松下来","坐立不安，难以安静坐着","容易烦躁或易怒","感到好像有什么可怕的事会发生"]},
@@ -754,7 +797,26 @@ var COMFORT_LINES=[
   "先照顾呼吸和身体，任务会更容易被看清楚。",
   "你不是懒，你可能只是累了。先把下一步缩小。"
 ];
-var RULE_CASES=window.MindPulseRuleCases||[];
+var RULE_CASES=[
+  {id:"R01",name:"焦虑普通波动",input:{mood:"anxious",sleepHours:6.2,steps:4200,socialScore:45,note:"想到考试有点紧张"},risk:"普通波动",path:["breathe","walk","journal"]},
+  {id:"R02",name:"低落普通波动",input:{mood:"sad",sleepHours:6,steps:3000,socialScore:30,note:"今天有点低落"},risk:"普通波动",path:["breathe","friend","sleep"]},
+  {id:"R03",name:"疲惫普通波动",input:{mood:"tired",sleepHours:5.5,steps:2600,socialScore:40,note:"很累"},risk:"普通波动",path:["sleep","breathe","focus"]},
+  {id:"R04",name:"危机词求助",input:{mood:"sad",sleepHours:3.8,steps:900,socialScore:10,note:"我很绝望"},risk:"高风险",path:["help"]},
+  {id:"R05",name:"自伤表达求助",input:{mood:"sad",sleepHours:4.5,steps:1200,socialScore:20,note:"有伤害自己的想法"},risk:"高风险",path:["help"]},
+  {id:"R06",name:"稳定观察",input:{mood:"happy",sleepHours:7.5,steps:8500,socialScore:70,note:"今天状态不错"},risk:"稳定观察",path:["focus","journal","walk"]},
+  {id:"R07",name:"安全短语误判控制",input:{mood:"anxious",sleepHours:6,steps:4000,socialScore:50,note:"我不想活在焦虑里，但是还能撑住"},risk:"普通波动",path:["breathe","walk","journal"]},
+  {id:"R08",name:"变体表达求助",input:{mood:"sad",sleepHours:4,steps:1000,socialScore:15,note:"想从这个世界上消失"},risk:"高风险",path:["help"]},
+  {id:"R09",name:"连续低睡眠",records:[{mood:"sad",sleepHours:4.5,steps:1500,socialScore:20,note:"昨天"},{mood:"anxious",sleepHours:5,steps:2000,socialScore:25,note:"前天"},{mood:"tired",sleepHours:5,steps:2000,socialScore:30,note:"今天"}],risk:"中度关注",path:["sleep","breathe","journal"]},
+  {id:"R10",name:"空文本安全",input:{mood:"calm",sleepHours:7,steps:6000,socialScore:60,note:""},risk:"稳定观察",path:["focus","journal","walk"]},
+  {id:"R11",name:"睡眠边界 6 小时",input:{mood:"tired",sleepHours:6,steps:3000,socialScore:40,note:"刚好6小时"},risk:"普通波动",path:["sleep","breathe","focus"]},
+  {id:"R12",name:"低社交连接优先联系",input:{mood:"anxious",sleepHours:6.5,steps:4200,socialScore:12,note:"最近不太想说话"},risk:"普通波动",path:["friend","breathe","walk"]},
+  {id:"R13",name:"极低睡眠三步路径",input:{mood:"tired",sleepHours:4.8,steps:2200,socialScore:40,note:"昨晚几乎没睡"},risk:"普通波动",path:["sleep","breathe","journal"]},
+  {id:"R14",name:"孤立表达求助",input:{mood:"sad",sleepHours:5.7,steps:1400,socialScore:8,note:"感觉没有人在乎，像是留不住了"},risk:"高风险",path:["help"]},
+  {id:"R15",name:"否定自伤误判控制",input:{mood:"sad",sleepHours:6.2,steps:3600,socialScore:42,note:"这几天很低落，但我没有伤害自己的想法，也愿意找人聊聊"},risk:"普通波动",path:["breathe","friend","sleep"]},
+  {id:"R16",name:"安全短语不掩盖危机",input:{mood:"sad",sleepHours:4.8,steps:1200,socialScore:12,note:"我不想活在焦虑里，但是今天真的想死"},risk:"高风险",path:["help"]},
+  {id:"R17",name:"连续社交断联",records:[{mood:"calm",sleepHours:6.6,steps:5000,socialScore:18,note:"这两天想独处"},{mood:"calm",sleepHours:6.8,steps:5400,socialScore:15,note:"没怎么联系别人"},{mood:"calm",sleepHours:6.7,steps:5200,socialScore:12,note:"还是不太想跟人说话"}],risk:"稳定观察",path:["friend","focus","journal"]},
+  {id:"R18",name:"连续负面状态",records:[{mood:"sad",sleepHours:6.4,steps:3900,socialScore:40,note:"有点低落"},{mood:"anxious",sleepHours:6.1,steps:4300,socialScore:36,note:"担心很多事"},{mood:"angry",sleepHours:6.2,steps:4200,socialScore:38,note:"还是很烦"}],risk:"中度关注",path:["walk","breathe","friend"]}
+];
 var S={
   showLogin:!sessionProfileReady(),
   showSplash:false,
@@ -789,25 +851,26 @@ var S={
   agentStyle:"balanced",
   agentTxt:"",
   intv:null,
-  intvSession:null,
   journalDraft:"",
   journalSaved:false,
   reminderOn:false,
   sleepReminderOn:true,
-  account:loadAccountState(),
-  authBusy:false,
-  vaultReady:false,
-  vaultError:"",
-  feedbackLearningEnabled:true,
-  dataLedger:null,
   completed:loadCompleted(),
   interventionStats:loadInterventionStats(),
-  interventionEvents:loadInterventionEvents(),
-  helpResources:defaultHelpResources(),
   surveyHistory:loadSurveyHistory(),
   tasks:loadTasks(),
+  memos:loadMemos(),
+  scheduleItems:loadScheduleItems(),
+  bottleRepo:createBottleRepository(),
   activeTaskId:null,
   activeComfort:"",
+  activeMemoId:null,
+  memoSearch:"",
+  scheduleView:"week",
+  scheduleRange:8,
+  scheduleEditingId:null,
+  drawnBottle:null,
+  labScenario:"LAB-01",
   ruleScenario:"R04",
   companionIndex:0,
   intvState:{
@@ -831,7 +894,7 @@ var sleepAudio={ctx:null,nodes:[],gain:null,mode:null};
 
 function gs(d){return(d.getMonth()+1)+"/"+d.getDate()}
 function em(t){return EMO.find(function(x){return x.t===t})}
-function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];})}
+function esc(s){return String(s||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];})}
 function pad2(n){return String(n).padStart(2,"0")}
 function dateKey(d){return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 function timeLabel(d){return d.toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit"})}
@@ -846,17 +909,8 @@ function recordDateKey(record){
   return record&&record.dateKey?record.dateKey:null;
 }
 function getLast(){return S.recs[S.recs.length-1]}
-function finiteMetric(value,fallback){var n=Number(value);return Number.isFinite(n)?n:(fallback==null?0:fallback)}
-function metricText(value,digits,suffix){
-  var n=Number(value);
-  if(!Number.isFinite(n))return "未记录";
-  return n.toFixed(digits==null?0:digits)+(suffix||"");
-}
-function avgSleep(){
-  var values=S.recs.map(function(r){return Number(r.sleep)}).filter(Number.isFinite);
-  return values.length?(values.reduce(function(a,v){return a+v},0)/values.length).toFixed(1):"—";
-}
-function totalSteps(){return S.recs.reduce(function(a,r){return a+finiteMetric(r.step)},0)}
+function avgSleep(){return (S.recs.reduce(function(a,r){return a+r.sleep},0)/S.recs.length).toFixed(1)}
+function totalSteps(){return S.recs.reduce(function(a,r){return a+r.step},0)}
 function streak(){return S.recs.length}
 function splashSeen(){
   try{return localStorage.getItem("mindpulseSplashSeen")==="1";}
@@ -890,48 +944,27 @@ function readJSON(key,fallback){
   }
 }
 function writeJSON(key,value){
-  try{localStorage.setItem(key,JSON.stringify(value));}
-  catch(e){}
-}
-function makeUUID(){
-  if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(c){
-    var r=Math.random()*16|0;
-    var v=c==="x"?r:(r&3|8);
-    return v.toString(16);
-  });
-}
-function makeVaultId(){
-  return "vault_"+makeUUID();
-}
-function ensureVaultId(profile){
-  if(!profile)return makeVaultId();
-  if(!profile.vaultId&&!profile.vault_id)profile.vaultId=makeVaultId();
-  if(profile.vault_id&&!profile.vaultId)profile.vaultId=profile.vault_id;
-  delete profile.vault_id;
-  return profile.vaultId;
+  try{localStorage.setItem(key,JSON.stringify(value));return true;}
+  catch(e){return false;}
 }
 function makeProfileId(){
   return "mpu_"+Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-4);
 }
 function normalizeProfile(profile,index){
   profile=profile||{};
-  var normalized={
+  return {
     id:profile.id||makeProfileId(),
     name:profile.name||("匿名同学 "+(index+1)),
     createdAt:profile.createdAt||new Date().toISOString()
   };
-  normalized.vaultId=profile.vaultId||profile.vault_id||makeVaultId();
-  return normalized;
 }
 function loadProfiles(){
   var saved=readJSON(PROFILE_LIST_KEY,null);
   var profiles=Array.isArray(saved)?saved.map(normalizeProfile):[];
   if(!profiles.length){
-    profiles=[normalizeProfile({id:"local-demo",name:"匿名同学 A",createdAt:new Date().toISOString()},0)];
+    profiles=[{id:"local-demo",name:"匿名同学 A",createdAt:new Date().toISOString()}];
+    writeJSON(PROFILE_LIST_KEY,profiles);
   }
-  profiles.forEach(ensureVaultId);
-  writeJSON(PROFILE_LIST_KEY,profiles);
   return profiles;
 }
 function loadActiveProfile(){
@@ -945,486 +978,8 @@ function profileKey(suffix){
   var user=(typeof S!=="undefined"&&S.user)?S.user:loadActiveProfile();
   return "mindpulse:"+user.id+":"+suffix;
 }
-function vaultKey(suffix){
-  var user=(typeof S!=="undefined"&&S.user)?S.user:loadActiveProfile();
-  var vaultId=ensureVaultId(user);
-  return "mindpulse:vault:"+vaultId+":"+suffix;
-}
-function loadAccountState(){
-  var saved=readJSON(ACCOUNT_STATE_KEY,null);
-  var state=saved&&typeof saved==="object"&&!Array.isArray(saved)?saved:{};
-  return {
-    functionsUrl:state.functionsUrl||"",
-    email:state.email||"",
-    accountId:state.accountId||"",
-    emailVerified:!!state.emailVerified,
-    syncEnabled:!!state.syncEnabled,
-    rememberMe:state.rememberMe!==false,
-    deviceId:state.deviceId||makeUUID(),
-    deviceName:state.deviceName||"当前浏览器",
-    sessionStatus:state.sessionStatus||"local",
-    lastSyncAt:state.lastSyncAt||"",
-    lastSyncStatus:state.lastSyncStatus||"",
-    pendingEmail:state.pendingEmail||"",
-    resendAvailableAt:Number(state.resendAvailableAt||0)
-  };
-}
-function saveAccountState(){
-  if(typeof S==="undefined"||!S.account)return;
-  writeJSON(ACCOUNT_STATE_KEY,S.account);
-}
-function syncStatusLabel(){
-  if(DEMO_AUTH_MODE)return S.account.emailVerified?"演示已验证":"演示未验证";
-  if(!S.account.emailVerified)return "未登录";
-  return S.account.syncEnabled?"已授权":"未开启";
-}
-var vaultWriteQueue=Promise.resolve();
-function vaultStore(){
-  if(!window.MindPulseVaultStore)throw new Error("本地 vault 存储模块未加载");
-  return window.MindPulseVaultStore;
-}
-function vaultSnapshot(){
-  return window.MindPulseStateStore.snapshot(S);
-}
-function legacyVaultKeys(profileId,vaultId){
-  var keys=[
-    "mindpulse:"+profileId+":recs",
-    "mindpulse:"+profileId+":completed",
-    "mindpulse:"+profileId+":interventionStats",
-    "mindpulse:"+profileId+":interventionEvents",
-    "mindpulse:"+profileId+":surveyHistory",
-    "mindpulse:"+profileId+":tasks",
-    "mindpulse:vault:"+vaultId+":recs"
-  ];
-  if(profileId==="local-demo"){
-    keys.push("mindpulseRecs","mindpulseCompleted");
-  }
-  return keys;
-}
-function hasLegacyVaultState(profileId,vaultId){
-  return legacyVaultKeys(profileId,vaultId).some(function(key){
-    try{return localStorage.getItem(key)!==null;}catch(e){return false;}
-  });
-}
-function removeLegacyVaultState(profileId,vaultId){
-  legacyVaultKeys(profileId,vaultId).forEach(function(key){
-    try{localStorage.removeItem(key);}catch(e){}
-  });
-}
-function applyVaultState(state){
-  window.MindPulseStateStore.apply(S,state,normalizeRecords);
-}
-function persistVaultQueued(){
-  if(typeof S==="undefined"||!S.user)return Promise.resolve();
-  var vaultId=ensureVaultId(S.user);
-  var snapshot=vaultSnapshot();
-  vaultWriteQueue=vaultWriteQueue.then(function(){
-    return vaultStore().writeVault(vaultId,snapshot);
-  }).catch(function(error){
-    S.account.lastSyncStatus="本地记录保存失败："+(error&&error.message?error.message:"未知错误");
-    saveAccountState();
-    toast(S.account.lastSyncStatus);
-  });
-  return vaultWriteQueue;
-}
-function saveVaultRecordsLocal(){
-  return persistVaultQueued();
-}
-function clearVaultRecordsLocal(vaultId){
-  return vaultStore().deleteVault(vaultId);
-}
-async function hydrateCurrentVault(){
-  var profileId=S.user.id;
-  var vaultId=ensureVaultId(S.user);
-  var saved=await vaultStore().readVault(vaultId);
-  if(saved){
-    applyVaultState(saved);
-    removeLegacyVaultState(profileId,vaultId);
-    return;
-  }
-  if(hasLegacyVaultState(profileId,vaultId)){
-    var legacy=vaultSnapshot();
-    await vaultStore().migrateLegacyState(vaultId,legacy);
-    applyVaultState(legacy);
-    removeLegacyVaultState(profileId,vaultId);
-    return;
-  }
-  await vaultStore().writeVault(vaultId,vaultSnapshot());
-}
-function bytesToBase64(bytes){
-  var bin="";
-  bytes.forEach(function(b){bin+=String.fromCharCode(b);});
-  return btoa(bin);
-}
-function base64ToBytes(value){
-  var bin=atob(String(value||""));
-  var bytes=new Uint8Array(bin.length);
-  for(var i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
-  return bytes;
-}
-function textToBytes(text){
-  return new TextEncoder().encode(text);
-}
-async function deriveVaultKey(secret,saltBytes,iterations){
-  if(!crypto.subtle)throw new Error("当前浏览器不支持 WebCrypto");
-  var keyMaterial=await crypto.subtle.importKey("raw",textToBytes(secret),"PBKDF2",false,["deriveKey"]);
-  return crypto.subtle.deriveKey(
-    {name:"PBKDF2",salt:saltBytes,iterations:iterations||SYNC_KDF_ITERATIONS,hash:"SHA-256"},
-    keyMaterial,
-    {name:"AES-GCM",length:256},
-    false,
-    ["encrypt","decrypt"]
-  );
-}
-async function encryptVaultPayload(payload,secret){
-  if(!crypto.getRandomValues)throw new Error("当前浏览器不支持安全随机数");
-  if(!secret||String(secret).length<8)throw new Error("同步密码至少需要 8 位");
-  var salt=crypto.getRandomValues(new Uint8Array(16));
-  var nonce=crypto.getRandomValues(new Uint8Array(12));
-  var key=await deriveVaultKey(String(secret),salt,SYNC_KDF_ITERATIONS);
-  var plaintext=JSON.stringify(payload);
-  var cipher=await crypto.subtle.encrypt({name:"AES-GCM",iv:nonce},key,textToBytes(plaintext));
-  return {
-    itemType:"vault_snapshot",
-    keyVersion:SYNC_KEY_VERSION,
-    ciphertext:bytesToBase64(new Uint8Array(cipher)),
-    nonce:bytesToBase64(nonce),
-    salt:bytesToBase64(salt),
-    kdf:"PBKDF2-SHA256",
-    iterations:SYNC_KDF_ITERATIONS,
-    algorithm:"AES-GCM/PBKDF2-SHA256",
-    updatedAt:new Date().toISOString()
-  };
-}
-async function decryptVaultPayload(encrypted,secret){
-  if(!encrypted||!secret)throw new Error("缺少同步密码或密文");
-  var key=await deriveVaultKey(String(secret),base64ToBytes(encrypted.salt),Number(encrypted.iterations)||SYNC_KDF_ITERATIONS);
-  var plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:base64ToBytes(encrypted.nonce)},key,base64ToBytes(encrypted.ciphertext));
-  return JSON.parse(new TextDecoder().decode(plain));
-}
-function cloudBaseUrl(){
-  var configured=(window.MINDPULSE_SUPABASE_FUNCTIONS_URL||S.account.functionsUrl||DEFAULT_SUPABASE_FUNCTIONS_URL||"").replace(/\/$/,"");
-  return configured;
-}
-var demoEncryptedCopy=null;
-function saveFunctionsUrl(){
-  var input=document.getElementById("functionsUrl");
-  var raw=String(input?input.value:"").trim().replace(/\/$/,"");
-  if(raw&&!/^https:\/\/[a-z0-9-]+\.functions\.supabase\.co$/i.test(raw)){
-    toast("请输入 Supabase Functions URL");
-    return;
-  }
-  S.account.functionsUrl=raw;
-  S.account.lastSyncStatus=raw?"已保存线上 Functions URL":"已清空 Functions URL";
-  saveAccountState();
-  toast(S.account.lastSyncStatus);
-  render();
-}
-function demoCloudFunction(name,body){
-  body=body||{};
-  if(name==="request-email-code"){
-    return Promise.resolve({ok:true,code:DEMO_EMAIL_CODE,expiresInSeconds:600,resendAfterSeconds:10});
-  }
-  if(name==="verify-email-code"){
-    var code=String(body.code||"").trim();
-    if(code!==DEMO_EMAIL_CODE){
-      return Promise.reject(new Error("演示验证码不正确，请输入 "+DEMO_EMAIL_CODE));
-    }
-    return Promise.resolve({
-      ok:true,
-      accountId:"demo_"+String(body.email||"local").replace(/[^a-z0-9]/gi,"").slice(0,18),
-      vaultId:body.vaultId
-    });
-  }
-  if(name==="sync-vault"){
-    if(!body.ciphertext||!body.nonce){
-      return Promise.reject(new Error("演示同步需要加密后的 payload"));
-    }
-    demoEncryptedCopy=Object.assign({},body);
-    return Promise.resolve({ok:true,updatedAt:new Date().toISOString(),demo:true});
-  }
-  if(name==="get-vault-copy"){
-    if(!demoEncryptedCopy){
-      return Promise.reject(new Error("当前 vault 没有可恢复的加密副本"));
-    }
-    return Promise.resolve(Object.assign({},demoEncryptedCopy));
-  }
-  if(name==="clear-vault-copy"){
-    demoEncryptedCopy=null;
-    return Promise.resolve({ok:true,clearedAt:new Date().toISOString(),demo:true});
-  }
-  return Promise.resolve({ok:true,demo:true});
-}
-async function callCloudFunction(name,body){
-  if(window.MindPulseDebug&&typeof window.MindPulseDebug.mockCloud==="function"){
-    return window.MindPulseDebug.mockCloud(name,body||{});
-  }
-  if(DEMO_AUTH_MODE){
-    return demoCloudFunction(name,body||{});
-  }
-  var base=cloudBaseUrl();
-  if(!base)throw new Error("请先在设置页配置 Supabase Functions URL");
-  var endpoint=base.replace(/\/mindpulse-api$/,"")+"/mindpulse-api/"+name;
-  var res=await fetch(endpoint,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    credentials:"include",
-    body:JSON.stringify(body||{})
-  });
-  var data=null;
-  try{data=await res.json();}catch(e){}
-  if(!res.ok){
-    throw new Error((data&&data.error)||("请求失败："+res.status));
-  }
-  return data||{};
-}
-function normalizeEmail(email){
-  return String(email||"").trim().toLowerCase();
-}
-function maskEmail(email){
-  email=normalizeEmail(email);
-  var parts=email.split("@");
-  if(parts.length!==2)return email||"未绑定";
-  var name=parts[0];
-  var head=name.slice(0,2);
-  return head+"***@"+parts[1];
-}
-function authCooldownLeft(){
-  return Math.max(0,Math.ceil((S.account.resendAvailableAt-Date.now())/1000));
-}
-async function requestEmailCode(fromLogin){
-  var input=document.getElementById(fromLogin?"loginEmail":"accountEmail");
-  var email=normalizeEmail(input?input.value:S.account.email);
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-    toast("请先输入有效邮箱");
-    return;
-  }
-  var left=authCooldownLeft();
-  if(left>0){
-    toast("请 "+left+" 秒后再重发");
-    return;
-  }
-  S.authBusy=true;
-  render();
-  try{
-    var data=await callCloudFunction("request-email-code",{email:email,deviceName:S.account.deviceName});
-    S.account.pendingEmail=email;
-    S.account.email=email;
-    S.account.resendAvailableAt=Date.now()+((data&&data.resendAfterSeconds)||60)*1000;
-    S.account.lastSyncStatus=DEMO_AUTH_MODE?("演示验证码："+((data&&data.code)||DEMO_EMAIL_CODE)+"。输入后会保存本地已验证状态。"):"验证码已发送，5-10 分钟内有效";
-    saveAccountState();
-    toast(DEMO_AUTH_MODE?("演示验证码："+((data&&data.code)||DEMO_EMAIL_CODE)):"验证码已发送");
-  }catch(e){
-    S.account.pendingEmail=email;
-    S.account.lastSyncStatus=e.message||"发送失败";
-    toast(S.account.lastSyncStatus);
-  }finally{
-    S.authBusy=false;
-    render();
-  }
-}
-async function verifyEmailCode(fromLogin){
-  var emailInput=document.getElementById(fromLogin?"loginEmail":"accountEmail");
-  var codeInput=document.getElementById(fromLogin?"loginCode":"accountCode");
-  var email=normalizeEmail(emailInput?emailInput.value:(S.account.pendingEmail||S.account.email));
-  var code=String(codeInput?codeInput.value:"").trim();
-  if(!email||!code){
-    toast("请填写邮箱和验证码");
-    return;
-  }
-  if(!/^\d{6}$/.test(code)){
-    toast("验证码应为 6 位数字");
-    return;
-  }
-  S.authBusy=true;
-  render();
-  try{
-    var data=await callCloudFunction("verify-email-code",{
-      email:email,
-      code:code,
-      vaultId:ensureVaultId(S.user),
-      deviceId:S.account.deviceId,
-      deviceName:S.account.deviceName,
-      rememberMe:S.account.rememberMe
-    });
-    S.account.email=email;
-    S.account.pendingEmail="";
-    S.account.accountId=data.accountId||S.account.accountId||"verified";
-    S.account.emailVerified=true;
-    S.account.sessionStatus=S.account.rememberMe?"remembered":"active";
-    S.account.lastSyncStatus="邮箱已验证，心理记录仍保留在本地";
-    saveAccountState();
-    if(fromLogin){
-      markSessionProfileReady();
-      S.showLogin=false;
-      S.showSplash=!splashSeen();
-    }
-    toast("邮箱已验证");
-  }catch(e){
-    S.account.lastSyncStatus=e.message||"验证失败";
-    toast(S.account.lastSyncStatus);
-  }finally{
-    S.authBusy=false;
-    render();
-  }
-}
-function buildVaultPayload(){
-  return {
-    exportedAt:new Date().toISOString(),
-    vaultId:ensureVaultId(S.user),
-    profile:{id:S.user.id,name:S.user.name,createdAt:S.user.createdAt,vaultId:S.user.vaultId},
-    records:S.recs,
-    completed:S.completed,
-    interventionStats:S.interventionStats,
-    interventionEvents:S.interventionEvents,
-    feedbackLearningEnabled:S.feedbackLearningEnabled!==false,
-    dataLedger:dataLedgerSnapshot(),
-    helpResources:currentHelpResources(),
-    surveyHistory:S.surveyHistory,
-    tasks:S.tasks,
-    dailyReport:dailyReport(todayKey()),
-    weeklyReport:weeklyReport()
-  };
-}
-function dataLedgerSnapshot(){
-  return {
-    rawText:{location:"local-indexeddb",encrypted:false,defaultSync:false},
-    aggregateTrend:{location:"local-indexeddb",encrypted:false,defaultSync:false},
-    interventionFeedback:{location:"anonymous-vault",encrypted:false,learningEnabled:S.feedbackLearningEnabled!==false},
-    cloudCopy:S.account&&S.account.syncEnabled?"encrypted-only":"off",
-    lastSyncAt:S.account&&S.account.lastSyncAt?S.account.lastSyncAt:null,
-    export:"user-triggered",
-    deletion:"local-and-cloud-confirmed-separately"
-  };
-}
-async function enableEncryptedSync(){
-  if(!S.account.emailVerified){
-    toast("请先完成邮箱验证");
-    return;
-  }
-  if(!confirm("开启加密同步后，心理文本会先在本地加密，云端只保存密文副本。继续吗？")){
-    return;
-  }
-  var syncSecret=prompt("请设置本次同步密码（至少 8 位）。密码不会保存，刷新后需要重新输入。");
-  syncSecret=syncSecret===null?null:String(syncSecret).trim();
-  if(syncSecret===null)return;
-  if(syncSecret.length<8){
-    toast("同步密码至少需要 8 位");
-    return;
-  }
-  S.authBusy=true;
-  render();
-  try{
-    await saveVaultRecordsLocal();
-    var encrypted=await encryptVaultPayload(buildVaultPayload(),syncSecret);
-    await callCloudFunction("sync-vault",{
-      vaultId:ensureVaultId(S.user),
-      itemType:encrypted.itemType,
-      keyVersion:encrypted.keyVersion,
-      ciphertext:encrypted.ciphertext,
-      nonce:encrypted.nonce,
-      salt:encrypted.salt,
-      kdf:encrypted.kdf,
-      iterations:encrypted.iterations,
-      algorithm:encrypted.algorithm,
-      updatedAt:encrypted.updatedAt,
-      deviceId:S.account.deviceId
-    });
-    S.account.syncEnabled=true;
-    S.account.lastSyncAt=new Date().toISOString();
-    S.account.lastSyncStatus="已上传加密副本";
-    saveAccountState();
-    toast("加密同步已开启");
-  }catch(e){
-    S.account.lastSyncStatus=e.message||"同步失败";
-    toast(S.account.lastSyncStatus);
-  }finally{
-    S.authBusy=false;
-    render();
-  }
-}
-async function disableEncryptedSync(){
-  S.account.syncEnabled=false;
-  S.account.lastSyncStatus="已关闭自动同步，本地记录保留";
-  saveAccountState();
-  toast("已关闭同步");
-  render();
-}
-async function clearCloudCopy(){
-  if(!S.account.emailVerified){
-    toast("尚未登录云端账号");
-    return;
-  }
-  if(!confirm("确定清除当前 vault 的云端加密副本吗？本地记录不会删除。")){
-    return;
-  }
-  S.authBusy=true;
-  render();
-  try{
-    await callCloudFunction("clear-vault-copy",{vaultId:ensureVaultId(S.user),deviceId:S.account.deviceId});
-    S.account.syncEnabled=false;
-    S.account.lastSyncStatus="云端副本已清除";
-    S.account.lastSyncAt=new Date().toISOString();
-    saveAccountState();
-    toast("云端副本已清除");
-  }catch(e){
-    S.account.lastSyncStatus=e.message||"清除失败";
-    toast(S.account.lastSyncStatus);
-  }finally{
-    S.authBusy=false;
-    render();
-  }
-}
-async function syncEncryptedNow(){
-  if(!S.account.syncEnabled){
-    toast("请先开启加密同步");
-    return;
-  }
-  await enableEncryptedSync();
-}
-async function restoreEncryptedSync(){
-  if(!S.account.emailVerified){
-    toast("请先完成邮箱验证");
-    return;
-  }
-  if(!confirm("从云端读取当前 vault 的加密副本，并覆盖本机记录吗？")){
-    return;
-  }
-  var syncSecret=prompt("请输入同步密码（不会保存，仅用于本次解密）。");
-  syncSecret=syncSecret===null?null:String(syncSecret).trim();
-  if(syncSecret===null)return;
-  if(syncSecret.length<8){
-    toast("同步密码至少需要 8 位");
-    return;
-  }
-  S.authBusy=true;
-  render();
-  try{
-    var encrypted=await callCloudFunction("get-vault-copy",{
-      vaultId:ensureVaultId(S.user),
-      deviceId:S.account.deviceId
-    });
-    var payload=await decryptVaultPayload(encrypted,syncSecret);
-    if(!payload||payload.vaultId!==ensureVaultId(S.user)||!Array.isArray(payload.records)){
-      throw new Error("密文内容与当前 vault 不匹配");
-    }
-    applyVaultState(payload);
-    await saveVaultRecordsLocal();
-    S.account.syncEnabled=true;
-    S.account.lastSyncAt=encrypted.updatedAt||new Date().toISOString();
-    S.account.lastSyncStatus="已从云端恢复并解密到本地";
-    saveAccountState();
-    toast("加密副本已恢复");
-  }catch(e){
-    S.account.lastSyncStatus=e.message||"恢复失败";
-    toast(S.account.lastSyncStatus);
-  }finally{
-    S.authBusy=false;
-    render();
-  }
-}
 function loadRecs(){
-  var saved=readJSON(vaultKey("recs"),null)||readJSON(profileKey("recs"),null);
+  var saved=readJSON(profileKey("recs"),null);
   if(!saved&&loadActiveProfile().id==="local-demo"){
     saved=readJSON("mindpulseRecs",null);
   }
@@ -1441,10 +996,6 @@ function loadInterventionStats(){
   var saved=readJSON(profileKey("interventionStats"),{});
   return saved&&typeof saved==="object"&&!Array.isArray(saved)?saved:{};
 }
-function loadInterventionEvents(){
-  var saved=readJSON(profileKey("interventionEvents"),[]);
-  return Array.isArray(saved)?saved:[];
-}
 function loadSurveyHistory(){
   var saved=readJSON(profileKey("surveyHistory"),[]);
   return Array.isArray(saved)?saved:[];
@@ -1457,32 +1008,28 @@ function loadTasks(){
     {id:"task_demo_2",title:"完成一个 10 分钟以内的小动作",done:false,createdAt:new Date().toISOString()}
   ];
 }
-function defaultHelpResources(){
-  return {
-    campus:{name:"校心理咨询中心",phone:"",desc:"预约一次正式咨询，把最近的状态交给专业老师。"},
-    counselor:{name:"辅导员 / 班主任",phone:"",desc:"适合需要请假、转介资源或让学院知道你的情况。"},
-    trusted:{name:"可信任联系人",phone:"",desc:"先找一个离你近、能陪你走到下一步的人。"}
-  };
+function loadMemos(){
+  var saved=readJSON(profileKey("memos"),[]);
+  return window.MindPulseMemoModel?window.MindPulseMemoModel.normalizeMemos(saved):[];
 }
-function normalizeHelpResources(value){
-  var base=defaultHelpResources();
-  value=value&&typeof value==="object"?value:{};
-  return {
-    campus:Object.assign(base.campus,value.campus||{}),
-    counselor:Object.assign(base.counselor,value.counselor||{}),
-    trusted:Object.assign(base.trusted,value.trusted||{})
-  };
+function loadScheduleItems(){
+  var saved=readJSON(profileKey("scheduleItems"),[]);
+  return window.MindPulseScheduleModel?window.MindPulseScheduleModel.normalizeItems(saved):[];
 }
-function currentHelpResources(){
-  S.helpResources=normalizeHelpResources(S.helpResources);
-  return S.helpResources;
+function createBottleRepository(){
+  return window.MindPulseBottleRepository?window.MindPulseBottleRepository.createLocalBottleRepository(localStorage):null;
 }
 function persistState(){
-  S.profiles.forEach(ensureVaultId);
   writeJSON(PROFILE_LIST_KEY,S.profiles);
   writeJSON(ACTIVE_PROFILE_KEY,S.user.id);
-  saveAccountState();
-  return persistVaultQueued();
+  writeJSON(profileKey("recs"),S.recs);
+  writeJSON(profileKey("completed"),S.completed);
+  writeJSON(profileKey("interventionStats"),S.interventionStats);
+  writeJSON(profileKey("surveyHistory"),S.surveyHistory);
+  writeJSON(profileKey("tasks"),S.tasks);
+  var memoSaved=writeJSON(profileKey("memos"),S.memos);
+  var scheduleSaved=writeJSON(profileKey("scheduleItems"),S.scheduleItems);
+  if((!memoSaved||!scheduleSaved)&&typeof toast==="function")toast("本机存储空间不足或不可用");
 }
 function normalizeRecord(record,index){
   record=record||{};
@@ -1494,24 +1041,10 @@ function normalizeRecord(record,index){
     created.setHours(20,Math.min(50,index*7),0,0);
   }
   var mood=record.mood||record.et||"calm";
-  var moodRaw=record.moodScore!=null?record.moodScore:(record.ii!=null?record.ii:null);
-  var score=Number(moodRaw);
-  var sleepRaw=record.sleepHours!=null?record.sleepHours:record.sleep;
-  var stepsRaw=record.steps!=null?record.steps:record.step;
-  var socialRaw=record.socialScore!=null?record.socialScore:record.sc;
-  var sleep=Number(sleepRaw);
-  var steps=Number(stepsRaw);
-  var social=Number(socialRaw);
-  var legacyPresence=record.signalPresence&&typeof record.signalPresence==="object"?record.signalPresence:{};
-  var signalPresence={
-    mood:Object.prototype.hasOwnProperty.call(legacyPresence,"mood")?!!legacyPresence.mood:(!!(record.mood||record.et||moodRaw!=null)),
-    sleep:Object.prototype.hasOwnProperty.call(legacyPresence,"sleep")?!!legacyPresence.sleep:(sleepRaw!==null&&sleepRaw!==undefined&&sleepRaw!==""&&Number.isFinite(sleep)),
-    steps:Object.prototype.hasOwnProperty.call(legacyPresence,"steps")?!!legacyPresence.steps:(stepsRaw!==null&&stepsRaw!==undefined&&stepsRaw!==""&&Number.isFinite(steps)),
-    social:Object.prototype.hasOwnProperty.call(legacyPresence,"social")?!!legacyPresence.social:(socialRaw!==null&&socialRaw!==undefined&&socialRaw!==""&&Number.isFinite(social))
-  };
-  var source=record.dataInputMode==="manual-web"?"manual":(record.entryType==="device"?"device":(record.dataSource||"self-report"));
-  var signalSources=record.signalSources&&typeof record.signalSources==="object"?Object.assign({},record.signalSources):{};
-  ["mood","sleep","steps","social"].forEach(function(key){if(!signalSources[key])signalSources[key]=source;});
+  var score=Number(record.moodScore||record.ii||({happy:5,calm:4,anxious:3,sad:2,tired:2,angry:2}[mood]||3));
+  var sleep=Number(record.sleepHours!=null?record.sleepHours:record.sleep);
+  var steps=Number(record.steps!=null?record.steps:record.step);
+  var social=Number(record.socialScore!=null?record.socialScore:record.sc);
   record.createdAt=created.toISOString();
   record.dateKey=record.dateKey||dateKey(created);
   record.time=record.time||timeLabel(created);
@@ -1520,16 +1053,14 @@ function normalizeRecord(record,index){
   record.date=record.date||record.ds;
   record.et=mood;
   record.mood=mood;
-  record.ii=signalPresence.mood&&Number.isFinite(score)?score:null;
+  record.ii=Number.isFinite(score)?score:3;
   record.moodScore=record.ii;
-  record.sleep=signalPresence.sleep&&Number.isFinite(sleep)?sleep:null;
+  record.sleep=Number.isFinite(sleep)?sleep:6;
   record.sleepHours=record.sleep;
-  record.step=signalPresence.steps&&Number.isFinite(steps)?steps:null;
+  record.step=Number.isFinite(steps)?steps:4200;
   record.steps=record.step;
-  record.sc=signalPresence.social&&Number.isFinite(social)?social:null;
+  record.sc=Number.isFinite(social)?social:45;
   record.socialScore=record.sc;
-  record.signalPresence=signalPresence;
-  record.signalSources=signalSources;
   record.text=record.text||record.note||record.checkinNote||"";
   record.note=record.note||record.text;
   record.entryType=record.entryType||"daily";
@@ -1541,8 +1072,83 @@ function normalizeRecords(records){
     return (recordTime(a)||new Date(0))-(recordTime(b)||new Date(0));
   });
 }
+function createFallbackRules(){
+  var negative=["sad","anxious","tired","angry"];
+  var moodLevels={happy:5,calm:4,anxious:3,sad:2,tired:2,angry:2};
+  var paths={anxious:["breathe","walk","journal"],sad:["breathe","friend","sleep"],tired:["sleep","breathe","focus"],angry:["breathe","walk","friend"],calm:["focus","journal","walk"],happy:["focus","journal","walk"]};
+  var pathReasons={anxious:"先降低生理唤醒，再把注意力从压力源中移开。",sad:"先稳定状态，再建立连接，避免独自承受。",tired:"优先恢复身体电量，再恢复掌控感。",angry:"先把身体带离情绪中心，再表达。",calm:"顺势完成小目标，保留稳定节奏。",happy:"利用较好状态推进小目标，并留下正向记录。"};
+  var danger=[
+    {re:/自[杀傷伤]|自杀/,level:"critical"},
+    {re:/伤害\s*(自己|自身|我)/,level:"critical"},
+    {re:/自残/,level:"critical"},
+    {re:/不想活|不想[再在]?活|活不下去|活着.*累|活着.*痛苦/,level:"critical"},
+    {re:/想[要去]?死|想消失|想[从]?[这這]个世界上?消失/,level:"critical"},
+    {re:/没有意义|毫无意义|活着.*没有.*意义/,level:"high"},
+    {re:/撑不住|撑不下去|受不了了|忍不了了/,level:"high"},
+    {re:/绝望|看不到希望|没有任何希望/,level:"high"},
+    {re:/不想存在|想要结束/,level:"high"},
+    {re:/解脱|一了百了|不如[死消失]/,level:"high"},
+    {re:/留[不没]?住|没有人在乎|没人.*在乎/,level:"medium"}
+  ];
+  var safe=[/不想活在.*里/,/不想活[着得].*但是/,/不想活[着得].*不过/,/活着.*[但虽].*还/,/撑不住.*[但虽].*还是/,/(?:没有|并无|无)\s*(?:自杀|自伤|自残|伤害\s*(?:自己|自身|我))(?:的)?\s*(?:想法|念头|计划|冲动)/,/(?:没有|并无|无)\s*想过\s*(?:自杀|自伤|自残|伤害\s*(?:自己|自身|我))/];
+  function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
+  function num(v,f){var n=Number(v);return Number.isFinite(n)?n:f}
+  function mood(r){return r.mood||r.et||"calm"}
+  function sleep(r){return num(r.sleepHours!=null?r.sleepHours:r.sleep,0)}
+  function steps(r){return num(r.steps!=null?r.steps:r.step,0)}
+  function social(r){return num(r.socialScore!=null?r.socialScore:r.sc,0)}
+  function text(r){return String(r.note||r.text||r.checkinNote||"")}
+  function uniq(list){var out=[];list.forEach(function(x){if(x&&out.indexOf(x)<0)out.push(x)});return out}
+  function complete(chain,m){return uniq(chain.concat(paths[m]||paths.calm).concat(["breathe","journal","friend","sleep","walk","focus"])).slice(0,3)}
+  function lowSleepDays(records){return (Array.isArray(records)?records:[]).slice(-4).filter(function(r){return sleep(r)<6}).length}
+  function recentNegativeCount(records){return (Array.isArray(records)?records:[]).slice(-4).filter(function(r){return negative.indexOf(mood(r))>=0}).length}
+  function detectDanger(raw){
+    var normalized=String(raw||"").toLowerCase().trim();
+    for(var i=0;i<safe.length;i++){normalized=normalized.replace(safe[i]," ")}
+    for(var j=0;j<danger.length;j++){if(danger[j].re.test(normalized))return{hasDanger:true,matchedPattern:danger[j].re.source,level:danger[j].level}}
+    return{hasDanger:false,matchedPattern:null,level:null};
+  }
+  function calculateRecoveryScore(record,completedInterventions){
+    record=record||{};
+    var m=mood(record);
+    var completed=(completedInterventions&&completedInterventions.length)||(Array.isArray(record.completedInterventions)?record.completedInterventions.length:0);
+    var b={
+      mood:clamp((moodLevels[m]||3)*12,0,60),
+      sleep:clamp(Math.round((sleep(record)/8)*18),0,18),
+      steps:clamp(Math.round((steps(record)/8000)*14),0,14),
+      social:clamp(Math.round((social(record)/100)*12),0,12),
+      intervention:completed>0?8:0
+    };
+    b.total=clamp(b.mood+b.sleep+b.steps+b.social+b.intervention,0,100);
+    return{total:b.total,breakdown:b,explanation:"情绪 "+b.mood+" 分、睡眠 "+b.sleep+" 分、步数 "+b.steps+" 分、社交 "+b.social+" 分、干预 "+b.intervention+" 分，合成当前恢复指数。"};
+  }
+  function assessRisk(records,currentText){
+    var safeRecords=Array.isArray(records)?records:[];
+    var latest=safeRecords[safeRecords.length-1]||{};
+    var d=detectDanger(text(latest)+" "+(currentText||""));
+    if(d.hasDanger)return{level:"高风险",tag:"优先求助",reason:"文本中出现危机信号（"+d.level+"级），停止普通自助建议，优先连接热线、老师、家人或专业资源。",desc:"文本中出现危机信号时，心晴会先停下普通自助建议，优先展示热线、老师、家人和专业机构入口。",shouldRecommendSelfHelp:false};
+    if(lowSleepDays(safeRecords)>=3||recentNegativeCount(safeRecords)>=3)return{level:"中度关注",tag:"建议连接他人",reason:"最近低睡眠或负面状态连续出现，建议联系可信任的人或校内支持资源。",desc:"本周低睡眠或负面状态连续出现，心晴会优先推荐低负担行动，并提示联系可信任的人。",shouldRecommendSelfHelp:true};
+    if(negative.indexOf(mood(latest))>=0)return{level:"普通波动",tag:"先做轻干预",reason:"当前更像日常压力波动，可先完成一个低负担行动。",desc:"当前更像日常压力波动，建议先完成呼吸、散步、记录或睡前放松中的一步。",shouldRecommendSelfHelp:true};
+    return{level:"稳定观察",tag:"保持记录",reason:"当前状态较平稳，继续保持记录和节奏观察。",desc:"当前状态较平稳，心晴会继续记录节奏变化，提醒你维持睡眠和连接感。",shouldRecommendSelfHelp:true};
+  }
+  function recommendPath(record,risk){
+    record=record||{};
+    if(risk&&risk.level==="高风险")return{path:["help"],reason:"高风险场景停止普通自助干预，优先进入求助入口。",reasons:["出现危机信号"]};
+    var m=mood(record),sl=sleep(record),sc=social(record),energy=record.energyLevel||"mid",connect=record.connectionNeed||"ok";
+    var chain=(paths[m]||paths.calm).slice(),reasons=[];
+    if(connect==="need"||sc<25){chain=["friend"].concat(chain);reasons.push(connect==="need"?"你选择了很需要连接":"社交连接偏低")}
+    else if(connect==="avoid"){chain=chain.filter(function(id){return id!=="friend"}).concat(["friend"]);reasons.push("你暂时不想联系别人")}
+    if(sl>0&&sl<5.2){chain=["sleep","breathe","journal"].concat(chain.filter(function(id){return id!=="focus"}));reasons.push("睡眠明显不足")}
+    else if(sl>0&&sl<6){chain=(m==="tired"?["sleep","breathe"]:["breathe","sleep"]).concat(chain);reasons.push("睡眠低于 6 小时")}
+    if(energy==="low"){chain=["breathe","journal","sleep"].concat(chain.filter(function(id){return id!=="focus"}));reasons.push("精力偏低")}
+    else if(energy==="high"&&["happy","calm"].indexOf(m)>=0){chain=["focus"].concat(chain);reasons.push("精力较高")}
+    if(m==="angry"){chain=["walk","breathe"].concat(chain);reasons.push("烦躁状态更适合先离开原地")}
+    return{path:complete(chain,m),reason:reasons.length?"根据"+reasons.join("、")+"调整推荐顺序。":(pathReasons[m]||pathReasons.calm),reasons:reasons.length?uniq(reasons):["当前状态较平稳"]};
+  }
+  return{calculateRecoveryScore:calculateRecoveryScore,assessRisk:assessRisk,recommendPath:recommendPath,lowSleepDays:lowSleepDays,recentNegativeCount:recentNegativeCount,detectDanger:detectDanger};
+}
 function rules(){
-  if(!window.MindPulseRules)throw new Error("MindPulseRules browser engine is unavailable");
+  if(!window.MindPulseRules)window.MindPulseRules=createFallbackRules();
   return window.MindPulseRules;
 }
 function recentNegativeCount(){return rules().recentNegativeCount(S.recs)}
@@ -1735,11 +1341,7 @@ function personalBaseline(){
         steps:r.steps!=null?r.steps:r.step,
         socialScore:r.socialScore!=null?r.socialScore:r.sc,
         moodScore:r.moodScore,
-        ii:r.ii,
-        signalPresence:r.signalPresence,
-        signalSources:r.signalSources,
-        dataInputMode:r.dataInputMode,
-        entryType:r.entryType
+        ii:r.ii
       };
     });
     var shared=rules().calculatePersonalBaseline(normalized);
@@ -1789,28 +1391,26 @@ function personalBaseline(){
   };
 }
 function interventionAverageDelta(id){
-  return window.MindPulseScoreSelectors.averageDelta(S.interventionEvents,id);
+  var stat=S.interventionStats&&S.interventionStats[id];
+  if(!stat||!stat.count)return 0;
+  return Math.round(stat.totalDelta/stat.count);
 }
 function interventionLearningRows(){
-  if(S.feedbackLearningEnabled===false)return [];
-  var summary=rules().summarizeInterventionFeedback?rules().summarizeInterventionFeedback(S.interventionEvents,S.interventionStats):{};
-  var ids=uniqueChain((S.interventionEvents||[]).map(function(event){return event.interventionId||event.id;}).concat(Object.keys(S.interventionStats||{})));
-  return ids.map(function(id){
-    var stat=summary[id]||{count:0,weightedDelta:0,eligible:false,status:"insufficient",explanation:"样本不足，暂不形成个人倾向"};
-    return {id:id,count:stat.count,avg:stat.weightedDelta||stat.avgDelta||0,eligible:!!stat.eligible,status:stat.status,explanation:stat.explanation};
+  return Object.keys(S.interventionStats||{}).filter(function(id){return id!=="__meta";}).map(function(id){
+    var stat=S.interventionStats[id]||{};
+    return {id:id,count:stat.count||0,avg:interventionAverageDelta(id)};
   }).map(function(row){
     var item=INTV.find(function(x){return x.id===row.id;})||{title:row.id};
-    return {id:row.id,title:item.title,count:row.count,avg:row.avg,eligible:row.eligible,status:row.status,explanation:row.explanation};
-  }).slice(0,4);
+    return {id:row.id,title:item.title,count:row.count,avg:row.avg};
+  }).filter(function(row){return row.count>0;}).slice(0,4);
 }
 function bestLearningLine(){
-  if(S.feedbackLearningEnabled===false)return "个人反馈学习已关闭；历史反馈不会用于调整推荐顺序。";
   var rows=interventionLearningRows();
-  if(!rows.length)return "当前档案还没有完成记录，完成一次行动后这里会显示实际变化。";
-  var eligible=rows.filter(function(row){return row.eligible;}).sort(function(a,b){return b.avg-a.avg;});
-  if(!eligible.length)return "目前同类反馈还不到 3 次，先显示样本不足，不提前形成个人倾向。";
-  var best=eligible[0];
-  return "因为你过去完成「"+best.title+"」后在 "+best.count+" 次反馈中变化更稳定，今天会优先参考这类动作。";
+  var status=rules().personalizationStatus?rules().personalizationStatus(S.interventionStats):{formed:false,safeFeedbackCount:0,required:3};
+  if(!status.formed)return "当前个人倾向仍在建立，有效普通反馈达到 3 次后才会调整顺序。";
+  if(!rows.length)return "当前档案还没有可用的普通安全反馈，系统会先按 RISE 信号排序。";
+  var best=rows.slice().sort(function(a,b){return b.avg-a.avg;})[0];
+  return "因为你过去完成「"+best.title+"」后平均提升 "+best.avg+" 分，今天会优先参考这类动作。";
 }
 function renderRiseExplainCard(){
   return '<section class="boundary">RISE = Rhythm 节奏 + Interaction 连接 + Self-report 自评 + Engagement 干预反馈。</section>';
@@ -1818,13 +1418,14 @@ function renderRiseExplainCard(){
 function renderBaselineCompareCard(){
   var latest=getLast();
   var baseline=personalBaseline();
-  return '<section class="quiet-card"><div class="quiet-title">个人基线对比</div><div class="quiet-copy">我的正常水平：睡眠 '+metricText(baseline.base.sleep,1,"h")+' / 步数 '+metricText(baseline.base.steps,0)+ ' / 连接 '+metricText(baseline.base.social,0,"%")+'</div><div class="quiet-copy">今天：睡眠 '+metricText(latest.sleep,1,"h")+' / 步数 '+metricText(latest.step,0)+' / 连接 '+metricText(latest.sc,0,"%")+'</div><div class="quiet-copy">偏移：'+esc(baseline.level)+' · 置信度 '+esc(baseline.confidenceText||"较低")+' · 数据 '+esc(String((baseline.dataCompleteness&&baseline.dataCompleteness.available)||0)+"/"+((baseline.dataCompleteness&&baseline.dataCompleteness.required)||4))+'</div></section>';
+  return '<section class="quiet-card"><div class="quiet-title">个人基线对比</div><div class="quiet-copy">我的正常水平：睡眠 '+baseline.base.sleep.toFixed(1)+'h / 步数 '+Math.round(baseline.base.steps)+' / 连接 '+Math.round(baseline.base.social)+'%</div><div class="quiet-copy">今天：睡眠 '+latest.sleep.toFixed(1)+'h / 步数 '+latest.step+' / 连接 '+latest.sc+'%</div><div class="quiet-copy">偏移：'+baseline.level+'</div></section>';
 }
 function renderLearningCard(){
   var rows=interventionLearningRows();
-  var h='<section class="quiet-card"><div class="quiet-title">干预反馈学习</div><div class="quiet-copy">'+esc(bestLearningLine())+'</div><div class="simple-list">';
+  var status=rules().personalizationStatus?rules().personalizationStatus(S.interventionStats):{formed:false,safeFeedbackCount:0,required:3,excludedHighRisk:0};
+  var h='<section class="quiet-card"><div class="quiet-title">安全约束下的个性化</div><div class="quiet-copy">'+bestLearningLine()+'</div><div class="simple-list"><div class="simple-item"><div class="simple-index">倾</div><div class="simple-copy">当前个人倾向：'+(status.formed?'已形成':'仍在建立')+'</div></div><div class="simple-item"><div class="simple-index">数</div><div class="simple-copy">有效反馈次数：'+status.safeFeedbackCount+' / '+status.required+'</div></div><div class="simple-item"><div class="simple-index">安</div><div class="simple-copy">高风险事件：已排除 '+status.excludedHighRisk+' 次</div></div>';
   rows.forEach(function(row){
-    h+='<div class="simple-item"><div class="simple-index">↻</div><div class="simple-copy">'+esc(row.title)+'：完成 '+esc(row.count)+' 次 · '+esc(row.eligible?"可形成个人倾向":"样本不足")+'<br><span class="detail-label">'+esc(row.explanation||"")+'</span></div></div>';
+    h+='<div class="simple-item"><div class="simple-index">↻</div><div class="simple-copy">'+row.title+'：完成 '+row.count+' 次，平均提升 '+row.avg+' 分</div></div>';
   });
   h+='</div></section>';
   return h;
@@ -1833,12 +1434,27 @@ function renderSafetyGateFlow(){
   return '<section class="quiet-card"><div class="quiet-title">Safety Gate 流程</div><div class="simple-list"><div class="simple-item"><div class="simple-index">1</div><div class="simple-copy">文本风险信号</div></div><div class="simple-item"><div class="simple-index">2</div><div class="simple-copy">Safety Gate 触发</div></div><div class="simple-item"><div class="simple-index">3</div><div class="simple-copy">停止普通干预，进入求助入口</div></div></div></section>';
 }
 function validationReport(){
-  return window.MindPulseScoreSelectors.validationReport(
-    S.recs,
-    S.interventionEvents,
-    function(record,completed){return rules().calculateRecoveryScore(record,completed).total;},
-    function(history){return rules().assessRisk(history).level;}
-  );
+  var records=Array.isArray(S.recs)?S.recs:[];
+  var analyzed=records.map(function(record,index){
+    var history=records.slice(0,index+1);
+    var completed=record.completedInterventions||[];
+    return {
+      score:rules().calculateRecoveryScore(record,completed).total,
+      risk:rules().assessRisk(history).level
+    };
+  });
+  var avgScore=analyzed.length?Math.round(analyzed.reduce(function(sum,item){return sum+item.score;},0)/analyzed.length):0;
+  var completedCount=(S.completed&&S.completed.length)||records.reduce(function(sum,record){
+    return sum+(Array.isArray(record.completedInterventions)?record.completedInterventions.length:0);
+  },0);
+  var highRisk=analyzed.filter(function(item){return item.risk==="高风险";}).length;
+  var completedRate=records.length?Math.min(100,Math.round(completedCount/records.length*100)):0;
+  return {
+    records:records.length,
+    avgScore:avgScore,
+    completedRate:completedRate,
+    highRisk:highRisk
+  };
 }
 function renderTrialReportCard(){
   var report=validationReport();
@@ -1846,16 +1462,47 @@ function renderTrialReportCard(){
 }
 function personalizeChain(chain,reasons){
   var ids=uniqueChain(chain);
-  var next=rules().personalizeRecommendation
-    ? rules().personalizeRecommendation(ids,S.feedbackLearningEnabled===false?{}:(S.interventionStats||{}),S.feedbackLearningEnabled===false?[]:(S.interventionEvents||[]))
-    : ids;
-  var rows=interventionLearningRows();
-  var best=rows.filter(function(item){return item.eligible;}).sort(function(a,b){return b.avg-a.avg;})[0];
+  var sharedRules=rules();
+  var status=sharedRules.personalizationStatus?sharedRules.personalizationStatus(S.interventionStats):null;
+  if(status&&!status.formed){
+    return {chain:ids,reasons:uniqueChain((reasons||[]).concat(["个人倾向仍在建立（"+status.safeFeedbackCount+" / "+status.required+"）"]))};
+  }
+  if(sharedRules.personalizeRecommendation){
+    ids=sharedRules.personalizeRecommendation(ids,S.interventionStats);
+  }
+  var scored=ids.map(function(id,idx){
+    var stat=S.interventionStats&&S.interventionStats[id];
+    var avgDelta=interventionAverageDelta(id);
+    var boost=stat?Math.min(2.4,(stat.count||0)*.35)+Math.max(0,avgDelta)/8:0;
+    return {id:id,idx:idx,score:idx-boost,avgDelta:avgDelta,count:stat?stat.count:0};
+  }).sort(function(a,b){return a.score-b.score;});
+  var next=scored.map(function(item){return item.id;});
+  var best=scored.find(function(item){return item.count>0&&item.avgDelta>=4;});
   var outReasons=(reasons||[]).slice();
   if(best){
-    outReasons.push("你过去完成「"+best.title+"」后形成了个人反馈倾向");
+    var label=(INTV.find(function(x){return x.id===best.id;})||{title:best.id}).title;
+    outReasons.push("你过去完成「"+label+"」后平均提升 "+best.avgDelta+" 分");
   }
   return {chain:next,reasons:uniqueChain(outReasons)};
+}
+function currentDataSource(){
+  var last=getLast()||{};
+  return last.dataInputMode==="manual-web"?"自我记录":"合成演示";
+}
+function currentDecisionTrace(){
+  if(!window.MindPulseDecisionPolicy){
+    return {decisionId:"decision_fallback",evaluatedAt:new Date().toISOString(),reasonCodes:["DATA_INSUFFICIENT"],mode:"DATA_INSUFFICIENT",allowedActions:["checkin"],blockedActions:["breathe","walk","focus","journal","sleep","friend"],evidence:["策略模块不可用，采用保守降级"],policyVersion:"fallback-safe",dataSource:currentDataSource(),confidence:"低"};
+  }
+  return window.MindPulseDecisionPolicy.evaluateState(S.recs,{source:currentDataSource()});
+}
+function decisionStrategyLabel(trace){
+  return window.MindPulseDecisionPolicy?window.MindPulseDecisionPolicy.strategyLabel(trace):"补充一条记录";
+}
+function assertCurrentActionAllowed(action){
+  var trace=currentDecisionTrace();
+  if(window.MindPulseDecisionPolicy)window.MindPulseDecisionPolicy.assertActionAllowed(trace,action);
+  else if(trace.allowedActions.indexOf(action)<0)throw new Error("SAFETY_GATE_BLOCKED: "+action);
+  return trace;
 }
 function currentPlan(){
   var last=getLast();
@@ -1873,20 +1520,6 @@ function currentPlan(){
       chain:["help"],
       desc:"先让一个可信任的人知道当前状态，必要时直接联系热线、老师或当地紧急救助。",
       reasons:["出现危机信号"],
-      mode:"help",
-      risk:risk,
-      base:base
-    };
-  }
-  if(risk.level==="数据不足"||recommended.path[0]==="ask"){
-    return {
-      label:"先补一条最少记录",
-      intro:"现在不急着给状态下结论，先补充最容易回答的一项信号。",
-      chain:["ask"],
-      desc:"个人基线还没有足够依据；补一条记录后，系统再决定是否需要行动。",
-      reasons:recommended.reasons||["数据不足"],
-      mode:"ask",
-      risk:risk,
       base:base
     };
   }
@@ -1920,8 +1553,6 @@ function currentPlan(){
     chain:uniqueChain(chain).slice(0,3),
     desc:desc,
     reasons:uniqueChain(reasons),
-    mode:recommended.mode||risk.mode||"action",
-    risk:risk,
     base:base
   };
 }
@@ -1937,7 +1568,7 @@ function ruleExplanation(){
 function linkedReasonText(){
   var path=currentPlan();
   var reason=path.reasons&&path.reasons.length?path.reasons[0]:"当前状态";
-  return "来自今日记录：睡眠 "+metricText(getLast().sleep,1,"h")+"、连接 "+metricText(getLast().sc,0,"%")+"，"+reason+"。";
+  return "来自今日记录：睡眠 "+getLast().sleep.toFixed(1)+"h、连接 "+getLast().sc+"%，"+reason+"。";
 }
 function flowBridgeTitle(active){
   var activeId=active==="help"?"action":active;
@@ -1958,7 +1589,7 @@ function flowBridgeCopy(active){
   var action=currentFirstAction();
   var done=S.completed.length?S.completed[S.completed.length-1]:null;
   if(active==="judge"){
-    return "今日记录已刷新判断：睡眠 "+metricText(last.sleep,1,"h")+"、连接 "+metricText(last.sc,0,"%")+"，并同步第一步「"+action.title+"」。";
+    return "今日记录已刷新判断：睡眠 "+last.sleep.toFixed(1)+"h、连接 "+last.sc+"%，并同步第一步「"+action.title+"」。";
   }
   if(active==="feedback"){
     if(done)return "刚完成「"+done.title+"」，趋势页会把它计入干预前后变化。";
@@ -1974,11 +1605,11 @@ function flowBridgeCopy(active){
   return "一次记录会同时影响首页判断、趋势解释、陪伴路线和求助入口。";
 }
 function renderFlowBridge(active,buttons){
-  var h='<section class="closed-loop" data-stage="'+esc(active)+'"><div class="closed-loop-mark">↻</div><div class="closed-loop-copy-wrap"><div class="closed-loop-title">'+flowBridgeTitle(active)+'</div><div class="closed-loop-copy">'+esc(flowBridgeCopy(active))+'</div>';
+  var h='<section class="closed-loop" data-stage="'+active+'"><div class="closed-loop-mark">↻</div><div class="closed-loop-copy-wrap"><div class="closed-loop-title">'+flowBridgeTitle(active)+'</div><div class="closed-loop-copy">'+flowBridgeCopy(active)+'</div>';
   if(buttons&&buttons.length){
     h+='<div class="closed-loop-actions">';
     buttons.forEach(function(btn){
-      h+='<button class="'+esc(btn.kind||"btn-lite")+'" id="'+esc(btn.id)+'">'+esc(btn.label)+'</button>';
+      h+='<button class="'+(btn.kind||"btn-lite")+'" id="'+btn.id+'">'+btn.label+'</button>';
     });
     h+='</div>';
   }
@@ -2025,13 +1656,12 @@ function checkinFeedback(){
     "高风险":"这条记录里出现了需要优先求助的信号。",
     "中度关注":"今天不是简单的心情不好，更像睡眠、精力和连接感一起在消耗你。",
     "普通波动":"这更像一次可被轻量干预接住的状态波动。",
-    "数据不足":"这次先不急着下结论，系统需要一项最少的补充记录。",
     "稳定观察":"目前整体较平稳，继续保持记录和节奏就可以。"
   };
   var rawNote=last.checkinNote&&last.checkinNote.trim()?last.checkinNote.trim():"";
-  var note=rawNote?("你写到“"+rawNote.slice(0,30)+(rawNote.length>30?"...":"")+"”，这会被作为本次判断的补充线索。"):"你没有补充备注，本次判断主要来自选择项和最近记录。";
-  var reason=risk.level==="高风险"?"文本中出现危机信号时，心晴会先停下普通干预；当前优先级是让可信任的人知道，并打开热线、老师或专业资源入口。":(risk.level==="数据不足"?risk.explanation:checkinReasonText());
-  var next=risk.level==="高风险"?"下一步不进入普通练习，先打开求助入口，把这件事告诉老师、家人或身边可信任的人。":(risk.level==="数据不足"?"下一步先补充最少的一项记录，系统会在有依据后再给行动建议。":"下一步先做「"+action.title+"」。它的目标不是立刻变好，而是先把今天的负担降一点。");
+  var note=rawNote?("你写到“"+esc(rawNote.slice(0,30))+(rawNote.length>30?"...":"")+"”，这会被作为本次判断的补充线索。"):"你没有补充备注，本次判断主要来自选择项和最近记录。";
+  var reason=risk.level==="高风险"?"文本中出现危机信号时，心晴会先停下普通干预；当前优先级是让可信任的人知道，并打开热线、老师或专业资源入口。":checkinReasonText();
+  var next=risk.level==="高风险"?"下一步不进入普通练习，先打开求助入口，把这件事告诉老师、家人或身边可信任的人。":"下一步先做「"+action.title+"」。它的目标不是立刻变好，而是先把今天的负担降一点。";
   return {
     level:risk.level,
     tag:risk.tag,
@@ -2148,17 +1778,12 @@ function analyzeSurvey(){
   };
 }
 function openSurvey(id){
-  if(isHighRisk()){
-    routeToHelp("当前为高风险状态，请先进入求助入口");
-    return false;
-  }
   S.navDir="soft";
   S.survey=id||null;
   S.surveyAnswers={};
   S.surveyResult=null;
   S.surveyStep=0;
   renderSurvey();
-  return true;
 }
 function closeSurvey(){
   S.survey=null;
@@ -2234,7 +1859,9 @@ function signalPath(){
   return nums.map(function(p,i){return (i===0?"M ":"L ")+p.x+" "+p.y;}).join(" ");
 }
 function beforeAfterScore(){
-  return window.MindPulseScoreSelectors.beforeAfter(S.interventionEvents);
+  var current=pulseScore();
+  var before=Math.max(28,current-(S.completed.length?13:6));
+  return {before:before,after:current};
 }
 function scoreImpactText(){
   var b=scoreBreakdown();
@@ -2242,19 +1869,18 @@ function scoreImpactText(){
 }
 function createProfile(name){
   var profile=normalizeProfile({name:(name&&name.trim())||("匿名同学 "+(S.profiles.length+1))},S.profiles.length);
-  ensureVaultId(profile);
   S.profiles.push(profile);
   S.user=profile;
   S.recs=buildRecs();
   S.completed=[];
   S.interventionStats={};
-  S.interventionEvents=[];
-  S.feedbackLearningEnabled=true;
-  S.dataLedger=null;
-  S.helpResources=defaultHelpResources();
   S.surveyHistory=[];
   S.tasks=loadTasks();
+  S.memos=[];
+  S.scheduleItems=[];
+  S.bottleRepo=createBottleRepository();
   S.activeTaskId=null;
+  S.activeMemoId=null;
   S.companionIndex=0;
   persistState();
   toast("已创建匿名档案");
@@ -2262,11 +1888,7 @@ function createProfile(name){
 }
 function enterProfile(id){
   if(id&&id!==S.user.id){
-    markSessionProfileReady();
-    S.showLogin=false;
-    S.showSplash=!splashSeen();
     switchProfile(id);
-    return;
   }
   markSessionProfileReady();
   S.showLogin=false;
@@ -2284,43 +1906,40 @@ function createProfileFromLogin(){
 function switchProfile(id){
   var profile=S.profiles.find(function(item){return item.id===id;});
   if(!profile)return;
-  ensureVaultId(profile);
   S.user=profile;
   writeJSON(ACTIVE_PROFILE_KEY,profile.id);
   S.recs=loadRecs();
   S.completed=loadCompleted();
   S.interventionStats=loadInterventionStats();
-  S.interventionEvents=loadInterventionEvents();
   S.surveyHistory=loadSurveyHistory();
   S.tasks=loadTasks();
+  S.memos=loadMemos();
+  S.scheduleItems=loadScheduleItems();
+  S.bottleRepo=createBottleRepository();
   S.activeTaskId=null;
+  S.activeMemoId=null;
   S.companionIndex=0;
   S.homeSide="front";
-  S.vaultReady=false;
-  hydrateCurrentVault().catch(function(error){
-    S.vaultError=error&&error.message?error.message:"本地记录读取失败";
-  }).then(function(){
-    S.vaultReady=true;
-    toast("已切换到 "+profile.name);
-    render();
-  });
+  toast("已切换到 "+profile.name);
+  render();
 }
-async function deleteCurrentProfile(){
+function deleteCurrentProfile(){
   if(S.profiles.length<=1){
     toast("至少保留一个匿名档案");
     return;
   }
   if(!confirm("删除当前匿名档案及其本地记录吗？"))return;
   var id=S.user.id;
-  var vaultId=ensureVaultId(S.user);
   try{
-    await vaultWriteQueue;
-    removeLegacyVaultState(id,vaultId);
-    await clearVaultRecordsLocal(vaultId);
-  }catch(e){
-    toast("匿名档案删除失败："+(e&&e.message?e.message:"未知错误"));
-    return;
-  }
+    localStorage.removeItem("mindpulse:"+id+":recs");
+    localStorage.removeItem("mindpulse:"+id+":completed");
+    localStorage.removeItem("mindpulse:"+id+":interventionStats");
+    localStorage.removeItem("mindpulse:"+id+":surveyHistory");
+    localStorage.removeItem("mindpulse:"+id+":tasks");
+    localStorage.removeItem("mindpulse:"+id+":memos");
+    localStorage.removeItem("mindpulse:"+id+":scheduleItems");
+    localStorage.removeItem("mindpulse:"+id+":bottleReplies");
+  }catch(e){}
   S.profiles=S.profiles.filter(function(profile){return profile.id!==id;});
   S.user=S.profiles[0];
   writeJSON(PROFILE_LIST_KEY,S.profiles);
@@ -2328,41 +1947,21 @@ async function deleteCurrentProfile(){
   S.recs=loadRecs();
   S.completed=loadCompleted();
   S.interventionStats=loadInterventionStats();
-  S.interventionEvents=loadInterventionEvents();
   S.surveyHistory=loadSurveyHistory();
   S.tasks=loadTasks();
+  S.memos=loadMemos();
+  S.scheduleItems=loadScheduleItems();
+  S.bottleRepo=createBottleRepository();
   S.activeTaskId=null;
+  S.activeMemoId=null;
   S.companionIndex=0;
-  S.vaultReady=false;
-  hydrateCurrentVault().catch(function(error){
-    S.vaultError=error&&error.message?error.message:"本地记录读取失败";
-  }).then(function(){
-    S.vaultReady=true;
-    toast("已删除匿名档案");
-    render();
-  });
+  toast("已删除匿名档案");
+  render();
 }
 function markInterventionComplete(id,title){
-  var riskAtStart=riskAssessment();
-  if(window.MindPulseRiskGate.blocksAction(id,riskAtStart)){
-    routeToHelp(riskAtStart.level==="高风险"?"当前为高风险状态，普通干预已暂停，请先进入求助入口":"当前数据不足，先补充最少的一项记录");
-    return;
-  }
-  if(id==="ask"){
-    safeOpenAction("ask");
-    return;
-  }
+  var decisionTrace=assertCurrentActionAllowed(id);
   var last=getLast();
-  var session=S.intvSession&&S.intvSession.id===id?S.intvSession:null;
-  var beforeScore=session?session.beforeScore:pulseScore();
-  var startedAt=session?session.startedAt:new Date().toISOString();
-  var contextBefore={
-    mood:last&&last.mood||last&&last.et||null,
-    sleepHours:last&&last.sleep!=null?last.sleep:null,
-    steps:last&&last.step!=null?last.step:null,
-    socialScore:last&&last.sc!=null?last.sc:null,
-    signalSources:last&&last.signalSources||{}
-  };
+  var beforeScore=pulseScore();
   var beforePath=currentPlan();
   var beforeMax=Math.max(0,beforePath.chain.length-1);
   var beforeIndex=Math.max(0,Math.min(S.companionIndex,beforeMax));
@@ -2372,17 +1971,12 @@ function markInterventionComplete(id,title){
   if(!S.completed.some(function(x){return x.id===id;})){
     S.completed.push({id:id,title:label,time:new Date().toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit"})});
   }
-  if(id==="breathe"){last.text="刚刚做完呼吸，身体先慢下来了一点。";last.ii=Math.min(5,finiteMetric(last.ii,3)+1);}
-  if(id==="focus"){last.text="完成了一段专注，掌控感回来了些。";last.ii=Math.min(5,finiteMetric(last.ii,3)+1);}
-  if(id==="walk"){last.step=finiteMetric(last.step)+Math.max(1,S.intvState.walk.steps||0);last.text="出去走了一小段，情绪没有那么卡住了。";last.ii=Math.min(5,finiteMetric(last.ii,3)+1);}
+  if(id==="breathe"){last.text="刚刚做完呼吸，身体先慢下来了一点。";last.ii=Math.min(5,last.ii+1);}
+  if(id==="focus"){last.text="完成了一段专注，掌控感回来了些。";last.ii=Math.min(5,last.ii+1);}
+  if(id==="walk"){last.step+=Math.max(1,S.intvState.walk.steps||0);last.text="出去走了一小段，情绪没有那么卡住了。";last.ii=Math.min(5,last.ii+1);}
   if(id==="journal"){last.text=S.journalDraft.trim()||"写下了此刻的感受。";}
-  if(id==="sleep"){last.sleep=+(finiteMetric(last.sleep)+.3).toFixed(1);last.text="今晚先收住这一步做完了，神经可以慢慢安静下来。";}
-  if(id==="friend"){last.sc=Math.min(100,finiteMetric(last.sc)+10);last.text="给朋友发了消息，至少让一个人知道了自己。";}
-  last.signalPresence=Object.assign({mood:true,sleep:true,steps:true,social:true},last.signalPresence||{});
-  last.signalPresence.mood=last.signalPresence.mood!==false;
-  last.signalPresence.sleep=last.sleep!=null;
-  last.signalPresence.steps=last.step!=null;
-  last.signalPresence.social=last.sc!=null;
+  if(id==="sleep"){last.sleep=+(last.sleep+.3).toFixed(1);last.text="今晚先收住这一步做完了，神经可以慢慢安静下来。";}
+  if(id==="friend"){last.sc=Math.min(100,last.sc+10);last.text="给朋友发了消息，至少让一个人知道了自己。";}
   last.sleepHours=last.sleep;
   last.steps=last.step;
   last.socialScore=last.sc;
@@ -2391,43 +1985,19 @@ function markInterventionComplete(id,title){
   last.completedInterventions=last.completedInterventions||[];
   if(last.completedInterventions.indexOf(id)<0)last.completedInterventions.push(id);
   var afterScore=pulseScore();
-  var completedAt=new Date().toISOString();
-  S.interventionEvents.push({
-    id:"evt_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,6),
-    interventionId:id,
-    title:label,
-    startedAt:startedAt,
-    completedAt:completedAt,
-    beforeScore:beforeScore,
-    afterScore:afterScore,
-    delta:afterScore-beforeScore,
-    contextBefore:contextBefore,
-    contextAfter:{
-      mood:last&&last.mood||last&&last.et||null,
-      sleepHours:last&&last.sleep!=null?last.sleep:null,
-      steps:last&&last.step!=null?last.step:null,
-      socialScore:last&&last.sc!=null?last.sc:null,
-      signalSources:last&&last.signalSources||{}
-    },
-    riskCode:riskAtStart.riskCode,
-    mode:riskAtStart.mode,
-    risk:riskAtStart.level,
-    dataCompleteness:riskAtStart.dataCompleteness,
-    baselineStatus:riskAtStart.baselineStatus,
-    eligibleForLearning:S.feedbackLearningEnabled!==false&&riskAtStart.mode!=="help"&&id!=="help"
-  });
-  if(S.feedbackLearningEnabled!==false&&riskAtStart.mode!=="help"&&id!=="help"){
+  var feedback={actionId:id,delta:afterScore-beforeScore,riskMode:decisionTrace.mode,riskLevel:riskAssessment().level,completedAt:new Date().toISOString()};
+  if(rules().recordSafeFeedback)S.interventionStats=rules().recordSafeFeedback(S.interventionStats,feedback);
+  else{
     var stat=S.interventionStats[id]||{count:0,totalDelta:0,lastDelta:0,lastAt:null};
     stat.count+=1;
-    stat.lastDelta=afterScore-beforeScore;
+    stat.lastDelta=feedback.delta;
     stat.totalDelta+=stat.lastDelta;
-    stat.lastAt=new Date().toISOString();
+    stat.lastAt=feedback.completedAt;
     S.interventionStats[id]=stat;
   }
   if(completedCurrent){
     S.companionIndex=beforeIndex<beforeMax?beforeIndex+1:0;
   }
-  S.intvSession=null;
   persistState();
   refreshCompanionStepCard();
   toast(label+"已写回首页和趋势");
@@ -2440,19 +2010,7 @@ function completeCurrentCompanionStep(){
   var item=INTV.find(function(x){return x.id===id;});
   markInterventionComplete(id,item?item.title:id);
 }
-window.MindPulseDebug={
-  completeCurrentCompanionStep:completeCurrentCompanionStep,
-  completeAction:function(id){markInterventionComplete(id);},
-  getState:function(){return S;},
-  flushVault:function(){return vaultWriteQueue;},
-  openAction:safeOpenAction,
-  openAgent:openAgent,
-  openSurvey:openSurvey,
-  restoreEncryptedSync:restoreEncryptedSync,
-  encryptVaultPayload:encryptVaultPayload,
-  decryptVaultPayload:decryptVaultPayload,
-  mockCloud:null
-};
+window.MindPulseDebug={completeCurrentCompanionStep:completeCurrentCompanionStep,openIntervention:openIntervention,currentDecisionTrace:currentDecisionTrace};
 function buildRecs(){
   var story=[
     {e:"happy",i:5,t:"今天出门晒了太阳，心情比前几天轻了一点。",sl:7.4,st:8520,sc:82},
@@ -2464,22 +2022,18 @@ function buildRecs(){
     {e:"anxious",i:3,t:"昨晚没睡踏实，今天还是有点紧，但至少愿意开始做第一步。",sl:5.4,st:4200,sc:38}
   ];
   var list=[],now=new Date();
-  var todayElapsedMinutes=Math.max(0,Math.floor((now.getTime()-new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime())/60000));
   for(var i=6;i>=0;i--){
     var dt=new Date(now);
     dt.setDate(dt.getDate()-i);
     dt.setHours(i===0?9:20,Math.min(50,(6-i)*7),0,0);
     var s=story[6-i];
-    if(i===0){
-      dt.setHours(0,Math.max(0,todayElapsedMinutes-60),0,0);
-    }
     list.push({id:"demo_"+i,entryType:"daily",createdAt:dt.toISOString(),dateKey:dateKey(dt),time:timeLabel(dt),dl:WEEK_LABELS[dt.getDay()],ds:gs(dt),date:gs(dt),et:s.e,mood:s.e,ii:s.i,moodScore:s.i,sleep:s.sl,sleepHours:s.sl,step:s.st,steps:s.st,sc:s.sc,socialScore:s.sc,text:s.t,note:s.t,energyLevel:"mid",connectionNeed:"ok",riskLevel:"",recommendedPath:(PATHS[s.e]||PATHS.calm).chain.slice(),completedInterventions:[]});
     if(i===0){
       var noon=new Date(dt);
-      noon.setHours(0,Math.max(0,todayElapsedMinutes-30),0,0);
+      noon.setHours(13,20,0,0);
       list.push({id:"demo_today_angry",entryType:"instant",createdAt:noon.toISOString(),dateKey:dateKey(noon),time:timeLabel(noon),dl:WEEK_LABELS[noon.getDay()],ds:gs(noon),date:gs(noon),et:"angry",mood:"angry",ii:2,moodScore:2,sleep:5.4,sleepHours:5.4,step:3900,steps:3900,sc:32,socialScore:32,text:"中午和同学沟通不顺，有一阵很烦。",note:"中午和同学沟通不顺，有一阵很烦。",energyLevel:"mid",connectionNeed:"avoid",riskLevel:"",recommendedPath:(PATHS.angry||PATHS.calm).chain.slice(),completedInterventions:[]});
       var later=new Date(dt);
-      later.setHours(0,Math.max(0,todayElapsedMinutes-10),0,0);
+      later.setHours(14,35,0,0);
       list.push({id:"demo_today_happy",entryType:"instant",createdAt:later.toISOString(),dateKey:dateKey(later),time:timeLabel(later),dl:WEEK_LABELS[later.getDay()],ds:gs(later),date:gs(later),et:"happy",mood:"happy",ii:5,moodScore:5,sleep:5.4,sleepHours:5.4,step:4600,steps:4600,sc:52,socialScore:52,text:"后来出去走了一圈，和朋友聊了几句，心情轻了一点。",note:"后来出去走了一圈，和朋友聊了几句，心情轻了一点。",energyLevel:"mid",connectionNeed:"ok",riskLevel:"",recommendedPath:(PATHS.happy||PATHS.calm).chain.slice(),completedInterventions:[]});
     }
   }
@@ -2550,29 +2104,24 @@ function fallbackCopy(txt){
   ta.remove();
 }
 function exportRecords(){
+  var ownBottles=S.bottleRepo?S.bottleRepo.listOwnBottles(S.user.id):[];
   var payload={
     exportedAt:new Date().toISOString(),
     profile:S.user,
-    vaultId:ensureVaultId(S.user),
-    account:{
-      email:S.account.email?maskEmail(S.account.email):"",
-      emailVerified:S.account.emailVerified,
-      syncEnabled:S.account.syncEnabled,
-      deviceId:S.account.deviceId
-    },
-    privacyBoundary:"心理文本属于 vault_id；云端同步仅上传本地加密后的密文 blob，不导出验证码、密码或 token。",
     baseline:personalBaseline(),
     records:S.recs,
     completed:S.completed,
     interventionStats:S.interventionStats,
-    interventionEvents:S.interventionEvents,
-    feedbackLearningEnabled:S.feedbackLearningEnabled!==false,
-    dataLedger:dataLedgerSnapshot(),
-    helpResources:currentHelpResources(),
-    scoreBreakdown:Object.assign({total:pulseScore()},recoveryScoreResult()),
+    scoreBreakdown:scoreBreakdown(),
     risk:riskAssessment(),
     dailyReport:dailyReport(todayKey()),
-    weeklyReport:weeklyReport()
+    weeklyReport:weeklyReport(),
+    decisionTrace:currentDecisionTrace(),
+    memos:S.memos,
+    scheduleItems:S.scheduleItems,
+    bottles:ownBottles.map(function(bottle){
+      return {bottle:bottle,replies:S.bottleRepo.listRepliesForOwnBottle(S.user.id,bottle.id)};
+    })
   };
   var blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
   var url=URL.createObjectURL(blob);
@@ -2585,28 +2134,28 @@ function exportRecords(){
   setTimeout(function(){URL.revokeObjectURL(url);},500);
   toast("记录已导出");
 }
-async function clearLocalData(){
+function clearLocalData(){
   if(!confirm("确定删除本地记录和干预完成状态吗？")){
     return;
   }
-  var currentVault=ensureVaultId(S.user);
   try{
-    await vaultWriteQueue;
-    removeLegacyVaultState(S.user.id,currentVault);
-    await clearVaultRecordsLocal(currentVault);
-  }catch(e){
-    toast("本地数据删除失败："+(e&&e.message?e.message:"未知错误"));
-    return;
-  }
+    localStorage.removeItem(profileKey("recs"));
+    localStorage.removeItem(profileKey("completed"));
+    localStorage.removeItem(profileKey("interventionStats"));
+    localStorage.removeItem(profileKey("surveyHistory"));
+    localStorage.removeItem(profileKey("tasks"));
+    localStorage.removeItem(profileKey("memos"));
+    localStorage.removeItem(profileKey("scheduleItems"));
+    localStorage.removeItem(profileKey("bottleReplies"));
+  }catch(e){}
   S.recs=buildRecs();
   S.completed=[];
   S.interventionStats={};
-  S.interventionEvents=[];
-  S.feedbackLearningEnabled=true;
-  S.dataLedger=null;
-  S.helpResources=defaultHelpResources();
   S.surveyHistory=[];
   S.tasks=loadTasks();
+  S.memos=[];
+  S.scheduleItems=[];
+  S.drawnBottle=null;
   S.activeTaskId=null;
   S.activeComfort="";
   S.companionIndex=0;
@@ -2747,7 +2296,6 @@ function closeIntervention(){
   if(S.intv==="breathe"&&S.intvState.breathe.timer){clearInterval(S.intvState.breathe.timer);S.intvState.breathe.timer=null;S.intvState.breathe.running=false;}
   if(S.intv==="sleep")stopSleepAudio();
   S.intv=null;
-  S.intvSession=null;
   var overlay=document.querySelector(".intervention-overlay");
   if(overlay)overlay.remove();
 }
@@ -2767,13 +2315,6 @@ function saveCheckin(){
   var realSleep=Number(S.ciSleepHours);
   var realSteps=Number(S.ciSteps);
   var realSocial=Number(S.ciSocial);
-  var hasRealSleep=S.ciSleepHours!==null&&S.ciSleepHours!==""&&Number.isFinite(realSleep);
-  var hasRealSteps=S.ciSteps!==null&&S.ciSteps!==""&&Number.isFinite(realSteps);
-  var hasRealSocial=S.ciSocial!==null&&S.ciSocial!==""&&Number.isFinite(realSocial);
-  var sleepValue=hasRealSleep?Math.max(0,Math.min(12,realSleep)):(S.ciSleep?SLEEP_MAP[S.ciSleep]:null);
-  var stepsValue=hasRealSteps?Math.max(0,Math.min(40000,Math.round(realSteps))):(S.ciEnergy?Math.max(0,profile.step+(ENERGY_STEP_DELTA[S.ciEnergy]||0)):null);
-  var socialValue=hasRealSocial?Math.max(0,Math.min(100,Math.round(realSocial))):(S.ciConnect?CONNECT_MAP[S.ciConnect]:null);
-  var inputMode=(hasRealSleep||hasRealSteps||hasRealSocial)?"manual-web":"quick-instant";
   var note=S.ciTxt&&S.ciTxt.trim()?S.ciTxt.trim():("记录了此刻的"+moodLabel(selected)+"。");
   var latest=normalizeRecord({
     id:"rec_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,6),
@@ -2788,17 +2329,15 @@ function saveCheckin(){
     mood:selected,
     ii:moodScore[selected]||3,
     moodScore:moodScore[selected]||3,
-    sleep:sleepValue,
-    step:stepsValue,
-    sc:socialValue,
+    sleep:Number.isFinite(realSleep)&&realSleep>0?Math.max(0,Math.min(12,realSleep)):(S.ciSleep?SLEEP_MAP[S.ciSleep]:profile.sleep),
+    step:Number.isFinite(realSteps)&&realSteps>=0?Math.max(0,Math.min(40000,Math.round(realSteps))):Math.max(1800,profile.step+(ENERGY_STEP_DELTA[S.ciEnergy]||0)),
+    sc:Number.isFinite(realSocial)&&realSocial>=0?Math.max(0,Math.min(100,Math.round(realSocial))):(S.ciConnect?CONNECT_MAP[S.ciConnect]:profile.sc),
     energyLevel:S.ciEnergy||"mid",
     connectionNeed:S.ciConnect||"ok",
     checkinNote:S.ciTxt&&S.ciTxt.trim()?S.ciTxt.trim():"",
     text:note,
     note:note,
-    dataInputMode:inputMode,
-    signalPresence:{mood:true,sleep:sleepValue!=null,steps:stepsValue!=null,social:socialValue!=null},
-    signalSources:{mood:"self-report",sleep:hasRealSleep?"manual":"self-report",steps:hasRealSteps?"manual":"self-report",social:hasRealSocial?"manual":"self-report"},
+    dataInputMode:(Number.isFinite(realSleep)||Number.isFinite(realSteps)||Number.isFinite(realSocial))?"manual-web":"quick-instant",
     completedInterventions:[]
   },S.recs.length);
   latest.sleepHours=latest.sleep;
@@ -2858,10 +2397,6 @@ function composeHelpText(who,how,extra,style){
   return [p1,p2,p3,p4,end].join("\n\n");
 }
 function openAgent(type){
-  if(type!=="help"&&isHighRisk()){
-    routeToHelp("当前为高风险状态，请先使用求助入口");
-    return;
-  }
   S.navDir="soft";
   S.agent=type;
   S.agentFlow="default";
@@ -2894,56 +2429,28 @@ function openHelpStyleAgent(who){
   S.agentTxt="";
   renderAgent();
 }
-function isHighRisk(){
-  return window.MindPulseRiskGate.isHighRisk(riskAssessment());
-}
-function routeToHelp(message){
-  if(S.agent)closeAgent();
-  if(S.intv)closeIntervention();
-  S.showCheckin=false;
-  S.dd=null;
-  S.showDetail=false;
-  S.survey=null;
-  S.surveyAnswers={};
-  S.surveyResult=null;
-  S.surveyStep=0;
-  S.navDir="soft";
-  S.tab="help";
-  window.scrollTo(0,0);
-  render();
-  if(message)toast(message);
-}
-function safeOpenAction(id){
+function openIntervention(id){
   if(id==="help"){
-    routeToHelp();
-    return false;
+    switchTab("help");
+    return;
   }
-  if(window.MindPulseRiskGate.blocksAction(id,riskAssessment())){
-    routeToHelp(riskAssessment().level==="高风险"?"当前为高风险状态，普通干预已暂停，请先进入求助入口":"当前数据不足，先补充最少的一项记录");
-    return false;
-  }
-  if(id==="ask"){
-    S.navDir="soft";
-    S.showCheckin=true;
-    render();
-    return true;
-  }
-  if(!INTV.some(function(item){return item.id===id&&item.id!=="help";})){
-    toast("暂时无法打开这一步");
-    return false;
-  }
+  assertCurrentActionAllowed(id);
   S.navDir="soft";
   S.intv=id;
-  S.intvSession={id:id,startedAt:new Date().toISOString(),beforeScore:pulseScore()};
   refreshIntervention();
-  return true;
-}
-function openIntervention(id){
-  return safeOpenAction(id);
 }
 function switchTab(next){
-  next=window.MindPulseRiskGate.routeTab(next,riskAssessment());
   if(!next||next===S.tab)return;
+  var trace=currentDecisionTrace();
+  if(trace.mode==="HIGH_RISK"&&["map","workspace","companion"].indexOf(next)>=0){
+    next="help";
+    toast("Safety Gate 已阻断普通行动，先进入求助入口");
+  }
+  if(trace.mode==="DATA_INSUFFICIENT"&&next==="companion"){
+    S.showCheckin=true;
+    next="home";
+    toast("基线建立中，请先补充一条记录");
+  }
   var from=TAB_ORDER.indexOf(S.tab);
   var to=TAB_ORDER.indexOf(next);
   S.navDir=from>=0&&to>=0?(to>from?"forward":"back"):"soft";
@@ -2971,15 +2478,14 @@ function render(){
   S.navDir="soft";
 }
 function renderLogin(){
-  var h='<div class="login-page"><div class="login-brand">心晴 MindPulse</div><div class="login-title">选择一个匿名档案，再开始看今天。</div><div class="login-copy">邮箱只用于账号验证；心理文本仍归属本机随机 vault_id，不直接挂在邮箱下面。</div>';
-  h+='<section class="login-card"><div class="setting-group-title" style="padding:0 0 4px">邮箱注册 / 登录</div><div class="auth-grid"><input class="field compact-field" id="loginEmail" maxlength="80" inputmode="email" placeholder="输入邮箱" value="'+esc(S.account.pendingEmail||S.account.email)+'"><div class="auth-row"><input class="field compact-field" id="loginCode" maxlength="6" inputmode="numeric" placeholder="6 位验证码"><button class="btn-lite" id="loginSendCode"'+(S.authBusy?' disabled':'')+'>发送验证码</button></div><button class="btn" id="loginVerifyCode"'+(S.authBusy?' disabled':'')+'>验证并进入</button></div><div class="auth-status">'+(DEMO_AUTH_MODE?'当前为演示版，验证码固定为 <strong>'+DEMO_EMAIL_CODE+'</strong>，验证结果只保存在本地。':'验证码由 Supabase Edge Function 生成，只保存 hash，5-10 分钟过期，并限制重发频率。')+(S.account.lastSyncStatus?'<br><strong>'+esc(S.account.lastSyncStatus)+'</strong>':'')+'</div></section>';
+  var h='<div class="login-page"><div class="login-brand">心晴 MindPulse</div><div class="login-title">选择一个匿名档案，再开始看今天。</div><div class="login-copy">这里不需要手机号、学号或实名信息。档案只用于区分个人基线、推荐反馈和本地记录。</div>';
   h+='<section class="login-card"><div class="setting-group-title" style="padding:0 0 4px">已有匿名档案</div><div class="login-profile-list">';
   S.profiles.forEach(function(profile,index){
-    h+='<button class="login-profile'+(profile.id===S.user.id?' active':'')+'" data-login-profile="'+esc(profile.id)+'"><div class="login-avatar">'+(index+1)+'</div><div class="login-profile-main"><div class="login-profile-name">'+esc(profile.name)+'</div><div class="login-profile-desc">'+(profile.id===S.user.id?'当前选择':'切换后使用独立本地记录')+' · vault '+esc(ensureVaultId(profile).slice(0,13))+'</div></div><div class="action-arrow">›</div></button>';
+    h+='<button class="login-profile'+(profile.id===S.user.id?' active':'')+'" data-login-profile="'+esc(profile.id)+'"><div class="login-avatar">'+(index+1)+'</div><div class="login-profile-main"><div class="login-profile-name">'+esc(profile.name)+'</div><div class="login-profile-desc">'+(profile.id===S.user.id?'当前选择':'切换后使用独立本地记录')+'</div></div><div class="action-arrow">›</div></button>';
   });
   h+='</div><button class="btn" id="loginEnter" style="margin-top:14px">进入当前档案</button></section>';
   h+='<section class="login-card"><div class="setting-group-title" style="padding:0 0 4px">创建新档案</div><input class="field compact-field" id="loginProfileName" maxlength="16" placeholder="例如 P002 / 同学A"><button class="btn-lite" id="loginCreate" style="margin-top:12px">创建并进入</button></section>';
-  h+='<div class="login-privacy">默认只使用本地匿名档案。注册后也不会自动上传心理文本；只有在设置里手动开启“加密同步”后，云端才保存密文副本。</div></div>';
+  h+='<div class="login-privacy">比赛版采用端侧匿名档案机制：数据保存在当前浏览器本地，不上传云端；正式校园试点才考虑邀请码或统一身份认证。</div></div>';
   app.insertAdjacentHTML("beforeend",h);
   document.querySelectorAll("[data-login-profile]").forEach(function(row){
     row.onclick=function(){
@@ -2991,23 +2497,17 @@ function renderLogin(){
         S.recs=loadRecs();
         S.completed=loadCompleted();
         S.interventionStats=loadInterventionStats();
-        S.interventionEvents=loadInterventionEvents();
         S.surveyHistory=loadSurveyHistory();
         S.tasks=loadTasks();
+        S.memos=loadMemos();
+        S.scheduleItems=loadScheduleItems();
+        S.bottleRepo=createBottleRepository();
         S.activeTaskId=null;
-        S.vaultReady=false;
+        S.activeMemoId=null;
         renderLogin();
-        hydrateCurrentVault().catch(function(error){
-          S.vaultError=error&&error.message?error.message:"本地记录读取失败";
-        }).then(function(){
-          S.vaultReady=true;
-          renderLogin();
-        });
       }
     };
   });
-  document.getElementById("loginSendCode").onclick=function(){requestEmailCode(true);};
-  document.getElementById("loginVerifyCode").onclick=function(){verifyEmailCode(true);};
   document.getElementById("loginEnter").onclick=function(){enterProfile(S.user.id);};
   document.getElementById("loginCreate").onclick=function(){createProfileFromLogin();};
 }
@@ -3020,7 +2520,7 @@ function renderSplash(){
   timers.push(setTimeout(function(){markSplashSeen();S.showSplash=false;render();},3160));
 }
 function renderCurrentPage(){
-  var map={home:renderHome,map:renderTrend,workspace:renderWorkspace,companion:renderCompanion,help:renderHelp,settings:renderSettings,rules:renderRuleLab};
+  var map={home:renderHome,map:renderTrend,workspace:renderWorkspace,companion:renderCompanion,help:renderHelp,settings:renderSettings,rules:renderRuleLab,memo:renderMemoList,"memo-detail":renderMemoDetail,schedule:renderSchedule,bottle:renderBottleSea};
   (map[S.tab]||renderHome)();
 }
 function safetyGateLabel(risk){
@@ -3032,38 +2532,46 @@ function renderHome(){
   var risk=riskAssessment();
   var baseline=personalBaseline();
   var score=pulseScore();
-  var highRisk=window.MindPulseRiskGate.isHighRisk(risk);
-  var needsData=risk.mode==="ask"||risk.level==="数据不足";
-  var briefReason=highRisk?risk.desc:(needsData?risk.explanation:ruleExplanation());
-  var actionHint=highRisk?"优先联系热线、老师、家人或身边可信任的人。":(needsData?"先补充最少的一项记录，不把不确定状态当作稳定。":"完成第一步后，我会重新看一次今天。");
-  var data=baseline.dataCompleteness||{available:0,required:4,percent:0};
-  var scoreResult=recoveryScoreResult();
+  var trace=currentDecisionTrace();
+  var highRisk=trace.mode==="HIGH_RISK";
+  var deviationCount=baseline.flags?baseline.flags.length:0;
+  var headline=deviationCount?"今天有"+deviationCount+"个信号偏离了你的平时节奏":"今天的节奏接近个人基线";
+  var completeness=Math.min(100,Math.round(([last.et||last.mood,last.sleep,last.step,last.sc].filter(function(value){return value!==null&&value!==undefined&&value!=="";}).length/4)*100));
+  var strategy=decisionStrategyLabel(trace);
+  var primaryLabel=trace.mode==="DATA_INSUFFICIENT"?"补充一条记录":(highRisk?"进入求助入口":(trace.mode==="MODERATE"?"连接一个可信任的人":"查看这一步为什么适合你"));
   var isBack=S.homeSide==="back";
   document.body.classList.toggle("home-screen",true);
   var h='<div class="page home-immersive"><div class="nb"><h1>心晴</h1><div class="nb-sub">'+esc(S.user.name)+' · 端侧匿名档案</div></div><div class="page-body">';
   h+='<section class="status-card">';
   if(!isBack){
-    h+='<div class="status-top"><div><div class="status-kicker">MindPulse-RISE</div><div class="status-title">'+esc(highRisk?"先联系一个可信任的人":(needsData?"先补一条最少记录":path.label))+'</div></div><div class="score-badge"><strong>'+score+'</strong><span>恢复指数</span></div></div>';
-    h+='<div class="status-line">'+(highRisk?"现在不安排普通练习，先把求助这一步发出去。":(needsData?"个人基线还在建立中，系统暂不把状态判断为稳定。":"今天先不用解决所有事，只走第一步就够了。"))+'</div>';
-    h+='<div class="mini-evidence-grid"><div class="mini-evidence"><div class="mini-label">睡眠偏移</div><div class="mini-value">'+(baseline.delta.sleepPct==null?"—":baseline.delta.sleepPct+"%")+'</div></div><div class="mini-evidence"><div class="mini-label">风险等级</div><div class="mini-value">'+esc(risk.level)+'</div></div><div class="mini-evidence"><div class="mini-label">Safety Gate</div><div class="mini-value">'+esc(safetyGateLabel(risk))+'</div></div></div>';
-    h+='<div class="status-line">数据完整度 '+esc(data.available+"/"+data.required)+"（"+esc(data.percent)+"%） · 置信度："+esc(scoreResult.confidence||baseline.confidenceText||"较低")+" · 信号来源："+esc(Object.keys(data.sources||{}).map(function(key){return data.sources[key];}).filter(function(source,index,list){return source&&list.indexOf(source)===index;}).join("、")||"未记录")+'</div>';
-    h+='<div class="quiet-actions"><button class="btn" id="spotlightGo">'+(highRisk?"打开求助入口":(needsData?"补充记录":"开始第一步"))+'</button><button class="btn-lite" id="homeFlip">看依据</button></div>';
+    h+='<div class="status-top"><div><div class="status-kicker">个人节奏偏移</div><div class="status-title">'+headline+'</div></div><div class="score-badge"><strong>'+score+'</strong><span>本次记录指数</span></div></div>';
+    h+='<div class="status-line">先看自己和平时相比发生了什么，再决定今天允许走哪一步。</div>';
+    h+='<div class="decision-signal-grid">';
+    h+='<div class="decision-signal"><div class="decision-signal-label">睡眠</div><div class="decision-signal-value">'+last.sleep.toFixed(1)+'h / 基线 '+baseline.base.sleep.toFixed(1)+'h</div><div class="decision-signal-delta">偏移 '+baseline.delta.sleepPct+'%</div></div>';
+    h+='<div class="decision-signal"><div class="decision-signal-label">活动</div><div class="decision-signal-value">'+last.step+' / 基线 '+Math.round(baseline.base.steps)+'</div><div class="decision-signal-delta">偏移 '+baseline.delta.stepsPct+'%</div></div>';
+    h+='<div class="decision-signal"><div class="decision-signal-label">连接</div><div class="decision-signal-value">'+last.sc+'% / 基线 '+Math.round(baseline.base.social)+'%</div><div class="decision-signal-delta">偏移 '+baseline.delta.social+' 点</div></div>';
+    h+='<div class="decision-signal"><div class="decision-signal-label">情绪</div><div class="decision-signal-value">'+moodLabel(last.et)+'</div><div class="decision-signal-delta">'+(baseline.delta.mood<0?"低于个人基线 "+Math.abs(baseline.delta.mood).toFixed(1)+" 级":"接近个人基线")+'</div></div>';
+    h+='</div>';
+    h+='<div class="mini-evidence-grid"><div class="mini-evidence"><div class="mini-label">数据完整度</div><div class="mini-value">'+completeness+'% · '+trace.confidence+'置信度</div></div><div class="mini-evidence"><div class="mini-label">当前安全策略</div><div class="mini-value">'+strategy+'</div></div><div class="mini-evidence"><div class="mini-label">数据来源</div><div class="mini-value">'+trace.dataSource+'</div></div></div>';
+    h+='<div class="status-line"><strong>当前策略允许的下一步：</strong>'+primaryLabel+'。Safety Gate：'+safetyGateLabel(risk)+'。</div>';
+    h+='<div class="quiet-actions"><button class="btn" id="spotlightGo">'+primaryLabel+'</button><button class="btn-lite" id="homeFlip">判断证据</button></div>';
   }else{
-    h+='<div class="status-top"><div><div class="status-kicker">判断依据</div><div class="status-title">为什么是这个结论</div></div><div class="score-badge"><strong>'+score+'</strong><span>'+esc(risk.level)+'</span></div></div>';
-    h+='<div class="status-line">'+esc(briefReason)+'</div>';
-    h+='<div class="simple-list"><div class="simple-item"><div class="simple-index">R</div><div class="simple-copy">'+esc(baseline.desc)+'</div></div><div class="simple-item"><div class="simple-index">D</div><div class="simple-copy">数据完整度 '+esc(data.available+"/"+data.required)+' · 置信度 '+esc(baseline.confidenceText||"较低")+' · 缺失项 '+esc((data.missing||[]).join("、")||"无")+'</div></div><div class="simple-item"><div class="simple-index">S</div><div class="simple-copy">'+esc(risk.explanation||"Safety Gate：高风险信号出现时停止普通自助建议。")+'</div></div><div class="simple-item"><div class="simple-index">E</div><div class="simple-copy">'+esc(actionHint)+'</div></div></div>';
-    h+='<div class="status-line">'+esc(bestLearningLine())+'</div>';
+    h+='<div class="status-top"><div><div class="status-kicker">判断证据</div><div class="status-title">为什么是这个安全策略</div></div><div class="score-badge"><strong>'+trace.reasonCodes.length+'</strong><span>Reason Code</span></div></div>';
+    h+='<div class="status-line">决策编号 '+esc(trace.decisionId)+' · 策略版本 '+esc(trace.policyVersion)+'</div>';
+    h+='<div class="simple-list">';
+    trace.reasonCodes.forEach(function(code,index){h+='<div class="simple-item"><div class="simple-index">'+(index+1)+'</div><div class="simple-copy"><strong>'+esc(code)+'</strong><br>'+esc(trace.evidence[index]||baseline.desc)+'</div></div>';});
+    h+='</div>';
+    h+='<div class="status-line">'+bestLearningLine()+'</div>';
     h+='<div class="quiet-actions"><button class="btn-lite" id="homeBack">回到正面</button><button class="btn" id="pulseAgent">完整详情</button></div>';
   }
   h+='</section>';
+  h+='<div class="home-tool-grid"><button class="home-tool" id="homeMemo"><div class="home-tool-icon">🗒</div><div class="home-tool-title">备忘录</div><div class="home-tool-meta">'+S.memos.length+' 条笔记 · 自动编号与联想搜索</div></button><button class="home-tool" id="homeSchedule"><div class="home-tool-icon">📅</div><div class="home-tool-title">待办日程</div><div class="home-tool-meta">默认周视图 · 按截止时间整理</div></button></div>';
   var lastSurvey=latestSurveyResult();
-  if(window.MindPulseRiskGate.canShowSelfCheck(risk)){
-    h+='<section class="survey-strip"><div class="survey-strip-icon">☁️</div><div class="survey-strip-main"><div class="survey-strip-title">轻自查问卷</div><div class="survey-strip-copy">'+esc(lastSurvey?("上次 "+lastSurvey.title.replace(" 自查","")+"："+lastSurvey.score+"/"+lastSurvey.range+"，"+lastSurvey.level):"PHQ-9、GAD-7 和压力感自查，结果由规则 agent 解释。")+'</div></div><button class="btn-lite survey-strip-btn" id="openSurveyHome">开始</button></section>';
-  }
+  h+='<section class="survey-strip"><div class="survey-strip-icon">☁️</div><div class="survey-strip-main"><div class="survey-strip-title">轻自查问卷</div><div class="survey-strip-copy">'+(lastSurvey?("上次 "+lastSurvey.title.replace(" 自查","")+"："+lastSurvey.score+"/"+lastSurvey.range+"，"+lastSurvey.level):"PHQ-9、GAD-7 和压力感自查，结果由规则 agent 解释。")+'</div></div><button class="btn-lite survey-strip-btn" id="openSurveyHome">开始</button></section>';
   h+='</div></div>';
   app.insertAdjacentHTML("beforeend",h);
   var go=document.getElementById("spotlightGo");
-  if(go)go.onclick=function(){if(highRisk){switchTab("help");return;}openIntervention(path.chain[0]);};
+  if(go)go.onclick=function(){if(highRisk||trace.mode==="MODERATE"){switchTab("help");return;}if(trace.mode==="DATA_INSUFFICIENT"){S.showCheckin=true;render();return;}openIntervention(path.chain[0]);};
   var flip=document.getElementById("homeFlip");
   if(flip)flip.onclick=function(){S.homeSide="back";render();};
   var back=document.getElementById("homeBack");
@@ -3072,6 +2580,153 @@ function renderHome(){
   if(detail)detail.onclick=function(){S.showDetail=true;renderPulseDetail();};
   var surveyBtn=document.getElementById("openSurveyHome");
   if(surveyBtn)surveyBtn.onclick=function(){openSurvey("phq");};
+  document.getElementById("homeMemo").onclick=function(){switchTab("memo");};
+  document.getElementById("homeSchedule").onclick=function(){switchTab("schedule");};
+}
+function formatLocalStamp(value){
+  var date=new Date(value);
+  if(!Number.isFinite(date.getTime()))return "刚刚";
+  return (date.getMonth()+1)+"月"+date.getDate()+"日 "+String(date.getHours()).padStart(2,"0")+":"+String(date.getMinutes()).padStart(2,"0");
+}
+function upsertMemoState(memo){
+  var index=S.memos.findIndex(function(item){return item.id===memo.id;});
+  if(index>=0)S.memos[index]=memo;
+  else S.memos.unshift(memo);
+  S.memos=window.MindPulseMemoModel.normalizeMemos(S.memos);
+  persistState();
+}
+function memoListHTML(){
+  var results=window.MindPulseMemoModel.searchMemos(S.memos,S.memoSearch);
+  if(!results.length)return '<div class="memo-empty">没有找到相关笔记。可以换个词，或新建一条笔记。</div>';
+  var h='<div class="memo-list">';
+  results.forEach(function(result){
+    var numbered=window.MindPulseMemoModel.numberedItems(result.memo);
+    var preview=numbered.length?numbered[0].text:"还没有事项";
+    h+='<button class="memo-card" data-memo-card="'+esc(result.memo.id)+'"><div class="memo-card-title">'+esc(result.memo.title)+'</div><div class="memo-card-meta">'+formatLocalStamp(result.memo.updatedAt)+' ｜ '+esc(preview)+'</div>'+(S.memoSearch?'<div class="memo-card-match" data-memo-match>'+esc(result.reason)+'</div>':'')+'</button>';
+  });
+  return h+'</div>';
+}
+function bindMemoCards(){
+  document.querySelectorAll("[data-memo-card]").forEach(function(card){
+    card.onclick=function(){S.activeMemoId=card.dataset.memoCard;S.tab="memo-detail";S.navDir="forward";render();};
+  });
+}
+function renderMemoList(){
+  var h='<div class="page"><div class="nb nb-row"><button class="nb-back" id="memoListBack" aria-label="返回首页">‹</button><div><h1>备忘录</h1><div class="nb-sub">全部笔记 · '+S.memos.length+' 条 · 本机匿名档案</div></div></div><div class="page-body">';
+  h+='<div class="memo-search"><span class="memo-search-icon">⌕</span><input class="field" id="memoSearch" maxlength="40" placeholder="搜索笔记，也可以试试“竞赛”" value="'+esc(S.memoSearch)+'"></div>';
+  h+='<div id="memoListResults">'+memoListHTML()+'</div></div><button class="memo-create" id="memoCreate" aria-label="新建笔记">＋</button></div>';
+  app.insertAdjacentHTML("beforeend",h);
+  document.getElementById("memoListBack").onclick=function(){switchTab("home");};
+  document.getElementById("memoCreate").onclick=function(){
+    var memo=window.MindPulseMemoModel.createMemo("未命名笔记");
+    memo=window.MindPulseMemoModel.insertItem(memo,0,"");
+    upsertMemoState(memo);
+    S.activeMemoId=memo.id;
+    S.tab="memo-detail";
+    render();
+  };
+  document.getElementById("memoSearch").oninput=function(event){
+    S.memoSearch=event.target.value.slice(0,40);
+    document.getElementById("memoListResults").innerHTML=memoListHTML();
+    bindMemoCards();
+  };
+  bindMemoCards();
+}
+function refreshMemoNumbers(){
+  var number=0;
+  document.querySelectorAll(".memo-item").forEach(function(row){
+    var input=row.querySelector("[data-memo-item-input]");
+    var badge=row.querySelector("[data-memo-number]");
+    if(input&&input.value.trim()){number+=1;badge.textContent=String(number);}else if(badge){badge.textContent="·";}
+  });
+}
+function renderMemoDetail(){
+  var memo=S.memos.find(function(item){return item.id===S.activeMemoId;});
+  if(!memo){S.tab="memo";render();return;}
+  if(!memo.items.length){memo=window.MindPulseMemoModel.insertItem(memo,0,"");upsertMemoState(memo);}
+  var h='<div class="page"><div class="nb nb-row"><button class="nb-back" id="memoBack" aria-label="返回笔记列表">‹</button><div style="min-width:0;flex:1"><input class="memo-title-input" id="memoTitle" maxlength="42" value="'+esc(memo.title)+'"><div class="memo-meta">'+formatLocalStamp(memo.updatedAt)+' · '+esc(memo.category)+'</div></div></div><div class="page-body">';
+  h+='<section class="memo-editor">';
+  memo.items.forEach(function(item,index){
+    h+='<div class="memo-item" data-memo-row="'+esc(item.id)+'"><div class="memo-number" data-memo-number>'+(item.text.trim()?index+1:'·')+'</div><textarea class="memo-item-input" data-memo-item-input="'+esc(item.id)+'" rows="2" maxlength="220" placeholder="写下第 '+(index+1)+' 条事项">'+esc(item.text)+'</textarea><div class="memo-item-actions"><button class="memo-icon-btn" data-memo-insert-after="'+esc(item.id)+'" aria-label="在后面插入">＋</button><button class="memo-icon-btn" data-memo-delete="'+esc(item.id)+'" aria-label="删除事项">×</button><button class="memo-icon-btn" data-memo-up="'+esc(item.id)+'" aria-label="上移">↑</button><button class="memo-icon-btn" data-memo-down="'+esc(item.id)+'" aria-label="下移">↓</button></div></div>';
+  });
+  h+='</section><div class="quiet-actions" style="margin:0 16px"><button class="btn-lite" id="memoAddEnd">添加下一条</button><button class="btn-ghost" id="memoDeleteNote">删除笔记</button></div><section class="boundary">编号由事项顺序自动生成。中间插入、删除或移动后会自动连续重排。</section></div></div>';
+  app.insertAdjacentHTML("beforeend",h);
+  document.getElementById("memoBack").onclick=function(){S.tab="memo";S.navDir="back";render();};
+  document.getElementById("memoTitle").oninput=function(event){memo=window.MindPulseMemoModel.updateTitle(memo,event.target.value);upsertMemoState(memo);};
+  document.querySelectorAll("[data-memo-item-input]").forEach(function(input){
+    input.oninput=function(){memo=window.MindPulseMemoModel.updateItem(memo,input.dataset.memoItemInput,input.value);upsertMemoState(memo);refreshMemoNumbers();};
+  });
+  document.querySelectorAll("[data-memo-insert-after]").forEach(function(button){
+    button.onclick=function(){var index=memo.items.findIndex(function(item){return item.id===button.dataset.memoInsertAfter;});memo=window.MindPulseMemoModel.insertItem(memo,index+1,"");upsertMemoState(memo);render();};
+  });
+  document.querySelectorAll("[data-memo-delete]").forEach(function(button){
+    button.onclick=function(){memo=memo.items.length===1?window.MindPulseMemoModel.updateItem(memo,button.dataset.memoDelete,""):window.MindPulseMemoModel.removeItem(memo,button.dataset.memoDelete);upsertMemoState(memo);render();};
+  });
+  document.querySelectorAll("[data-memo-up],[data-memo-down]").forEach(function(button){
+    button.onclick=function(){var id=button.dataset.memoUp||button.dataset.memoDown;var index=memo.items.findIndex(function(item){return item.id===id;});var target=button.dataset.memoUp!==undefined?index-1:index+1;memo=window.MindPulseMemoModel.moveItem(memo,id,target);upsertMemoState(memo);render();};
+  });
+  document.getElementById("memoAddEnd").onclick=function(){memo=window.MindPulseMemoModel.insertItem(memo,memo.items.length,"");upsertMemoState(memo);render();};
+  document.getElementById("memoDeleteNote").onclick=function(){if(confirm("删除这条笔记吗？")){S.memos=S.memos.filter(function(item){return item.id!==memo.id;});S.activeMemoId=null;persistState();S.tab="memo";render();}};
+  refreshMemoNumbers();
+}
+function scheduleInputDate(value){
+  var date=value?new Date(value):new Date();
+  return dateKey(date).replace(/^(\d+)-(\d)-(\d+)$/,function(_,y,m,d){return y+"-"+String(m).padStart(2,"0")+"-"+String(d).padStart(2,"0");});
+}
+function scheduleListHTML(items){
+  if(!items.length)return '<div class="schedule-empty">这个范围内暂时没有未完成事项。慢一点也没关系。</div>';
+  var h='<div class="schedule-list">';
+  items.forEach(function(item){h+='<div class="schedule-item" data-schedule-item="'+esc(item.id)+'"><button class="schedule-check" data-schedule-toggle="'+esc(item.id)+'">'+(item.done?'✓':'○')+'</button><div><div class="schedule-item-title" data-schedule-title>'+esc(item.title)+'</div><div class="schedule-item-time">'+(item.dueAt?formatLocalStamp(item.dueAt):"未设置日期")+'</div></div><div class="schedule-item-actions"><button class="memo-icon-btn" data-schedule-edit="'+esc(item.id)+'">✎</button><button class="memo-icon-btn" data-schedule-delete="'+esc(item.id)+'">×</button></div></div>';});
+  return h+'</div>';
+}
+function renderSchedule(){
+  var model=window.MindPulseScheduleModel;
+  var anchor=new Date();
+  var groups=model.groupItems(S.scheduleItems,S.scheduleView,anchor);
+  var rangeItems=model.itemsInRange(S.scheduleItems,anchor,S.scheduleRange);
+  var editing=S.scheduleItems.find(function(item){return item.id===S.scheduleEditingId;});
+  var h='<div class="page"><div class="nb nb-row"><button class="nb-back" id="scheduleBack" aria-label="返回首页">‹</button><div><h1>待办日程</h1><div class="nb-sub">先看最近要做什么，不把所有事一起压上来。</div></div></div><div class="page-body">';
+  h+='<section class="schedule-form"><input class="field" id="scheduleTitle" maxlength="42" placeholder="写下一件待办" value="'+esc(editing?editing.title:"")+'"><div class="schedule-form-row"><input class="field" type="date" id="scheduleDate" value="'+(editing&&editing.dueAt?model.dateKey(editing.dueAt):model.dateKey(new Date()))+'"><input class="field" type="time" id="scheduleTime" value="'+(editing&&editing.dueAt?String(new Date(editing.dueAt).getHours()).padStart(2,"0")+":"+String(new Date(editing.dueAt).getMinutes()).padStart(2,"0"):"18:00")+'"></div><button class="btn" id="scheduleAdd" style="margin-top:10px">'+(editing?"保存修改":"加入日程")+'</button></section>';
+  h+='<div class="segment-control">'+["week","month","year"].map(function(view){var label={week:"周",month:"月",year:"年"}[view];return '<button class="'+(S.scheduleView===view?'active':'')+'" data-schedule-view="'+view+'">'+label+'</button>';}).join("")+'</div>';
+  if(S.scheduleView==="week"){
+    h+='<div class="week-calendar">';
+    groups.forEach(function(group){var date=new Date(group.date);h+='<button class="calendar-day '+(model.dateKey(date)===model.dateKey(new Date())?'today':'')+'"><div class="calendar-day-label">'+["日","一","二","三","四","五","六"][date.getDay()]+'</div><div class="calendar-day-number">'+date.getDate()+'</div><div class="calendar-day-count">'+group.items.length+'</div></button>';});
+    h+='</div>';
+  }else{
+    h+='<div class="schedule-list">'+(groups.length?groups.map(function(group){return '<div class="schedule-item"><div class="schedule-check">'+group.items.length+'</div><div><div class="schedule-item-title">'+esc(group.label)+'</div><div class="schedule-item-time">该'+(S.scheduleView==="month"?'月':'年')+'的全部日程</div></div></div>';}).join(""):'<div class="schedule-empty">还没有可展示的日程。</div>')+'</div>';
+  }
+  h+='<div class="schedule-range">'+[1,3,8,30].map(function(days){return '<button class="'+(S.scheduleRange===days?'active':'')+'" data-schedule-range="'+days+'">'+(days===1?'今天':days+' 天内')+'</button>';}).join("")+'</div>';
+  h+='<div id="scheduleRangeResults">'+scheduleListHTML(rangeItems)+'</div><section class="boundary">今天已经做出的每一个小选择，都算在向前走。先完成最近的一件就好。</section></div></div>';
+  app.insertAdjacentHTML("beforeend",h);
+  document.getElementById("scheduleBack").onclick=function(){S.scheduleEditingId=null;switchTab("home");};
+  document.getElementById("scheduleAdd").onclick=function(){
+    var title=document.getElementById("scheduleTitle").value.trim();
+    if(!title){toast("先写下待办内容");return;}
+    var input={id:editing&&editing.id,title:title,dueDate:document.getElementById("scheduleDate").value,dueTime:document.getElementById("scheduleTime").value,done:editing&&editing.done,createdAt:editing&&editing.createdAt};
+    var item=model.createScheduleItem(input,{id:editing&&editing.id});
+    S.scheduleItems=model.upsertItem(S.scheduleItems,item);S.scheduleEditingId=null;persistState();render();
+  };
+  document.querySelectorAll("[data-schedule-view]").forEach(function(button){button.onclick=function(){S.scheduleView=button.dataset.scheduleView;render();};});
+  document.querySelectorAll("[data-schedule-range]").forEach(function(button){button.onclick=function(){S.scheduleRange=Number(button.dataset.scheduleRange);render();};});
+  document.querySelectorAll("[data-schedule-toggle]").forEach(function(button){button.onclick=function(){var item=S.scheduleItems.find(function(x){return x.id===button.dataset.scheduleToggle;});if(item){item.done=!item.done;item.updatedAt=new Date().toISOString();persistState();render();}};});
+  document.querySelectorAll("[data-schedule-edit]").forEach(function(button){button.onclick=function(){S.scheduleEditingId=button.dataset.scheduleEdit;render();};});
+  document.querySelectorAll("[data-schedule-delete]").forEach(function(button){button.onclick=function(){S.scheduleItems=S.scheduleItems.filter(function(item){return item.id!==button.dataset.scheduleDelete;});persistState();render();};});
+}
+function renderBottleSea(){
+  var repo=S.bottleRepo||createBottleRepository();
+  S.bottleRepo=repo;
+  var own=repo?repo.listOwnBottles(S.user.id):[];
+  var h='<div class="page"><div class="nb nb-row"><button class="nb-back" id="bottleBack" aria-label="返回求助页">‹</button><div><h1>匿名漂流瓶</h1><div class="nb-sub">本机演示海域 · 尚未连接真实社区</div></div></div><div class="page-body"><section class="bottle-sea"><div class="bottle-stage"><div class="bottle-icon">🌊</div><div class="bottle-title">把想说的话放进海里</div><div class="bottle-copy">这里是本地功能演示。不会上传真实社区，也不会替你联系任何人。</div></div><textarea class="field" id="bottleContent" rows="4" maxlength="300" placeholder="写下此刻想被看见的一句话"></textarea><div class="quiet-actions"><button class="btn" id="bottleThrow">投放漂流瓶</button><button class="btn-lite" id="bottleDraw">随机捞一个</button></div><div class="bottle-card"><div class="bottle-card-meta">我的瓶子 <strong id="ownBottleCount">'+own.length+'</strong></div><div class="bottle-card-text">回复只有当前匿名档案的发送者本人能够查看。</div></div>';
+  if(S.drawnBottle){h+='<div class="bottle-card" data-drawn-bottle><div class="bottle-card-meta">'+esc(S.drawnBottle.alias)+' · 随机捞取</div><div class="bottle-card-text">'+esc(S.drawnBottle.content)+'</div><textarea class="field" id="bottleReplyInput" rows="3" maxlength="220" placeholder="留下一句匿名回应" style="margin-top:10px"></textarea><button class="btn-lite" id="bottleReply" style="margin-top:8px">匿名回复</button><div class="setting-desc" id="bottleReplyStatus" style="margin-top:7px"></div></div>';}
+  h+='</section>';
+  if(own.length){h+='<section class="setting-card"><div class="setting-group-title">我投放的瓶子</div>';own.forEach(function(bottle){var replies=repo.listRepliesForOwnBottle(S.user.id,bottle.id);h+='<div class="setting-row"><div class="setting-icon" style="background:#eefaf6">💬</div><div class="setting-copy"><div class="setting-title">'+esc(bottle.content)+'</div><div class="setting-desc">收到 '+replies.length+' 条本地匿名回复</div></div></div>';});h+='</section>';}
+  h+='</div></div>';
+  app.insertAdjacentHTML("beforeend",h);
+  document.getElementById("bottleBack").onclick=function(){S.drawnBottle=null;switchTab("help");};
+  document.getElementById("bottleThrow").onclick=function(){var content=document.getElementById("bottleContent").value;var created=repo.createBottle(S.user.id,content);if(!created){toast("先写下一句话");return;}toast("已放入本机演示海域");render();};
+  document.getElementById("bottleDraw").onclick=function(){S.drawnBottle=repo.drawBottle(S.user.id);render();};
+  var reply=document.getElementById("bottleReply");
+  if(reply)reply.onclick=function(){var content=document.getElementById("bottleReplyInput").value;var saved=repo.replyToBottle(S.user.id,S.drawnBottle.id,content);if(!saved){toast("先写下回复");return;}document.getElementById("bottleReplyStatus").textContent="匿名回复已放回海里";document.getElementById("bottleReplyInput").value="";};
 }
 function renderTrend(){
   var insight=buildInsight();
@@ -3079,8 +2734,8 @@ function renderTrend(){
   var hard=getHardDay();
   var delta=beforeAfterScore();
   var trendTitle=lowSleepDays()>=3?"最近被睡眠拖住":insight.title;
-  var h='<div class="page"><div class="nb"><h1>日报 / 周报</h1><div class="nb-sub">即时记录、今日时间线和 7 天周报都在这里复盘。</div></div><div class="page-body">';
-  h+='<section class="status-card"><div class="status-top"><div><div class="status-kicker">本周一句话</div><div class="status-title">'+esc(trendTitle)+'</div></div><div class="score-badge"><strong>'+pulseScore()+'</strong><span>今日</span></div></div><div class="status-line">'+esc(insight.desc)+'</div><div class="mini-evidence-grid"><div class="mini-evidence"><div class="mini-label">平均睡眠</div><div class="mini-value">'+avgSleep()+'h</div></div><div class="mini-evidence"><div class="mini-label">低睡眠</div><div class="mini-value">'+lowSleepDays()+' 天</div></div><div class="mini-evidence"><div class="mini-label">总步数</div><div class="mini-value">'+(totalSteps()/1000).toFixed(0)+'k</div></div></div></section>';
+  var h='<div class="page"><div class="nb"><h1>趋势</h1><div class="nb-sub">即时记录、日报和周报都在这里复盘。</div></div><div class="page-body">';
+  h+='<section class="status-card"><div class="status-top"><div><div class="status-kicker">本周一句话</div><div class="status-title">'+trendTitle+'</div></div><div class="score-badge"><strong>'+pulseScore()+'</strong><span>今日</span></div></div><div class="status-line">'+insight.desc+'</div><div class="mini-evidence-grid"><div class="mini-evidence"><div class="mini-label">平均睡眠</div><div class="mini-value">'+avgSleep()+'h</div></div><div class="mini-evidence"><div class="mini-label">低睡眠</div><div class="mini-value">'+lowSleepDays()+' 天</div></div><div class="mini-evidence"><div class="mini-label">总步数</div><div class="mini-value">'+(totalSteps()/1000).toFixed(0)+'k</div></div></div></section>';
   h+='<div class="report-grid">'+renderTodayReportCard()+renderWeeklyReportCard()+'</div>';
   h+=renderFlowBridge("feedback",[
     {id:"trendToCompanion",label:"去做这一步",kind:"btn-lite"},
@@ -3090,11 +2745,10 @@ function renderTrend(){
   h+='<section class="flow-card"><div class="spotlight-title">情绪起伏轨迹</div><div class="spotlight-main" style="font-size:20px">这周有起落，但最后没有停在最低点。</div><div class="flow-row">';
   S.recs.forEach(function(r){
     var item=em(r.et);
-    h+='<div class="flow-col"><div class="flow-bar" style="height:'+(48+r.ii*13)+'px;background:'+esc(item.c)+'">'+item.e+'</div><div class="flow-day">周'+esc(r.dl)+'</div></div>';
+    h+='<div class="flow-col"><div class="flow-bar" style="height:'+(48+r.ii*13)+'px;background:'+item.c+'">'+item.e+'</div><div class="flow-day">周'+r.dl+'</div></div>';
   });
   h+='</div></section>';
-  var deltaCopy=delta.hasData?"最近一次真实行动让恢复指数从 "+delta.before+" 变为 "+delta.after+"（"+(delta.delta>=0?"+":"")+delta.delta+"），已写回今天。":"完成一次行动后，这里会显示实际变化。";
-  h+='<section class="quiet-card"><div class="quiet-title">最明显的转折点：周'+esc(hard.dl)+'</div><div class="quiet-copy">那天睡眠 '+hard.sleep.toFixed(1)+'h，步数 '+hard.step+'，连接 '+hard.sc+'%。状态不是突然变差，更像几个信号一起掉下去。</div><div class="simple-list"><div class="simple-item"><div class="simple-index">好</div><div class="simple-copy">周'+esc(best.dl)+' 更轻一点，睡眠和连接感都更稳。</div></div><div class="simple-item"><div class="simple-index">今</div><div class="simple-copy">'+esc(deltaCopy)+'</div></div></div></section>';
+  h+='<section class="quiet-card"><div class="quiet-title">最明显的转折点：周'+hard.dl+'</div><div class="quiet-copy">那天睡眠 '+hard.sleep.toFixed(1)+'h，步数 '+hard.step+'，连接 '+hard.sc+'%。状态不是突然变差，更像几个信号一起掉下去。</div><div class="simple-list"><div class="simple-item"><div class="simple-index">好</div><div class="simple-copy">周'+best.dl+' 更轻一点，睡眠和连接感都更稳。</div></div><div class="simple-item"><div class="simple-index">今</div><div class="simple-copy">恢复指数从 '+delta.before+' 到 '+delta.after+'，完成的小动作会写回今天。</div></div></div></section>';
   h+='</div></div>';
   app.insertAdjacentHTML("beforeend",h);
   document.getElementById("trendToCompanion").onclick=function(){switchTab("companion");};
@@ -3154,8 +2808,8 @@ function renderCompanion(){
   if(S.companionIndex>maxIndex)S.companionIndex=maxIndex;
   var currentIndex=S.companionIndex;
   var h='<div class="page"><div class="nb"><h1>陪伴</h1><div class="nb-sub">今天只走一步。</div></div><div class="page-body">';
-  h+='<section class="status-card"><div class="status-top"><div><div class="status-kicker">陪伴路线</div><div class="status-title">'+esc(path.label)+'</div></div><div class="score-badge"><strong id="companionStepNo">'+(currentIndex+1)+'</strong><span>/ '+path.chain.length+'</span></div></div><div class="status-line">依据：'+esc(path.reasons.join("、"))+'。</div><div class="simple-list">';
-  path.chain.forEach(function(id,idx){var item=INTV.find(function(x){return x.id===id})||INTV[0];h+='<div class="simple-item"><div class="simple-index">'+(idx+1)+'</div><div class="simple-copy">'+esc(item.title)+'</div></div>';});
+  h+='<section class="status-card"><div class="status-top"><div><div class="status-kicker">陪伴路线</div><div class="status-title">'+path.label+'</div></div><div class="score-badge"><strong id="companionStepNo">'+(currentIndex+1)+'</strong><span>/ '+path.chain.length+'</span></div></div><div class="status-line">依据：'+path.reasons.join("、")+'。</div><div class="simple-list">';
+  path.chain.forEach(function(id,idx){var item=INTV.find(function(x){return x.id===id})||INTV[0];h+='<div class="simple-item"><div class="simple-index">'+(idx+1)+'</div><div class="simple-copy">'+item.title+'</div></div>';});
   h+='</div></section>';
   h+=renderLearningCard();
   h+=companionStepHTML(path);
@@ -3177,7 +2831,7 @@ function companionStepHTML(path){
   var currentCopy=current.desc+(hasNext?"":" 这是今天推荐路线的最后一步，完成后会回到第 1 步，开启下一轮。");
   var skipAttrs=hasNext?'':' disabled aria-disabled="true"';
   var skipLabel=hasNext?"换下一步":"已到最后一步";
-  return '<section class="quiet-card" id="companionStepCard"><div class="quiet-title">现在这一步：'+esc(current.title)+'</div><div class="quiet-copy">'+esc(currentCopy)+'</div><div class="companion-step-line"><div class="companion-step-fill" style="width:'+(((currentIndex+1)/path.chain.length)*100)+'%"></div></div><div class="quiet-actions"><button class="btn" id="currentStep">开始这一步</button><button class="btn-lite" id="skipStep"'+skipAttrs+'>'+esc(skipLabel)+'</button></div></section>';
+  return '<section class="quiet-card" id="companionStepCard"><div class="quiet-title">现在这一步：'+current.title+'</div><div class="quiet-copy">'+currentCopy+'</div><div class="companion-step-line"><div class="companion-step-fill" style="width:'+(((currentIndex+1)/path.chain.length)*100)+'%"></div></div><div class="quiet-actions"><button class="btn" id="currentStep">开始这一步</button><button class="btn-lite" id="skipStep"'+skipAttrs+'>'+skipLabel+'</button></div></section>';
 }
 function bindCompanionStep(){
   var path=currentPlan();
@@ -3214,72 +2868,27 @@ function updateCompanionStepNo(){
 function renderHelp(){
   var risk=riskAssessment();
   var target=suggestedHelpTarget();
-  var configured=currentHelpResources();
-  var campus=configured.campus;
+  var campus=CAMPUS_RES[0];
   var hotline=RES[0];
-  var configuredRows=[
-    {icon:"🏫",item:configured.campus},
-    {icon:"👩‍🏫",item:configured.counselor},
-    {icon:"🤝",item:configured.trusted}
-  ].filter(function(row){return row.item&&row.item.name;}).map(function(row){
-    var phone=row.item.phone?" · "+row.item.phone:"";
-    return '<div class="simple-item"><div class="simple-index">'+row.icon+'</div><div class="simple-copy">'+esc(row.item.name)+esc(phone)+'：'+esc(row.item.desc)+'</div></div>';
-  }).join("");
   var h='<div class="page"><div class="nb"><h1>求助</h1><div class="nb-sub">先让一个人知道。</div></div><div class="page-body">';
-  h+='<section class="danger-card"><div class="danger-title">撑不住时，先联系一个人。</div><div class="danger-copy">当前判断：'+esc(risk.level)+'。如果有即时危险，请优先联系热线、老师、家人或当地紧急救助。</div><div class="danger-steps"><div class="danger-step">暂停普通练习</div><div class="danger-step">告诉可信任的人</div><div class="danger-step">必要时拨打热线</div></div><div class="danger-actions"><a class="btn-lite" href="tel:400-161-9995" style="width:auto">拨打热线</a><a class="btn-lite" href="tel:010-82951332" style="width:auto">010-82951332</a></div></section>';
+  h+='<section class="danger-card"><div class="danger-title">撑不住时，先联系一个人。</div><div class="danger-copy">当前判断：'+risk.level+'。如果有即时危险，请优先联系热线、老师、家人或当地紧急救助。</div><div class="danger-steps"><div class="danger-step">暂停普通练习</div><div class="danger-step">告诉可信任的人</div><div class="danger-step">必要时拨打热线</div></div><div class="danger-actions"><a class="btn-lite" href="tel:400-161-9995" style="width:auto">拨打热线</a><a class="btn-lite" href="tel:010-82951332" style="width:auto">010-82951332</a></div></section>';
   h+=renderSafetyGateFlow();
-  h+='<section class="status-card"><div class="status-top"><div><div class="status-kicker">推荐联系对象</div><div class="status-title">'+esc(target.label)+'</div></div><div class="score-badge"><strong>1</strong><span>先做</span></div></div><div class="status-line">来自当前风险判断：'+esc(risk.level)+'。'+esc(target.reason)+'</div><div class="quiet-actions"><button class="btn" id="quickHelp">整理话术</button><button class="btn-lite" id="helpAgent">换个说法</button></div></section>';
+  h+='<section class="status-card"><div class="status-top"><div><div class="status-kicker">推荐联系对象</div><div class="status-title">'+target.label+'</div></div><div class="score-badge"><strong>1</strong><span>先做</span></div></div><div class="status-line">来自当前风险判断：'+risk.level+'。'+target.reason+'</div><div class="quiet-actions"><button class="btn" id="quickHelp">整理话术</button><button class="btn-lite" id="helpAgent">换个说法</button></div></section>';
   h+=renderFlowBridge("help",[
     {id:"helpToHome",label:"看判断",kind:"btn-lite"},
     {id:"helpToCompanion",label:"回陪伴",kind:"btn-ghost"}
   ]);
-  h+='<section class="quiet-card"><div class="quiet-title">可用资源</div><div class="simple-list">'+configuredRows+'<div class="simple-item"><div class="simple-index">☎</div><div class="simple-copy">'+esc(hotline.name)+'：'+esc(hotline.phone)+'，'+esc(hotline.desc)+'。</div></div></div></section>';
+  h+='<section class="quiet-card"><div class="quiet-title">可用资源</div><div class="simple-list"><div class="simple-item"><div class="simple-index">'+campus.icon+'</div><div class="simple-copy">'+campus.name+'：'+campus.desc+'</div></div><div class="simple-item"><div class="simple-index">☎</div><div class="simple-copy">'+hotline.name+'：'+hotline.phone+'，'+hotline.desc+'。</div></div></div></section>';
   h+='<section class="boundary">心晴只负责记录、整理和转接。高风险时，普通自助建议不会作为主路径。</section>';
-  h+='<section class="setting-card"><div class="setting-group-title">更多</div><button class="setting-row" id="goSettings"><div class="setting-icon" style="background:#f5f1ff">⚙️</div><div class="setting-copy"><div class="setting-title">设置与规则验证</div><div class="setting-desc">查看隐私、数据控制和规则测试。</div></div><div class="action-arrow">›</div></button></section>';
+  h+='<section class="setting-card"><div class="setting-group-title">更多</div><button class="setting-row" id="openBottleSea"><div class="setting-icon" style="background:#eef3ff">🌊</div><div class="setting-copy"><div class="setting-title">匿名漂流瓶</div><div class="setting-desc">进入本机演示海域，投放、随机捞取和匿名回应。</div></div><div class="action-arrow">›</div></button><button class="setting-row" id="goSettings"><div class="setting-icon" style="background:#f5f1ff">⚙️</div><div class="setting-copy"><div class="setting-title">设置与规则验证</div><div class="setting-desc">查看隐私、数据控制和规则测试。</div></div><div class="action-arrow">›</div></button></section>';
   h+='</div></div>';
   app.insertAdjacentHTML("beforeend",h);
   document.getElementById("helpAgent").onclick=function(){openHelpStyleAgent(target.who);};
   document.getElementById("quickHelp").onclick=function(){openHelpAgentWithTarget(target.who);};
   document.getElementById("helpToHome").onclick=function(){switchTab("home");};
   document.getElementById("helpToCompanion").onclick=function(){switchTab("companion");};
+  document.getElementById("openBottleSea").onclick=function(){switchTab("bottle");};
   document.getElementById("goSettings").onclick=function(){switchTab("settings");};
-}
-function renderAccountSyncCard(){
-  var verified=S.account.emailVerified;
-  var syncOn=S.account.syncEnabled;
-  var cooldown=authCooldownLeft();
-  var vaultId=ensureVaultId(S.user);
-  var h='<section class="setting-card" id="accountSyncCard"><div class="setting-group-title">账号与加密同步</div>';
-  h+='<div class="setting-row"><div class="setting-icon" style="background:#eef3ff">@</div><div class="setting-copy"><div class="setting-title">'+(verified?maskEmail(S.account.email):"邮箱未验证")+'</div><div class="setting-desc">邮箱只存于 accounts，用于登录和设备管理；心理文本归属 vault_id，不直接挂在邮箱下面。</div></div><div class="status-pill '+(verified?"":"muted")+'">'+(verified?"已验证":"本地")+'</div></div>';
-  h+='<div style="padding:0 18px 14px"><div class="auth-grid">'+(DEMO_AUTH_MODE?'<div class="auth-status">当前为演示版，验证码固定为 <strong>'+DEMO_EMAIL_CODE+'</strong>；不会请求 Supabase 或 Resend。</div>':'<div class="auth-row"><input class="field compact-field" id="functionsUrl" maxlength="120" inputmode="url" placeholder="https://项目ref.functions.supabase.co" value="'+esc(cloudBaseUrl())+'"><button class="btn-lite" id="saveFunctionsUrl">保存 URL</button></div>')+'<input class="field compact-field" id="accountEmail" maxlength="80" inputmode="email" placeholder="输入邮箱" value="'+esc(S.account.pendingEmail||S.account.email)+'"><div class="auth-row"><input class="field compact-field" id="accountCode" maxlength="6" inputmode="numeric" placeholder="6 位验证码"><button class="btn-lite" id="accountSendCode"'+(S.authBusy||cooldown>0?' disabled':'')+'>'+(cooldown>0?cooldown+"s":"发送验证码")+'</button></div><button class="btn" id="accountVerifyCode"'+(S.authBusy?' disabled':'')+'>验证邮箱</button></div>';
-  h+='<div class="sync-mini-grid"><div class="sync-mini"><div class="sync-mini-label">vault_id</div><div class="sync-mini-value">'+esc(vaultId)+'</div></div><div class="sync-mini"><div class="sync-mini-label">设备</div><div class="sync-mini-value">'+esc(S.account.deviceName)+' · '+esc(S.account.deviceId.slice(0,8))+'</div></div></div>';
-  h+='<div class="auth-status">同步状态：<strong>'+syncStatusLabel()+'</strong>。'+(S.account.lastSyncAt?"上次同步 "+new Date(S.account.lastSyncAt).toLocaleString("zh-CN")+"。":"注册后不会默认上传心理文本。")+(S.account.lastSyncStatus?'<br>'+esc(S.account.lastSyncStatus):"")+'</div>';
-  h+='<div class="split" style="margin-top:10px"><button class="btn-lite" id="enableSync" style="flex:1"'+(!verified||S.authBusy?' disabled':'')+'>'+(syncOn?"重新加密同步":"开启加密同步")+'</button><button class="btn-ghost" id="disableSync" style="flex:1"'+(!syncOn||S.authBusy?' disabled':'')+'>关闭同步</button></div>';
-  h+='<div class="split" style="margin-top:10px"><button class="btn-lite" id="syncNow" style="flex:1"'+(!syncOn||S.authBusy?' disabled':'')+'>立即同步</button><button class="btn-lite" id="restoreSync" style="flex:1"'+(!verified||S.authBusy?' disabled':'')+'>恢复副本</button></div><div class="split" style="margin-top:10px"><button class="btn-ghost" id="clearCloudCopy" style="flex:1"'+(!verified||S.authBusy?' disabled':'')+'>清除云端副本</button></div></div></section>';
-  return h;
-}
-function renderDataLedgerCard(){
-  var ledger=dataLedgerSnapshot();
-  var syncLabel=ledger.cloudCopy==="off"?"未开启":"仅密文";
-  var lastSync=ledger.lastSyncAt?new Date(ledger.lastSyncAt).toLocaleString("zh-CN"):"从未同步";
-  return '<section class="setting-card" id="dataLedgerCard"><div class="setting-group-title">数据权限账本</div><div class="setting-row"><div class="setting-icon" style="background:#eefaf6">本</div><div class="setting-copy"><div class="setting-title">原始心理文本</div><div class="setting-desc">只保存在本机 IndexedDB；默认不同步。数据用途是个人回看和当前档案判断。</div></div><div class="status-pill">本地</div></div><div class="setting-row"><div class="setting-icon" style="background:#eef3ff">趋</div><div class="setting-copy"><div class="setting-title">聚合趋势与反馈</div><div class="setting-desc">只属于当前匿名 vault；反馈学习可单独关闭，未达到 3 次同类样本时不形成倾向。</div></div><div class="status-pill">'+(S.feedbackLearningEnabled===false?"关闭":"端侧")+'</div></div><div class="setting-row"><div class="setting-icon" style="background:#fff7ef">云</div><div class="setting-copy"><div class="setting-title">云端副本</div><div class="setting-desc">默认关闭；当前：'+esc(syncLabel)+' · 最近同步：'+esc(lastSync)+'。云端只应存在加密密文。</div></div><div class="status-pill '+(ledger.cloudCopy==="off"?"muted":"")+'">'+esc(syncLabel)+'</div></div><div class="setting-row"><div class="setting-icon" style="background:#f5f1ff">控</div><div class="setting-copy"><div class="setting-title">用户控制</div><div class="setting-desc">导出由用户主动触发；删除本地数据和云端副本分别确认。</div></div><div class="status-pill">可控</div></div></section>';
-}
-function renderHelpResourceCard(){
-  var resources=currentHelpResources();
-  return '<section class="setting-card"><div class="setting-group-title">求助资源配置</div><div class="setting-desc" style="padding:0 18px 10px">只保存在当前匿名档案；高风险时优先展示这些入口，不会自动发送消息。</div><div style="padding:0 18px 14px"><div class="real-input-grid"><label><div class="real-input-label">学校心理中心</div><input class="field compact-field" id="helpCampusName" maxlength="40" value="'+esc(resources.campus.name)+'"></label><label><div class="real-input-label">电话 / 分机</div><input class="field compact-field" id="helpCampusPhone" maxlength="30" inputmode="tel" value="'+esc(resources.campus.phone)+'"></label><label><div class="real-input-label">辅导员 / 班主任</div><input class="field compact-field" id="helpCounselorName" maxlength="40" value="'+esc(resources.counselor.name)+'"></label><label><div class="real-input-label">电话 / 联系方式</div><input class="field compact-field" id="helpCounselorPhone" maxlength="30" inputmode="tel" value="'+esc(resources.counselor.phone)+'"></label><label><div class="real-input-label">可信任联系人</div><input class="field compact-field" id="helpTrustedName" maxlength="40" value="'+esc(resources.trusted.name)+'"></label><label><div class="real-input-label">电话 / 联系方式</div><input class="field compact-field" id="helpTrustedPhone" maxlength="30" inputmode="tel" value="'+esc(resources.trusted.phone)+'"></label></div><button class="btn" id="saveHelpResources" style="margin-top:12px">保存求助资源</button></div></section>';
-}
-function saveHelpResources(){
-  var resources=currentHelpResources();
-  resources.campus.name=document.getElementById("helpCampusName").value.trim()||defaultHelpResources().campus.name;
-  resources.campus.phone=document.getElementById("helpCampusPhone").value.trim();
-  resources.counselor.name=document.getElementById("helpCounselorName").value.trim()||defaultHelpResources().counselor.name;
-  resources.counselor.phone=document.getElementById("helpCounselorPhone").value.trim();
-  resources.trusted.name=document.getElementById("helpTrustedName").value.trim()||defaultHelpResources().trusted.name;
-  resources.trusted.phone=document.getElementById("helpTrustedPhone").value.trim();
-  S.helpResources=normalizeHelpResources(resources);
-  persistState();
-  toast("求助资源已保存到当前匿名档案");
-  render();
 }
 function renderSettings(){
   var baseline=personalBaseline();
@@ -3289,13 +2898,10 @@ function renderSettings(){
     h+='<button class="setting-row" data-profile="'+esc(profile.id)+'"><div class="setting-icon" style="background:#f5f1ff">ID</div><div class="setting-copy"><div class="setting-title">'+esc(profile.name)+'</div><div class="setting-desc">'+(profile.id===S.user.id?'当前档案':'切换到这个匿名档案')+'</div></div><div class="action-arrow">›</div></button>';
   });
   h+='<div style="padding:10px 18px 14px"><input class="field compact-field" id="profileName" maxlength="16" placeholder="新档案昵称，例如 P002"><div class="split" style="margin-top:10px"><button class="btn-lite" id="createProfile" style="flex:1">创建档案</button><button class="btn-ghost" id="deleteProfile" style="flex:1">删除当前</button></div><button class="btn" id="openProfileLogin" style="margin-top:10px">回到匿名档案页</button></div></section>';
-  h+='<section class="setting-card"><div class="setting-group-title">个体化模型</div><div class="setting-row"><div class="setting-icon" style="background:#eef3ff">RISE</div><div class="setting-copy"><div class="setting-title">个人基线偏移</div><div class="setting-desc">'+esc(baseline.desc)+'</div></div><div class="status-pill">'+esc(baseline.level)+'</div></div><button class="setting-row" id="toggleFeedbackLearning"><div class="setting-icon" style="background:#fff7ef">↻</div><div class="setting-copy"><div class="setting-title">推荐反馈学习</div><div class="setting-desc">'+(S.feedbackLearningEnabled===false?'已关闭；历史反馈不会改变推荐顺序。':'已开启；至少 3 次同类反馈后才形成当前档案的个人倾向。')+'</div></div><div class="toggle'+(S.feedbackLearningEnabled===false?'':' on')+'"></div></button></section>';
+  h+='<section class="setting-card"><div class="setting-group-title">个体化模型</div><div class="setting-row"><div class="setting-icon" style="background:#eef3ff">RISE</div><div class="setting-copy"><div class="setting-title">个人基线偏移</div><div class="setting-desc">'+baseline.desc+'</div></div><div class="status-pill">'+baseline.level+'</div></div><div class="setting-row"><div class="setting-icon" style="background:#fff7ef">↻</div><div class="setting-copy"><div class="setting-title">推荐反馈学习</div><div class="setting-desc">完成干预后记录前后分数变化，下次优先推荐对当前档案更有效的动作。</div></div><div class="status-pill">端侧</div></div></section>';
   h+=renderLearningCard();
   h+=renderTrialReportCard();
-  h+=renderDataLedgerCard();
-  h+=renderHelpResourceCard();
-  h+=renderAccountSyncCard();
-  h+='<section class="setting-card"><div class="setting-group-title">隐私与安全</div><div class="setting-row"><div class="setting-icon" style="background:#eefaf6">🔒</div><div class="setting-copy"><div class="setting-title">本机分析</div><div class="setting-desc">情绪判断和原始心理文本保存在本地 IndexedDB，不把明文上传到云端。</div></div><div class="status-pill">已启用</div></div><div class="setting-row"><div class="setting-icon" style="background:#fff7ef">☁️</div><div class="setting-copy"><div class="setting-title">云端同步</div><div class="setting-desc">默认关闭；开启后先在本地加密，Supabase encrypted_items 只保存密文 blob。</div></div><div class="status-pill '+(S.account.syncEnabled?"":"muted")+'">'+(S.account.syncEnabled?"密文":"未开启")+'</div></div></section>';
+  h+='<section class="setting-card"><div class="setting-group-title">隐私与安全</div><div class="setting-row"><div class="setting-icon" style="background:#eefaf6">🔒</div><div class="setting-copy"><div class="setting-title">本机分析</div><div class="setting-desc">情绪判断在本机完成，不把你的内容上传到云端。</div></div><div class="status-pill">已启用</div></div><div class="setting-row"><div class="setting-icon" style="background:#fff7ef">☁️</div><div class="setting-copy"><div class="setting-title">云端同步</div><div class="setting-desc">当前原型默认关闭，正式版需要单独授权后再开启。</div></div><div class="status-pill muted">未开放</div></div></section>';
   h+='<section class="setting-card"><div class="setting-group-title">数据控制</div><button class="setting-row" id="exportRecords"><div class="setting-icon" style="background:#eef3ff">⬇</div><div class="setting-copy"><div class="setting-title">导出记录</div><div class="setting-desc">导出情绪、睡眠、步数、风险等级和干预完成记录，用于自我复盘或咨询前整理。</div></div><div class="action-arrow">›</div></button><button class="setting-row" id="clearLocalData"><div class="setting-icon" style="background:#fff0f0">×</div><div class="setting-copy"><div class="setting-title">删除全部本地数据</div><div class="setting-desc">删除后回到演示数据；正式版需提供更严格的二次确认。</div></div><div class="action-arrow">›</div></button></section>';
   h+='<section class="setting-card"><div class="setting-group-title">提醒</div><button class="setting-row" id="toggleReminder"><div class="setting-icon" style="background:#fff1eb">🔔</div><div class="setting-copy"><div class="setting-title">每日轻提醒</div><div class="setting-desc">'+(S.reminderOn?'已开启，晚上 20:30 提醒你回来看一眼今天。':'已关闭，不会主动提醒你回来记录。')+'</div></div><div class="toggle'+(S.reminderOn?' on':'')+'"></div></button><button class="setting-row" id="toggleSleepReminder"><div class="setting-icon" style="background:#eef3ff">🌙</div><div class="setting-copy"><div class="setting-title">睡前放松提醒</div><div class="setting-desc">'+(S.sleepReminderOn?'已开启，22:30 提醒你收尾。':'已关闭，不会主动提醒睡前放松。')+'</div></div><div class="toggle'+(S.sleepReminderOn?' on':'')+'"></div></button></section>';
   h+='<section class="setting-card"><div class="setting-group-title">记录来源</div><div class="setting-row"><div class="setting-icon" style="background:#eefaf6">❤️</div><div class="setting-copy"><div class="setting-title">演示睡眠与步数</div><div class="setting-desc">当前版本使用模拟睡眠和步数；正式 iOS 版接入健康数据前，会先征得你的授权。</div></div><div class="status-pill muted">演示数据</div></div></section>';
@@ -3319,17 +2925,6 @@ function renderSettings(){
   };
   document.getElementById("toggleReminder").onclick=function(){S.reminderOn=!S.reminderOn;refreshSettingToggle("toggleReminder",S.reminderOn?"已开启，晚上 20:30 提醒你回来看一眼今天。":"已关闭，不会主动提醒你回来记录。",S.reminderOn);};
   document.getElementById("toggleSleepReminder").onclick=function(){S.sleepReminderOn=!S.sleepReminderOn;refreshSettingToggle("toggleSleepReminder",S.sleepReminderOn?"已开启，22:30 提醒你收尾。":"已关闭，不会主动提醒睡前放松。",S.sleepReminderOn);};
-  document.getElementById("toggleFeedbackLearning").onclick=function(){S.feedbackLearningEnabled=S.feedbackLearningEnabled===false;persistState();render();};
-  document.getElementById("saveHelpResources").onclick=function(){saveHelpResources();};
-  var saveUrlBtn=document.getElementById("saveFunctionsUrl");
-  if(saveUrlBtn)saveUrlBtn.onclick=function(){saveFunctionsUrl();};
-  document.getElementById("accountSendCode").onclick=function(){requestEmailCode(false);};
-  document.getElementById("accountVerifyCode").onclick=function(){verifyEmailCode(false);};
-  document.getElementById("enableSync").onclick=function(){enableEncryptedSync();};
-  document.getElementById("disableSync").onclick=function(){disableEncryptedSync();};
-  document.getElementById("syncNow").onclick=function(){syncEncryptedNow();};
-  document.getElementById("restoreSync").onclick=function(){restoreEncryptedSync();};
-  document.getElementById("clearCloudCopy").onclick=function(){clearCloudCopy();};
   document.getElementById("exportRecords").onclick=function(){exportRecords();};
   document.getElementById("clearLocalData").onclick=function(){clearLocalData();};
   document.getElementById("goRuleLab").onclick=function(){switchTab("rules");};
@@ -3342,33 +2937,22 @@ function refreshSettingToggle(id,desc,on){
   if(text)text.textContent=desc;
   if(toggle)toggle.classList.toggle("on",!!on);
 }
-function ruleCaseRecords(item){
-  return item.expectedRecords||item.records||[item.input];
-}
-function ruleCaseExpectedRisk(item){
-  return item.expectedRisk||item.risk;
-}
-function ruleCaseExpectedPath(item){
-  return item.expectedPath||item.path;
-}
 function runRuleCases(){
   return RULE_CASES.map(function(item){
-    var records=ruleCaseRecords(item);
+    var records=item.records||[item.input];
     var latest=records[records.length-1];
     var risk=rules().assessRisk(records);
     var recommendation=rules().recommendPath(latest,risk);
     var score=rules().calculateRecoveryScore(latest,latest.completedInterventions||[]);
-    var riskOk=risk.level===ruleCaseExpectedRisk(item);
-    var pathOk=JSON.stringify(recommendation.path)===JSON.stringify(ruleCaseExpectedPath(item));
+    var riskOk=risk.level===item.risk;
+    var pathOk=JSON.stringify(recommendation.path)===JSON.stringify(item.path);
     return {
       id:item.id,
       name:item.name,
       pass:riskOk&&pathOk,
-      expected:ruleCaseExpectedRisk(item)+" / "+ruleCaseExpectedPath(item).join(" -> "),
+      expected:item.risk+" / "+item.path.join(" -> "),
       actual:risk.level+" / "+recommendation.path.join(" -> "),
-      score:score.total,
-      evidence:risk.evidence||[],
-      shouldRecommendSelfHelp:risk.shouldRecommendSelfHelp
+      score:score.total
     };
   });
 }
@@ -3376,7 +2960,7 @@ function selectedRuleScenario(){
   return RULE_CASES.find(function(item){return item.id===S.ruleScenario;})||RULE_CASES[0];
 }
 function scenarioRecordText(item){
-  var records=ruleCaseRecords(item);
+  var records=item.records||[item.input];
   var latest=records[records.length-1]||{};
   return "情绪 "+signalLabel("mood",latest.mood||latest.et)+"，睡眠 "+(latest.sleepHours||latest.sleep)+"h，步数 "+(latest.steps||latest.step)+"，连接 "+(latest.socialScore||latest.sc)+"%，备注："+(latest.note||latest.text||"无");
 }
@@ -3409,6 +2993,12 @@ function runPersonalizationCases(){
     }
   ];
 }
+var LAB_SCENARIOS=[
+  {id:"LAB-01",name:"数据不足",records:[{mood:"calm",sleepHours:7,steps:5200,socialScore:55,note:"第一次记录"}]},
+  {id:"LAB-02",name:"普通波动",records:[{mood:"calm",sleepHours:7.1,steps:6200,socialScore:62,note:"昨天较平稳"},{mood:"anxious",sleepHours:6.2,steps:4100,socialScore:38,note:"今天有点紧张"}]},
+  {id:"LAB-03",name:"高风险",records:[{mood:"calm",sleepHours:7,steps:6200,socialScore:60,note:"昨天"},{mood:"sad",sleepHours:4.2,steps:900,socialScore:6,note:"我很绝望，想从这个世界上消失"}]}
+];
+function selectedLabScenario(){return LAB_SCENARIOS.find(function(item){return item.id===S.labScenario;})||LAB_SCENARIOS[0];}
 function renderRuleLab(){
   var results=runRuleCases();
   var personalization=runPersonalizationCases();
@@ -3416,32 +3006,38 @@ function renderRuleLab(){
   var autoTotal=results.length+personalization.length;
   var autoPassed=passed+personalization.filter(function(x){return x.pass}).length;
   var selected=selectedRuleScenario();
-  var records=ruleCaseRecords(selected);
+  var records=selected.records||[selected.input];
   var latest=records[records.length-1];
   var selectedRisk=rules().assessRisk(records);
   var selectedPath=rules().recommendPath(latest,selectedRisk);
   var selectedScore=rules().calculateRecoveryScore(latest,latest.completedInterventions||[]);
+  var lab=selectedLabScenario();
+  var labTrace=window.MindPulseDecisionPolicy.evaluateState(lab.records,{source:"合成演示"});
+  var labStrategy=decisionStrategyLabel(labTrace);
   var h='<div class="page"><div class="nb nb-row"><div class="nb-back" id="ruleBack">‹</div><div><h1>规则验证</h1><div class="nb-sub">评委可现场看到规则链路是否可复现。</div></div></div><div class="page-body">';
   h+='<section class="agent-stage"><div class="agent-stage-top"><div><div class="agent-stage-tag">评委验证模式 · Safety Gate</div><div class="agent-stage-title">页面演示用例：'+passed+' / '+results.length+'</div><div class="agent-stage-desc">自动化规则测试：'+autoPassed+' / '+autoTotal+'。每条用例都调用同一套 MindPulseRules：RISE 恢复指数、风险闸门和推荐路径共同输出。</div></div><div class="agent-avatar">✓</div></div></section>';
+  h+='<section class="setting-card"><div class="setting-group-title">三状态答辩演示 · 合成演示场景</div><div style="padding:0 18px 14px"><div class="agent-options">'+LAB_SCENARIOS.map(function(item){return '<button class="agent-option '+(item.id===lab.id?'active':'')+'" data-lab-scenario="'+item.id+'">'+item.id+'</button>';}).join("")+'</div></div></section>';
+  h+='<section class="lab-result" data-lab-result><div class="lab-result-title">'+lab.id+' · '+lab.name+' · '+labStrategy+'</div><div class="setting-desc" style="margin-top:7px">每次点击均实时调用 evaluateState()，不使用写死输出。</div><div class="lab-result-grid"><div class="lab-result-cell"><strong>Reason Code</strong>'+esc(labTrace.reasonCodes.join(" / "))+'</div><div class="lab-result-cell"><strong>允许动作</strong>'+esc(labTrace.allowedActions.join(" / "))+'</div><div class="lab-result-cell"><strong>阻断动作</strong>'+esc(labTrace.blockedActions.join(" / "))+'</div><div class="lab-result-cell"><strong>来源 / 置信度</strong>'+esc(labTrace.dataSource+" / "+labTrace.confidence)+'</div></div></section>';
   h+=renderRiseExplainCard();
   h+='<section class="setting-card"><div class="setting-group-title">场景复现</div><div style="padding:0 18px 14px"><div class="agent-options" style="margin-top:8px">';
   RULE_CASES.forEach(function(item){
-    h+='<button class="agent-option'+(item.id===selected.id?' active':'')+'" data-rule-scenario="'+esc(item.id)+'">'+esc(item.id)+'</button>';
+    h+='<button class="agent-option'+(item.id===selected.id?' active':'')+'" data-rule-scenario="'+item.id+'">'+item.id+'</button>';
   });
-  h+='</div></div><div class="rule-grid" style="padding:0 10px 10px"><div class="rule-row pass"><div><div class="rule-label">'+esc(selected.id)+' · '+esc(selected.name)+'</div><div class="setting-desc">'+esc(scenarioRecordText(selected))+'<br>输出：'+esc(selectedRisk.level)+' / '+esc(selectedPath.path.join(" -> "))+' · mode='+esc(selectedRisk.mode||"action")+' · RISE '+esc(selectedScore.total)+'<br>允许：'+esc((selectedRisk.allowedActions||[]).join("、")||"—")+' · 阻止：'+esc((selectedRisk.blockedActions||[]).join("、")||"—")+'</div></div><div class="rule-status">'+(selectedRisk.level==="高风险"?"闸门触发":(selectedRisk.level==="数据不足"?"请求数据":"可自助"))+'</div></div></div></section>';
+  h+='</div></div><div class="rule-grid" style="padding:0 10px 10px"><div class="rule-row pass"><div><div class="rule-label">'+selected.id+' · '+selected.name+'</div><div class="setting-desc">'+scenarioRecordText(selected)+'<br>输出：'+selectedRisk.level+' / '+selectedPath.path.join(" -> ")+' · RISE '+selectedScore.total+'</div></div><div class="rule-status">'+(selectedRisk.level==="高风险"?"闸门触发":"可自助")+'</div></div></div></section>';
   h+='<section class="setting-card"><div class="setting-group-title">个性化用例</div><div class="rule-grid" style="padding:0 10px 10px">';
   personalization.forEach(function(item){
-    h+='<div class="rule-row '+(item.pass?'pass':'fail')+'"><div><div class="rule-label">'+esc(item.id)+' · '+esc(item.name)+'</div><div class="setting-desc">预期：'+esc(item.expected)+'<br>实际：'+esc(item.actual)+'</div></div><div class="rule-status">'+(item.pass?'通过':'需检查')+'</div></div>';
+    h+='<div class="rule-row '+(item.pass?'pass':'fail')+'"><div><div class="rule-label">'+item.id+' · '+item.name+'</div><div class="setting-desc">预期：'+item.expected+'<br>实际：'+item.actual+'</div></div><div class="rule-status">'+(item.pass?'通过':'需检查')+'</div></div>';
   });
   h+='</div></section>';
   h+='<section class="setting-card"><div class="setting-group-title">用例结果</div><div class="rule-grid" style="padding:0 10px 10px">';
   results.forEach(function(item){
-    h+='<div class="rule-row '+(item.pass?'pass':'fail')+'"><div><div class="rule-label">'+esc(item.id)+' · '+esc(item.name)+'</div><div class="setting-desc">预期：'+esc(item.expected)+'<br>实际：'+esc(item.actual)+' · 恢复指数 '+esc(item.score)+'</div></div><div class="rule-status">'+(item.pass?'通过':'需检查')+'</div></div>';
+    h+='<div class="rule-row '+(item.pass?'pass':'fail')+'"><div><div class="rule-label">'+item.id+' · '+item.name+'</div><div class="setting-desc">预期：'+item.expected+'<br>实际：'+item.actual+' · 恢复指数 '+item.score+'</div></div><div class="rule-status">'+(item.pass?'通过':'需检查')+'</div></div>';
   });
   h+='</div></section><section class="boundary">规则验证只能证明当前透明规则链路可复现，不代表医学诊断有效性。真实有效性仍需要匿名用户试用和专业审核。</section>';
   h+='</div></div>';
   app.insertAdjacentHTML("beforeend",h);
   document.getElementById("ruleBack").onclick=function(){switchTab("settings");};
+  document.querySelectorAll("[data-lab-scenario]").forEach(function(btn){btn.onclick=function(){S.labScenario=btn.dataset.labScenario;render();};});
   document.querySelectorAll("[data-rule-scenario]").forEach(function(btn){
     btn.onclick=function(){S.ruleScenario=btn.dataset.ruleScenario;render();};
   });
@@ -3455,45 +3051,27 @@ function renderPulseDetail(){
   var result=recoveryScoreResult();
   var b=result.breakdown;
   var risk=riskAssessment();
+  var trace=currentDecisionTrace();
   var path=currentPlan();
   var names=path.chain.map(function(id){var item=INTV.find(function(x){return x.id===id});return item?item.title:"求助入口";});
-  var source=last.dataInputMode==="manual-web"?"用户手动输入":(last.dataSource||"自评 / 演示记录");
-  var data=result.dataCompleteness||{available:0,required:4,missing:[]};
-  var strategy=risk;
-  var baseline=personalBaseline();
+  var source=last.dataInputMode==="manual-web"?"用户手动输入":"演示映射或样例数据";
   function scoreRow(key,label){
     var max=SCORE_LIMITS[key]||100;
-    var contribution=(result.contributions||[]).find(function(item){return item.signal===key;})||{};
-    var present=contribution.present!==false;
-    var value=present?(b[key]||0):"未记录";
-    var pct=present?Math.max(0,Math.min(100,Math.round((b[key]||0)/max*100))):0;
-    return '<div class="detail-row"><div><div class="detail-label">'+esc(label)+' / '+esc(max)+(present?"":" · 未纳入")+'</div><div class="score-meter"><span style="width:'+pct+'%"></span></div></div><div class="detail-value">'+esc(value)+'</div></div>';
+    var value=b[key]||0;
+    var pct=Math.max(0,Math.min(100,Math.round(value/max*100)));
+    return '<div class="detail-row"><div><div class="detail-label">'+label+' / '+max+'</div><div class="score-meter"><span style="width:'+pct+'%"></span></div></div><div class="detail-value">'+value+'</div></div>';
   }
-  function simulateBaselineScore(key){
-    var stat=baseline.signals&&baseline.signals[key];
-    if(!stat||stat.baseline==null||!stat.present)return null;
-    var simulated=Object.assign({},last,{signalPresence:Object.assign({},last.signalPresence||{})});
-    simulated.signalPresence[key]=true;
-    if(key==="mood"){simulated.moodScore=stat.baseline;simulated.ii=stat.baseline;}
-    if(key==="sleep"){simulated.sleepHours=stat.baseline;simulated.sleep=stat.baseline;}
-    if(key==="steps"){simulated.steps=stat.baseline;simulated.step=stat.baseline;}
-    if(key==="social"){simulated.socialScore=stat.baseline;simulated.sc=stat.baseline;}
-    return rules().calculateRecoveryScore(simulated,simulated.completedInterventions||[]).total-result.total;
-  }
-  var simulatedSleep=simulateBaselineScore("sleep");
-  var contributionText=(result.contributions||[]).map(function(item){
-    return '<div class="simple-item"><div class="simple-index">'+(item.present?"+":"—")+'</div><div class="simple-copy">'+esc(item.label)+'：'+esc(item.present?"贡献 "+item.share+" 分 · "+item.reason:item.reason)+'</div></div>';
-  }).join("");
   var h='<div class="overlay-page"><div class="nb nb-row"><div class="nb-back" id="detailBack">‹</div><div><h1>判断详情</h1><div class="nb-sub">把分数、依据和下一步讲清楚。</div></div></div><div class="agent-shell">';
-  h+='<div class="agent-kicker">可解释恢复指数</div><div class="agent-heading">恢复指数 '+esc(result.total)+'</div><div class="agent-note">'+esc(result.explanation||scoreExplain())+'</div>';
+  h+='<div class="agent-kicker">可解释恢复指数</div><div class="agent-heading">恢复指数 '+result.total+'</div><div class="agent-note">'+esc(result.explanation||scoreExplain())+'</div>';
   h+='<div class="agent-block"><div class="agent-result-title">RISE 方法</div><div class="agent-result-text">Rhythm 节奏 + Interaction 连接 + Self-report 自评 + Engagement 干预反馈。</div></div>';
+  h+='<div class="agent-block"><div class="agent-result-title">决策追踪</div><div class="detail-grid"><div class="detail-row"><div class="detail-label">决策编号</div><div class="detail-value">'+esc(trace.decisionId)+'</div></div><div class="detail-row"><div class="detail-label">策略版本</div><div class="detail-value">'+esc(trace.policyVersion)+'</div></div><div class="detail-row"><div class="detail-label">数据来源 / 置信度</div><div class="detail-value">'+esc(trace.dataSource+' / '+trace.confidence)+'</div></div></div></div>';
+  h+='<div class="agent-block"><div class="agent-result-title">Reason Code</div><div class="agent-result-text">'+esc(trace.reasonCodes.join(" / "))+'</div><div class="pulse-insight" style="background:#eefaf6;color:var(--text);border:1px solid #d4ede5">判断证据：'+esc(trace.evidence.join("；"))+'</div></div>';
+  h+='<div class="agent-block"><div class="agent-result-title">允许动作</div><div class="agent-result-text">'+esc(trace.allowedActions.join(" / "))+'</div><div class="agent-result-title" style="margin-top:12px">阻断动作</div><div class="agent-result-text">'+esc(trace.blockedActions.join(" / ")||"无")+'</div></div>';
   h+='<div class="agent-block"><div class="agent-result-title">分数拆解</div><div class="detail-grid">'+scoreRow("mood","情绪")+scoreRow("sleep","睡眠")+scoreRow("steps","活动")+scoreRow("social","连接")+scoreRow("intervention","干预完成")+'</div></div>';
-  h+='<div class="agent-block"><div class="agent-result-title">贡献解释</div><div class="agent-result-text">每个分项只在数据存在时参与；缺失项不会被默认为 0 分。</div><div class="simple-list">'+contributionText+'</div></div>';
-  h+='<div class="agent-block"><div class="agent-result-title">个人基线对比</div><div class="agent-result-text">'+esc(baseline.desc)+'</div><div class="detail-grid"><div class="detail-row"><div class="detail-label">数据完整度</div><div class="detail-value">'+esc(data.available+"/"+data.required)+" · "+esc(data.percent)+"%"+'</div></div><div class="detail-row"><div class="detail-label">置信度</div><div class="detail-value">'+esc(baseline.confidenceText||"较低")+'</div></div></div></div>';
-  h+='<div class="agent-block"><div class="agent-result-title">反事实模拟</div><div class="agent-result-text">'+esc(simulatedSleep==null?"睡眠基线还未建立，暂不做模拟。":"如果只把睡眠数值模拟回个人基线，当前分数将变化约 "+(simulatedSleep>=0?"+":"")+simulatedSleep+" 分；这只是贡献模拟，不代表因果或诊断。")+'</div></div>';
-  h+='<div class="agent-block"><div class="agent-result-title">风险策略</div><div class="agent-result-text">'+esc(risk.level)+' · '+esc(risk.tag)+' · mode='+esc(risk.mode||"action")+'</div><div class="pulse-insight" style="background:#fff7ef;color:var(--text);border:1px solid var(--line)">'+esc(risk.explanation||risk.reason||risk.desc)+'</div><div class="detail-grid"><div class="detail-row"><div class="detail-label">允许动作</div><div class="detail-value">'+esc((risk.allowedActions||[]).join("、")||"—")+'</div></div><div class="detail-row"><div class="detail-label">阻止动作</div><div class="detail-value">'+esc((risk.blockedActions||[]).join("、")||"—")+'</div></div></div></div>';
-  h+='<div class="agent-block"><div class="agent-result-title">推荐路径</div><div class="agent-result-text">'+esc(names.join(" -> "))+'</div><div class="pulse-insight" style="background:#eefaf6;color:var(--text);border:1px solid #d4ede5">排序依据：'+esc(path.reasons.join("、"))+'。'+(risk.level==="高风险"?"高风险时不继续推荐普通自助干预。":"")+'</div></div>';
-  h+='<div class="agent-block"><div class="agent-result-title">数据来源</div><div class="detail-grid"><div class="detail-row"><div class="detail-label">输入模式</div><div class="detail-value">'+esc(source)+'</div></div><div class="detail-row"><div class="detail-label">睡眠 / 步数 / 连接</div><div class="detail-value">'+metricText(last.sleep,1,"h")+' · '+metricText(last.step,0)+' · '+metricText(last.sc,0,"%")+'</div></div></div></div>';
+  h+='<div class="agent-block"><div class="agent-result-title">个人基线对比</div><div class="agent-result-text">'+personalBaseline().desc+'</div></div>';
+  h+='<div class="agent-block"><div class="agent-result-title">安全策略判断</div><div class="agent-result-text">'+risk.level+' · '+risk.tag+'</div><div class="pulse-insight" style="background:#fff7ef;color:var(--text);border:1px solid var(--line)">'+esc(risk.reason||risk.desc)+'</div></div>';
+  h+='<div class="agent-block"><div class="agent-result-title">当前策略允许的下一步</div><div class="agent-result-text">'+names.join(" -> ")+'</div><div class="pulse-insight" style="background:#eefaf6;color:var(--text);border:1px solid #d4ede5">排序依据：'+esc(path.reasons.join("、"))+'。'+(risk.level==="高风险"?"高风险时不继续推荐普通低负担行动。":"")+'</div></div>';
+  h+='<div class="agent-block"><div class="agent-result-title">数据来源</div><div class="detail-grid"><div class="detail-row"><div class="detail-label">输入模式</div><div class="detail-value">'+source+'</div></div><div class="detail-row"><div class="detail-label">睡眠 / 步数 / 连接</div><div class="detail-value">'+last.sleep.toFixed(1)+'h · '+last.step+' · '+last.sc+'%</div></div></div></div>';
   h+='</div></div>';
   d.innerHTML=h;
   app.appendChild(d);
@@ -3510,21 +3088,21 @@ function renderSurvey(){
     h+='<section class="survey-hero"><div class="survey-hero-top"><div><div class="survey-hero-kicker">经典自查入口</div><div class="survey-hero-title">你想先看哪一类状态？</div><div class="survey-hero-copy">这里不会直接给诊断，只把结果交给规则 agent 做自我觉察分析。</div></div><div class="survey-hero-icon">☁️</div></div></section>';
     h+='<section class="survey-choice-panel">';
     SURVEYS.forEach(function(item){
-      h+='<button class="survey-choice" data-survey-start="'+esc(item.id)+'"><div class="survey-choice-icon" style="background:#eefaf6">'+esc(item.icon)+'</div><div class="survey-choice-main"><div class="survey-choice-title">'+esc(item.title)+'</div><div class="survey-choice-copy">'+esc(item.short)+' · '+esc(item.range)+'</div></div><div class="action-arrow">›</div></button>';
+      h+='<button class="survey-choice" data-survey-start="'+item.id+'"><div class="survey-choice-icon" style="background:#eefaf6">'+item.icon+'</div><div class="survey-choice-main"><div class="survey-choice-title">'+item.title+'</div><div class="survey-choice-copy">'+item.short+' · '+item.range+'</div></div><div class="action-arrow">›</div></button>';
     });
     h+='</section>';
     h+='<div class="survey-actions-bottom"><button class="btn-lite" id="surveyCancel">稍后再说</button></div>';
   }else if(S.surveyResult){
     var result=S.surveyResult;
     var next=INTV.find(function(item){return item.id===result.next;})||INTV[0];
-    h+='<section class="survey-result-screen"><div class="survey-hero"><div class="survey-hero-top"><div><div class="survey-hero-kicker">规则 agent 分析</div><div class="survey-hero-title">'+esc(result.level)+' · '+esc(result.score)+' / '+esc(result.range)+'</div><div class="survey-hero-copy">'+esc(result.advice)+'</div></div><div class="survey-hero-icon">'+esc(survey.icon)+'</div></div></div><div class="quiet-card" style="margin:0"><div class="quiet-title">为什么这么判断</div><div class="simple-list">';
+    h+='<section class="survey-result-screen"><div class="survey-hero"><div class="survey-hero-top"><div><div class="survey-hero-kicker">规则 agent 分析</div><div class="survey-hero-title">'+result.level+' · '+result.score+' / '+result.range+'</div><div class="survey-hero-copy">'+result.advice+'</div></div><div class="survey-hero-icon">'+survey.icon+'</div></div></div><div class="quiet-card" style="margin:0"><div class="quiet-title">为什么这么判断</div><div class="simple-list">';
     result.flags.forEach(function(flag){h+='<div class="simple-item"><div class="simple-index">证</div><div class="simple-copy">'+esc(flag)+'</div></div>';});
-    h+='</div><div class="survey-result-band"><div class="survey-result-title">建议先做「'+esc(next.title)+'」</div><div class="survey-result-copy">这不是治疗建议，只是根据问卷分数和今日状态，给你一个低负担下一步。</div></div></div></section><div class="survey-actions-bottom"><button class="btn" id="surveyNextAction">开始</button><button class="btn-lite" id="surveyAgain">再测</button></div>';
+    h+='</div><div class="survey-result-band"><div class="survey-result-title">建议先做「'+next.title+'」</div><div class="survey-result-copy">这不是治疗建议，只是根据问卷分数和今日状态，给你一个低负担下一步。</div></div></div></section><div class="survey-actions-bottom"><button class="btn" id="surveyNextAction">开始</button><button class="btn-lite" id="surveyAgain">再测</button></div>';
   }else{
     var index=Math.max(0,Math.min(S.surveyStep-1,survey.questions.length-1));
     var answered=surveyAnswerCount();
     var pct=Math.round(answered/survey.questions.length*100);
-    h+='<section class="survey-hero"><div class="survey-hero-top"><div><div class="survey-hero-kicker">'+esc(survey.title)+'</div><div class="survey-hero-title">第 '+(index+1)+' 题</div><div class="survey-hero-copy">按最近一段时间的真实感受选择。PSS 中积极题会自动反向计分。</div></div><div class="survey-hero-icon">'+esc(survey.icon)+'</div></div><div class="survey-progress-line" style="margin-top:14px"><span style="width:'+pct+'%"></span></div></section>';
+    h+='<section class="survey-hero"><div class="survey-hero-top"><div><div class="survey-hero-kicker">'+survey.title+'</div><div class="survey-hero-title">第 '+(index+1)+' 题</div><div class="survey-hero-copy">按最近一段时间的真实感受选择。PSS 中积极题会自动反向计分。</div></div><div class="survey-hero-icon">'+survey.icon+'</div></div><div class="survey-progress-line" style="margin-top:14px"><span style="width:'+pct+'%"></span></div></section>';
     h+='<section class="survey-question-panel"><div class="survey-question-card"><div class="survey-question-count">'+(index+1)+' / '+survey.questions.length+'</div><div class="survey-question-big">'+esc(survey.questions[index])+'</div></div><div class="survey-option-stack">';
     SURVEY_OPTIONS.forEach(function(label,value){
       h+='<button class="survey-option-wide'+(S.surveyAnswers[index]===value?' active':'')+'" data-survey-answer="'+index+'" data-survey-value="'+value+'">'+label+'</button>';
@@ -3603,7 +3181,7 @@ function renderDayDetail(){
   var mood=em(day.et);
   var d=document.createElement("div");
   d.className="modal";
-  d.innerHTML='<div class="panel"><div class="handle"></div><div class="saved-state" style="min-height:auto;padding-top:16px;padding-bottom:16px"><div style="font-size:56px">'+mood.e+'</div><div class="saved-title" style="font-size:20px">'+mood.l+'</div><div class="saved-copy">'+esc(day.dl)+' · '+esc(day.ds)+'</div></div><div class="path-card" style="margin:0;background:#fffaf6"><div class="path-desc" style="margin-top:0;color:var(--text)">'+esc(day.text)+'</div></div><div class="split"><div class="metric-card" style="margin:0;flex:1"><div class="metric-label">睡眠</div><div class="metric-value">'+day.sleep.toFixed(1)+'h</div></div><div class="metric-card" style="margin:0;flex:1"><div class="metric-label">步数</div><div class="metric-value">'+day.step+'</div></div><div class="metric-card" style="margin:0;flex:1"><div class="metric-label">社交</div><div class="metric-value">'+day.sc+'%</div></div></div><button class="btn" id="closeDay" style="margin-top:16px">关闭</button></div>';
+  d.innerHTML='<div class="panel"><div class="handle"></div><div class="saved-state" style="min-height:auto;padding-top:16px;padding-bottom:16px"><div style="font-size:56px">'+mood.e+'</div><div class="saved-title" style="font-size:20px">'+mood.l+'</div><div class="saved-copy">'+day.dl+' · '+day.ds+'</div></div><div class="path-card" style="margin:0;background:#fffaf6"><div class="path-desc" style="margin-top:0;color:var(--text)">'+day.text+'</div></div><div class="split"><div class="metric-card" style="margin:0;flex:1"><div class="metric-label">睡眠</div><div class="metric-value">'+day.sleep.toFixed(1)+'h</div></div><div class="metric-card" style="margin:0;flex:1"><div class="metric-label">步数</div><div class="metric-value">'+day.step+'</div></div><div class="metric-card" style="margin:0;flex:1"><div class="metric-label">社交</div><div class="metric-value">'+day.sc+'%</div></div></div><button class="btn" id="closeDay" style="margin-top:16px">关闭</button></div>';
   app.appendChild(d);
   d.onclick=function(ev){if(ev.target===d){S.dd=null;render();}};
   d.querySelector("#closeDay").onclick=function(){S.dd=null;render();};
@@ -3617,7 +3195,7 @@ function renderCheckin(){
     var feedback=checkinFeedback();
     var actionLabel=feedback.level==="高风险"?"打开求助入口":"开始这一步";
     h+='<div class="saved-state"><div style="font-size:56px">✨</div><div class="saved-title">已经记下这一刻</div><div class="saved-copy">它会保留在今日时间线里，晚一点也能回看。</div></div>';
-    h+='<div class="agent-block" style="margin-top:14px"><div class="agent-result-title">此刻反馈 · '+esc(feedback.level)+' / '+esc(feedback.tag)+'</div><div class="feedback-summary">'+esc(feedback.title)+'</div><div class="feedback-tags">'+feedback.evidence.map(function(x){return '<span class="feedback-tag">'+esc(x)+'</span>';}).join("")+'</div><div class="feedback-grid"><div class="feedback-card"><div class="feedback-label">判断依据</div><div class="feedback-copy">'+esc(feedback.reason)+'</div></div><div class="feedback-card"><div class="feedback-label">备注处理</div><div class="feedback-copy">'+esc(feedback.note)+'</div></div><div class="feedback-card"><div class="feedback-label">下一步</div><div class="feedback-copy">'+esc(feedback.next)+'</div></div></div><div class="agent-result-actions"><button class="btn" id="checkStartAction">'+esc(actionLabel)+'</button><button class="btn-ghost" id="checkTrend">看今日/周报</button><button class="btn-ghost" id="checkClose">稍后再说</button></div></div>';
+    h+='<div class="agent-block" style="margin-top:14px"><div class="agent-result-title">此刻反馈 · '+feedback.level+' / '+feedback.tag+'</div><div class="feedback-summary">'+feedback.title+'</div><div class="feedback-tags">'+feedback.evidence.map(function(x){return '<span class="feedback-tag">'+x+'</span>';}).join("")+'</div><div class="feedback-grid"><div class="feedback-card"><div class="feedback-label">判断依据</div><div class="feedback-copy">'+feedback.reason+'</div></div><div class="feedback-card"><div class="feedback-label">备注处理</div><div class="feedback-copy">'+feedback.note+'</div></div><div class="feedback-card"><div class="feedback-label">下一步</div><div class="feedback-copy">'+feedback.next+'</div></div></div><div class="agent-result-actions"><button class="btn" id="checkStartAction">'+actionLabel+'</button><button class="btn-ghost" id="checkTrend">看今日/周报</button><button class="btn-ghost" id="checkClose">稍后再说</button></div></div>';
   }else if(S.ciStep===1){
     h+='<div class="sheet-title">今天更接近哪一种感觉？</div><div class="sheet-desc">选一个最像现在的，不用想太久。</div><div class="check-grid">';
     EMO.forEach(function(item){
@@ -3638,7 +3216,7 @@ function renderCheckin(){
     h+='<div class="agent-block"><div class="agent-result-title">真实数据输入</div><div class="real-input-grid"><label><div class="real-input-label">睡眠小时</div><input class="field compact-field" id="realSleep" type="number" min="0" max="12" step="0.1" placeholder="6.5" value="'+esc(sleepVal)+'"></label><label><div class="real-input-label">今日步数</div><input class="field compact-field" id="realSteps" type="number" min="0" max="40000" step="100" placeholder="4200" value="'+esc(stepVal)+'"></label><label class="wide"><div class="real-input-label">社交连接度 <span id="socialLive">'+socialVal+'%</span></div><input class="range-field" id="realSocial" type="range" min="0" max="100" step="1" value="'+socialVal+'"><div class="range-value">0 表示很少连接，100 表示连接感很强。</div></label></div></div>';
     h+='<div class="split"><button class="btn-ghost" id="checkBack" style="flex:1">上一步</button><button class="btn" id="checkNext3" style="flex:1">继续</button></div>';
   }else{
-    h+='<div class="sheet-title">要不要顺手写一句？</div><div class="sheet-desc">可选。几句话、几个词，甚至一个念头都可以。</div><textarea class="field" rows="4" id="checkInput" placeholder="比如：刚才有点生气，现在稍微松了一点。">'+esc(S.ciTxt)+'</textarea><div class="split"><button class="btn-ghost" id="checkBack" style="flex:1">上一步</button><button class="btn" id="checkSave" style="flex:1">保存此刻</button></div>';
+    h+='<div class="sheet-title">要不要顺手写一句？</div><div class="sheet-desc">可选。几句话、几个词，甚至一个念头都可以。</div><textarea class="field" rows="4" id="checkInput" placeholder="比如：刚才有点生气，现在稍微松了一点。">'+S.ciTxt+'</textarea><div class="split"><button class="btn-ghost" id="checkBack" style="flex:1">上一步</button><button class="btn" id="checkSave" style="flex:1">保存此刻</button></div>';
   }
   h+='</div>';
   d.innerHTML=h;
@@ -3720,7 +3298,7 @@ function refreshAgent(){
 }
 function renderAgentHome(){
   if(S.agentStep===0){
-    return '<div class="agent-kicker">心晴已先看过你的节奏</div><div class="agent-heading">我先说我观察到的，不急着让你回答。</div><div class="agent-note">'+esc(agentObservation())+'</div><div class="agent-block"><div class="agent-result-title">我建议的第一条路径</div><div class="agent-result-text">'+esc(agentPlanText())+'</div><div class="pulse-insight" style="background:#fff7ef;color:var(--text);border:1px solid var(--line)">依据：'+esc(dataEvidenceLine())+'</div><div class="agent-result-actions"><button class="btn" id="agentAcceptPlan">按这条走</button><button class="btn-ghost" id="agentPersonalize">我想补充一下</button></div></div>';
+    return '<div class="agent-kicker">心晴已先看过你的节奏</div><div class="agent-heading">我先说我观察到的，不急着让你回答。</div><div class="agent-note">'+agentObservation()+'</div><div class="agent-block"><div class="agent-result-title">我建议的第一条路径</div><div class="agent-result-text">'+agentPlanText()+'</div><div class="pulse-insight" style="background:#fff7ef;color:var(--text);border:1px solid var(--line)">依据：'+dataEvidenceLine()+'</div><div class="agent-result-actions"><button class="btn" id="agentAcceptPlan">按这条走</button><button class="btn-ghost" id="agentPersonalize">我想补充一下</button></div></div>';
   }
   if(S.agentStep===1){
     return '<div class="agent-kicker">你来校准我</div><div class="agent-heading">如果我刚刚说得不完全准，你现在更接近哪种状态？</div><div class="agent-note">这一步不是问卷，是让我把判断调得更像你。</div><div class="agent-block"><div class="agent-options">'+["有点累","有点慌","有点低落","有点烦","还不错"].map(function(x){return '<button class="agent-option" data-agent-value="'+x+'">'+x+'</button>';}).join("")+'</div></div>';
@@ -3732,7 +3310,7 @@ function renderAgentHome(){
     return renderAgentHomeResult();
   }
   if(S.agentStep===3){
-    return '<div class="agent-kicker">补一句会更准</div><div class="agent-heading">要不要告诉我今天发生了什么？</div><div class="agent-note">可选。哪怕只是一句，也够我把建议调得更像你自己。</div><div class="agent-block"><textarea class="field" id="agentInput" rows="4" placeholder="比如：今天复习得很慢，一想到ddl就紧张。">'+esc(S.agentTxt)+'</textarea><button class="btn" id="agentFinish" style="margin-top:14px">生成我的下一步</button></div>';
+    return '<div class="agent-kicker">补一句会更准</div><div class="agent-heading">要不要告诉我今天发生了什么？</div><div class="agent-note">可选。哪怕只是一句，也够我把建议调得更像你自己。</div><div class="agent-block"><textarea class="field" id="agentInput" rows="4" placeholder="比如：今天复习得很慢，一想到ddl就紧张。">'+S.agentTxt+'</textarea><button class="btn" id="agentFinish" style="margin-top:14px">生成我的下一步</button></div>';
   }
   return renderAgentHomeResult();
 }
@@ -3745,9 +3323,9 @@ function renderAgentHomeResult(){
     "找个人说说":["friend","发出那一句","help","整理求助内容"],
     "把思绪理顺":["journal","倒出来一点","breathe","先把身体降下来"]
   };
-  var extra=S.agentTxt&&S.agentTxt.trim()?('你提到“'+esc(S.agentTxt.length>22?S.agentTxt.slice(0,22)+'…':S.agentTxt)+'”，说明这件事已经有点压住你了。 '):"";
+  var extra=S.agentTxt&&S.agentTxt.trim()?('你提到“'+(S.agentTxt.length>22?S.agentTxt.slice(0,22)+'…':S.agentTxt)+'”，说明这件事已经有点压住你了。 '):"";
   var btns=btnMap[S.agentQ2]||["breathe","先降下来","journal","倒出来一点"];
-  return '<div class="agent-kicker">整理结果</div><div class="agent-heading">我把现在的你整理成这样。</div><div class="agent-block"><div class="agent-result-title">你现在的状态</div><div class="agent-result-text">你像是'+esc(moodMap[S.agentQ1]||S.agentQ1)+'。'+extra+'现在最适合的第一步，是'+esc(actMap[S.agentQ2]||S.agentQ2)+'。</div><div class="pulse-insight" style="background:#fff7ef;color:var(--text);border:1px solid var(--line)">我的判断依据：'+esc(dataEvidenceLine())+'</div><div class="agent-result-actions"><button class="btn" data-agent-go="'+esc(btns[0])+'">'+esc(btns[1])+'</button><button class="btn-ghost" data-agent-alt="'+esc(btns[2])+'">'+esc(btns[3])+'</button></div></div>';
+  return '<div class="agent-kicker">整理结果</div><div class="agent-heading">我把现在的你整理成这样。</div><div class="agent-block"><div class="agent-result-title">你现在的状态</div><div class="agent-result-text">你像是'+(moodMap[S.agentQ1]||S.agentQ1)+'。'+extra+'现在最适合的第一步，是'+(actMap[S.agentQ2]||S.agentQ2)+'。</div><div class="pulse-insight" style="background:#fff7ef;color:var(--text);border:1px solid var(--line)">我的判断依据：'+dataEvidenceLine()+'</div><div class="agent-result-actions"><button class="btn" data-agent-go="'+btns[0]+'">'+btns[1]+'</button><button class="btn-ghost" data-agent-alt="'+btns[2]+'">'+btns[3]+'</button></div></div>';
 }
 function renderAgentCompanion(){
   if(S.agentStep===0){
@@ -3759,7 +3337,7 @@ function renderAgentCompanion(){
     "找人连接":{title:"先让一个人知道你的状态",text:"你现在更需要的是连接，不是独自把所有情绪想明白。",go:["friend","发出那一句","help","整理求助内容"]}
   };
   var item=map[S.agentQ1]||map["缓一下"];
-  return '<div class="agent-kicker">新的路径</div><div class="agent-heading">'+esc(item.title)+'</div><div class="agent-block"><div class="agent-result-title">为什么这样排</div><div class="agent-result-text">'+esc(item.text)+'</div><div class="agent-result-actions"><button class="btn" data-agent-go="'+esc(item.go[0])+'">'+esc(item.go[1])+'</button><button class="btn-ghost" data-agent-alt="'+esc(item.go[2])+'">'+esc(item.go[3])+'</button></div></div>';
+  return '<div class="agent-kicker">新的路径</div><div class="agent-heading">'+item.title+'</div><div class="agent-block"><div class="agent-result-title">为什么这样排</div><div class="agent-result-text">'+item.text+'</div><div class="agent-result-actions"><button class="btn" data-agent-go="'+item.go[0]+'">'+item.go[1]+'</button><button class="btn-ghost" data-agent-alt="'+item.go[2]+'">'+item.go[3]+'</button></div></div>';
 }
 function renderAgentHelp(){
   if(S.agentFlow==="style"&&S.agentStep===0){
@@ -3772,12 +3350,12 @@ function renderAgentHelp(){
     return '<div class="agent-kicker">继续</div><div class="agent-heading">你更希望对方怎么帮你？</div><div class="agent-note">不用太精确，大概选一个方向就够了。</div><div class="agent-block"><div class="agent-options"><button class="agent-option" data-agent-value="listen">听我说说</button><button class="agent-option" data-agent-value="stay">陪我待一会儿</button><button class="agent-option" data-agent-value="connect">帮我联系资源</button><button class="agent-option" data-agent-value="unsure">我还没想清楚</button></div></div>';
   }
   if(S.agentStep===2){
-    return '<div class="agent-kicker">补一句会更像你</div><div class="agent-heading">最近发生了什么？</div><div class="agent-note">可选。写一句，我会把它顺进整段话里。</div><div class="agent-block"><textarea class="field" id="agentInput" rows="4" placeholder="比如：最近论文压得我一直睡不好。">'+esc(S.agentTxt)+'</textarea><button class="btn" id="agentFinish" style="margin-top:14px">生成话术草稿</button></div>';
+    return '<div class="agent-kicker">补一句会更像你</div><div class="agent-heading">最近发生了什么？</div><div class="agent-note">可选。写一句，我会把它顺进整段话里。</div><div class="agent-block"><textarea class="field" id="agentInput" rows="4" placeholder="比如：最近论文压得我一直睡不好。">'+S.agentTxt+'</textarea><button class="btn" id="agentFinish" style="margin-top:14px">生成话术草稿</button></div>';
   }
   var who=S.agentQ1||"counselor";
   var labelMap={counselor:"老师",friend:"朋友",family:"家人"};
   var helpText=composeHelpText(who,S.agentQ2||"listen",S.agentTxt||"",S.agentStyle);
-  return '<div class="agent-kicker">话术草稿</div><div class="agent-heading">先看一眼，再决定要不要复制。</div><div class="agent-block"><div class="agent-result-title">给'+esc(labelMap[who])+'的草稿</div><div class="agent-result-text" style="white-space:pre-wrap">'+esc(helpText)+'</div><div class="agent-result-actions"><button class="btn" id="agentCopy">复制草稿</button><button class="btn-ghost" id="agentRewrite">再换一种说法</button></div></div><div class="boundary" style="margin:14px 0 0">如果你现在已经有强烈绝望感、自伤想法，或者完全睡不着，请优先联系热线、老师或身边可信任的大人。</div>';
+  return '<div class="agent-kicker">话术草稿</div><div class="agent-heading">先看一眼，再决定要不要复制。</div><div class="agent-block"><div class="agent-result-title">给'+labelMap[who]+'的草稿</div><div class="agent-result-text" style="white-space:pre-wrap">'+helpText+'</div><div class="agent-result-actions"><button class="btn" id="agentCopy">复制草稿</button><button class="btn-ghost" id="agentRewrite">再换一种说法</button></div></div><div class="boundary" style="margin:14px 0 0">如果你现在已经有强烈绝望感、自伤想法，或者完全睡不着，请优先联系热线、老师或身边可信任的大人。</div>';
 }
 function bindAgentEvents(){
   var accept=document.getElementById("agentAcceptPlan");
@@ -3889,7 +3467,7 @@ function renderFullPage(title,body){
   if(old)old.remove();
   var d=document.createElement("div");
   d.className="full intervention-overlay";
-  d.innerHTML='<div class="full-page"><div class="nb nb-row"><div class="nb-back" id="intvBack">‹</div><div><h1>'+esc(title)+'</h1><div class="nb-sub">先把这一步做完，其他事情可以晚一点再说。</div></div></div>'+body+'</div>';
+  d.innerHTML='<div class="full-page"><div class="nb nb-row"><div class="nb-back" id="intvBack">‹</div><div><h1>'+title+'</h1><div class="nb-sub">先把这一步做完，其他事情可以晚一点再说。</div></div></div>'+body+'</div>';
   app.appendChild(d);
   document.getElementById("intvBack").onclick=function(){closeIntervention();};
 }
@@ -4134,7 +3712,7 @@ function renderBreathePage(){
 }
 function renderJournalPage(){
   var saved=S.journalSaved;
-  var body=saved?'<div class="saved-state"><div style="font-size:56px">📝</div><div class="saved-title">已经记下来了</div><div class="saved-copy">记录本身，就是在给自己留一个出口。</div><button class="btn" id="journalAgain" style="margin-top:18px;max-width:220px">再写一篇</button></div>':'<div class="agent-shell"><div class="agent-heading">写几句就够了。</div><div class="agent-note">不用完整，不用漂亮。把脑子里最吵的那句话写出来，通常就会轻一点。</div><div class="agent-block"><textarea class="field" rows="8" id="journalInput" placeholder="今天发生了什么？你现在最明显的感觉是什么？">'+esc(S.journalDraft)+'</textarea><div class="stage-actions"><button class="btn" id="journalSave">保存这段记录</button></div></div></div>';
+  var body=saved?'<div class="saved-state"><div style="font-size:56px">📝</div><div class="saved-title">已经记下来了</div><div class="saved-copy">记录本身，就是在给自己留一个出口。</div><button class="btn" id="journalAgain" style="margin-top:18px;max-width:220px">再写一篇</button></div>':'<div class="agent-shell"><div class="agent-heading">写几句就够了。</div><div class="agent-note">不用完整，不用漂亮。把脑子里最吵的那句话写出来，通常就会轻一点。</div><div class="agent-block"><textarea class="field" rows="8" id="journalInput" placeholder="今天发生了什么？你现在最明显的感觉是什么？">'+S.journalDraft+'</textarea><div class="stage-actions"><button class="btn" id="journalSave">保存这段记录</button></div></div></div>';
   renderFullPage("把脑子里的话倒出来",body);
   var input=document.getElementById("journalInput");
   if(input)input.oninput=function(){S.journalDraft=input.value;};
@@ -4212,7 +3790,7 @@ function renderFriendPage(){
 function renderTabBar(){
   var tabs=[
     {id:"home",label:"首页",icon:'<path d="M12 3l9 8h-3v9h-5v-6h-2v6H6v-9H3z"/>'},
-    {id:"map",label:"日报",icon:'<path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/>'},
+    {id:"map",label:"趋势",icon:'<path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/>'},
     {id:"workspace",label:"待办",icon:'<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 13.2l-3.5-3.5 1.4-1.4 2.1 2.1 5.7-5.7 1.4 1.4-7.1 7.1z"/>'},
     null,
     {id:"companion",label:"陪伴",icon:'<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>'},
@@ -4233,21 +3811,10 @@ function renderTabBar(){
   });
   document.getElementById("tabCheckin").onclick=function(){S.navDir="soft";S.showCheckin=true;render();};
 }
-function boot(){
-  return hydrateCurrentVault().catch(function(error){
-    S.vaultError=error&&error.message?error.message:"本地记录读取失败";
-    S.account.lastSyncStatus="本地记录读取失败："+S.vaultError;
-    saveAccountState();
-  }).then(function(){
-    S.vaultReady=true;
-    render();
-    if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){
-      navigator.serviceWorker.register("sw.js").catch(function(){});
-    }
-  });
+render();
+if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){
+  navigator.serviceWorker.register("sw.js").catch(function(){});
 }
-var vaultBootPromise=boot();
-if(window.MindPulseDebug)window.MindPulseDebug.whenVaultReady=function(){return vaultBootPromise;};
 })();
 </script>
 </body>
