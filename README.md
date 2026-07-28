@@ -244,4 +244,4 @@ RISE 恢复指数 = Rhythm 节奏信号 + Interaction 连接信号 + Self-report
 - 不自动上报，不替用户发送信息，求助内容由用户主动复制或发送。
 
 详见：`docs/心理安全与伦理说明.md`。
-https://vsllm.com
+
