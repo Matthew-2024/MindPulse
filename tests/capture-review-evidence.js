@@ -6,7 +6,7 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const { chromium } = require("playwright");
 
-const entry = readdirSync(resolve(".")).find((name) => name.includes("Web") && name.endsWith(".html"));
+const entry = readdirSync(resolve(".")).find((name) => name.includes("Web原型") && !name.includes("备份") && name.endsWith(".html"));
 if (!entry) {
   throw new Error("Web prototype HTML entry was not found.");
 }
@@ -27,7 +27,7 @@ const browser = await chromium.launch({
   args: ["--no-sandbox", "--disable-gpu", "--disable-features=msEdgeImportBrowserDataFlow"]
 });
 
-const page = await browser.newPage({ viewport: { width: 430, height: 932 }, deviceScaleFactor: 1 });
+const page = await browser.newPage({ viewport: { width: 393, height: 852 }, deviceScaleFactor: 1 });
 const errors = [];
 page.on("pageerror", (error) => errors.push(error.message));
 page.on("console", (message) => {

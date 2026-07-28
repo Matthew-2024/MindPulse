@@ -6,12 +6,6 @@ const CORE_ASSETS = [
   "./src/features/memo/memo-model.js",
   "./src/features/schedule/schedule-model.js",
   "./src/features/bottle/bottle-repository.js",
-  "./src/rules/browser-cases.js",
-  "./src/storage/vault-store.js",
-  "./src/config/runtime-config.js",
-  "./src/state/store.js",
-  "./src/security/risk-gate.js",
-  "./src/selectors/score-selectors.js",
   "./manifest.webmanifest",
   "./assets/mindpulse-icon.svg"
 ];

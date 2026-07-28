@@ -15,7 +15,7 @@ struct CheckInView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    SectionHeader(title: "记录此刻", subtitle: "即时记录会进入今日时间线，也会汇总到日报和周报。")
+                    SectionHeader(title: "记录今天", subtitle: "按自己的节奏来，不用一次想清楚。")
 
                     MPCard {
                         Text("今天更接近哪一种感觉？")
@@ -73,7 +73,7 @@ struct CheckInView: View {
                             .background(Color.white.opacity(0.74), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
                     }
 
-                    PrimaryButton(title: "保存此刻", systemImage: "checkmark.circle.fill") {
+                    PrimaryButton(title: "保存今天", systemImage: "checkmark.circle.fill") {
                         store.saveCheckIn(
                             mood: mood,
                             sleepHours: sleepHours,
@@ -91,11 +91,10 @@ struct CheckInView: View {
             .navigationTitle("记录")
             .mindPulseBackground()
             .alert("已经记下来了", isPresented: $saved) {
-                Button("看今日/周报") { store.selectedTab = .trend }
                 Button("看首页判断") { store.selectedTab = .home }
                 Button("继续记录", role: .cancel) {}
             } message: {
-                Text("它会保留在今日时间线里，晚一点也能回看。")
+                Text("今天没有被你忽略，这就很重要。")
             }
         }
     }

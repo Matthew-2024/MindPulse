@@ -23,8 +23,10 @@
 8. 求助表达：帮助用户整理发给老师、朋友或家人的第一句话。
 9. Safety Gate 风险闸门：识别稳定观察、普通波动、中度关注和高风险求助场景；高风险时停止普通自助建议，只进入求助入口。
 10. 验证证据板：在设置页展示本地样本数、平均恢复指数、干预完成覆盖率和 Safety Gate 触发数，明确区分演示验证与真实用户研究。
-11. 隐私控制：即时记录、日报/周报聚合结果和干预完成情况写入本地存储，原始心理文本保留在 IndexedDB；邮箱账号与本地 `vault_id` 分离，Supabase 只作为验证码账号、设备管理和加密 blob 同步后端。
-12. 加密同步授权：注册后不默认上传心理文本；用户必须手动开启“加密同步”，前端先用 WebCrypto 加密，云端 `encrypted_items` 只保存密文、nonce、salt 和算法信息。
+11. 隐私控制：即时记录、日报/周报聚合结果和干预完成情况写入浏览器本地存储，支持 JSON 导出和本地数据清除；后续可再讨论 IndexedDB、端侧数据库或同步方案。
+12. 可审计策略：每次评估生成固定 Reason Code、决策编号、允许/阻断动作、证据、策略版本、数据来源和置信度；高风险和数据不足策略在领域层不可绕过。
+13. 备忘录与日程：支持多笔记、事项自动连续编号、中间插入/删除/移动、模糊及联想搜索；待办日程默认周视图，可切换月/年，并按 1、3、8、30 天范围检索。
+14. 匿名漂流瓶演示：支持本机投放、随机捞取和匿名回应，仓储接口为未来真实后端保留替换点；当前明确标注为本机演示海域，不代表已上线多用户社区。
 
 ## 当前交付物
 
@@ -40,7 +42,6 @@
 | 自我审查 | `docs/自我审查项目.md` |
 | 提交前自查矩阵 | `docs/提交前自查矩阵.md` |
 | 数据说明 | `docs/数据使用说明.md` |
-| Supabase 云端同步方案 | `docs/Supabase云端同步方案.md`、`supabase/migrations/`、`supabase/functions/` |
 | 用户验证 | `docs/用户研究与验证计划.docx` |
 | 匿名试用执行包 | `docs/匿名试用执行包.md` |
 | A07 试用证据台账 | `docs/user-study-evidence/README.md` |
@@ -80,13 +81,16 @@
 | 解释详情 | 已实现 | 首页可展开分数拆解、风险依据、推荐路径和数据来源 |
 | 线上规则验证 | 已实现 | 设置页可现场运行规则用例 |
 | 验证证据板 | 已实现 | 设置页从本地记录即时计算 RISE 均值、干预覆盖率和 Safety Gate 触发数 |
-| 本地存储 | 已实现 | localStorage 兼容单 HTML 状态，IndexedDB 保存当前 vault 的原始记录、问卷、干预反馈和待办 |
-| 邮箱验证码注册 | 模板已提供 | 前端已接邮箱验证码入口；Supabase Edge Functions 模板实现 6 位验证码、hash 存储、5-10 分钟过期、尝试次数和重发限频 |
-| Supabase 加密同步 | 模板已提供 | 已提供 SQL 迁移和 Edge Functions；正式使用前需配置 Supabase 项目 URL、邮件服务、密钥和部署域名 |
+| 本地存储 | 已实现 | localStorage 保存记录和干预状态 |
 | PWA 基础能力 | 已实现 | 已补 manifest、图标和 Service Worker |
 | 放松音频 | 已实现 | Web Audio 生成呼吸底噪、雨声、森林氛围 |
 | 日报 / 周报 | 已实现 | 从当前匿名档案本地记录表自动聚合今日时间线、日报和 7 天周报 |
-| 数据导出 | 已实现 | 导出 JSON 记录，包含匿名档案、`vaultId`、非敏感账号同步状态、原始记录、风险结果、日报和周报 |
+| 数据导出 | 已实现 | 导出 JSON 记录，包含匿名档案、原始记录、风险结果、日报和周报 |
+| 决策追踪 | 已实现 | 固定 Reason Code、允许/阻断动作、证据、策略版本、数据来源和置信度 |
+| Safety Gate 命令守卫 | 已实现 | 高风险只允许求助，数据不足只允许补充记录；直接调用普通行动也会被阻断 |
+| 备忘录 | 已实现 | 多笔记、事项自动编号、中间插入/删除/移动、模糊和同义词联想搜索 |
+| 待办日程 | 已实现 | 周/月/年视图、日期待办、日期范围筛选和截止时间排序 |
+| 匿名漂流瓶 | 本机演示已实现 | 本地瓶池、随机捞取、匿名回应和回复隔离；真实后端待后续接入 |
 | 规则测试 | 已实现 | `node tests/run-rule-tests.js` 可验证核心规则 |
 | UI 冒烟测试 | 已实现 | `node tests/ui-smoke.js` 可验证线上核心演示路径、即时记录、日报/周报和导出结构 |
 | iOS SwiftUI 原型 | 已实现 | 已提供独立 SwiftUI 版本，包含匿名档案、RISE、Safety Gate、验证证据板；需在 Mac/Xcode 上最终编译 |
@@ -103,10 +107,11 @@
 心晴MindPulse_Web原型.html
 ```
 
-建议使用手机宽度预览：
+建议以 iPhone 14 Pro 竖屏为主视口预览：
 
-- iPhone 参考尺寸：430 x 932
+- iPhone 14 Pro 主尺寸：393 x 852
 - 小屏参考尺寸：375 x 667
+- 大屏兼容尺寸：430 x 932（393 px 手机画布居中）
 - 平板参考尺寸：1024 x 768
 
 运行规则测试：
@@ -119,6 +124,19 @@ node tests/run-rule-tests.js
 
 ```bash
 node tests/ui-smoke.js
+```
+
+运行新增领域测试：
+
+```bash
+npm.cmd run test:domain
+```
+
+运行收口改造端到端和视觉测试：
+
+```bash
+npm.cmd run test:convergence:ui
+npm.cmd run test:convergence:visual
 ```
 
 运行 30 条合成演示数据分析：
@@ -157,33 +175,6 @@ npm.cmd run preflight
 
 ```bash
 npm.cmd run verify
-```
-
-Supabase 云端同步模板：
-
-```text
-docs/Supabase云端同步方案.md
-supabase/migrations/20260618_mindpulse_secure_sync.sql
-supabase/functions/mindpulse-api
-supabase/functions/request-email-code
-supabase/functions/verify-email-code
-supabase/functions/sync-vault
-supabase/functions/get-vault-copy
-supabase/functions/clear-vault-copy
-```
-
-正式接入时优先部署 `mindpulse-api` 单入口 Edge Function，前端会在该函数下调用 `request-email-code`、`verify-email-code`、`sync-vault`、`get-vault-copy` 和 `clear-vault-copy` 五个动作。Supabase 项目中需要配置 `SUPABASE_URL`、`SUPABASE_SERVICE_ROLE_KEY`、`EMAIL_HASH_PEPPER`、`CODE_HASH_SECRET`、邮件服务密钥和允许的前端域名。仓库不保存这些密钥。
-
-连接线上 Supabase 时，不需要启动本地 Supabase。建议用静态服务器打开原型，避免 `file://` 影响 CORS 和 Cookie：
-
-```bash
-npm.cmd run serve:web
-```
-
-然后访问 `http://localhost:4173/心晴MindPulse_Web原型.html`，在设置页填写：
-
-```text
-https://<project-ref>.functions.supabase.co
 ```
 
 当前测试结果：
@@ -244,49 +235,13 @@ RISE 恢复指数 = Rhythm 节奏信号 + Interaction 连接信号 + Self-report
 
 ## 隐私与心理安全
 
-- 当前原型默认只在浏览器本地保存心理记录。
-- 原始心理文本写入本地 IndexedDB；localStorage 只保留单 HTML 原型所需状态、账号状态和同步开关。
-- 邮箱账号与心理文本分离：`accounts` 管邮箱验证，心理记录归属随机 `vault_id`。
-- Supabase 同步默认关闭；开启后只上传本地加密后的 `encrypted_items` 密文 blob。
+- 当前原型数据仅保存在浏览器本地。
 - 不读取聊天记录、联系人、定位等敏感信息。
-- 不上传明文情绪文本。
+- 不上传情绪文本。
 - 支持 JSON 导出。
 - 支持删除本地数据。
-- 支持关闭同步和清除云端加密副本。
 - 高风险场景优先引导联系可信任的人或专业资源。
 - 不自动上报，不替用户发送信息，求助内容由用户主动复制或发送。
 
 详见：`docs/心理安全与伦理说明.md`。
-
-## 国赛证据链
-
-| 评委关注点 | 已补证据 |
-|---|---|
-| 是否有真实可运行作品 | Web 高保真原型 |
-| 是否有技术核心 | 恢复指数、风险分级、推荐路径规则模块 |
-| 是否可解释 | 算法说明、分数拆解、风险证据和推荐依据 |
-| 是否有测试 | 规则测试、UI 冒烟测试、一键 verify 脚本、自我审查护栏、当前测试与自查报告 |
-| 是否有心理安全边界 | 心理安全与伦理说明 |
-| 是否有自我审查机制 | 自我审查项目：检查产品定位、心理安全、数据伦理、算法解释和证据真实性 |
-| 是否有提交前总览 | `docs/提交前自查矩阵.md` 汇总 A01-A10、preflight、截图和外部证据缺口 |
-| 是否有用户验证计划 | 用户研究与验证计划、匿名试用执行包、A07 试用证据台账 |
-| 是否有演示证据 | 设置页验证证据板、合成演示数据分析、`docs/review-evidence/` 自查截图 |
-| 是否能答辩 | 国赛答辩脚本、追问回答、PPT 与答辩自查口径同步稿 |
-| 是否知道当前边界 | 已实现/规划中明确区分 |
-
-## 国赛必须继续补齐
-
-1. 按 `docs/匿名试用执行包.md` 执行 10-20 名同学匿名试用，并按 `docs/user-study-evidence/README.md` 补齐真实证据文件。
-2. 按 `docs/专业审核执行包.md` 找 1-2 名心理老师、辅导员或校心理中心老师审核文案和风险流程，并按 `docs/professional-review-evidence/README.md` 补齐真实证据文件。
-3. 录制 3 分钟稳定演示视频。
-4. 补充移动端截图和高风险流程截图。
-5. 继续推进工程化拆分，将当前稳定 HTML 升级为 Web/PWA 工程。
-6. 如果接入 HealthKit 或 Core ML，必须提供真机授权截图、模型文件或推理结果。
-
-## 答辩注意
-
-- 不要把恢复指数称为医学量表。
-- 不要说系统能诊断抑郁症、焦虑症或其他疾病。
-- 不要把 HealthKit、Core ML 讲成已实现；可以说明 iOS SwiftUI 原型已提供，但还需要 Mac/Xcode 编译与真机验证。
-- 不要让高风险场景继续展示普通轻干预作为主路径。
-- 要主动说明：作品的价值在早期觉察、低负担行动和求助表达。
+https://vsllm.com

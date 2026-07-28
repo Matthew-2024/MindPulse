@@ -17,15 +17,6 @@ export const SCORE_LIMITS = {
   intervention: 8
 };
 
-export const SIGNAL_KEYS = ["mood", "sleep", "steps", "social"];
-
-export const SIGNAL_LABELS = {
-  mood: "情绪",
-  sleep: "睡眠",
-  steps: "活动",
-  social: "连接"
-};
-
 export const DANGER_PATTERNS = [
   { re: /自[杀傷伤]|自杀/, level: "critical", tag: "direct-self-harm" },
   { re: /伤害\s*(自己|自身|我)/, level: "critical", tag: "self-harm-ideation" },
@@ -67,101 +58,20 @@ export function moodOf(record = {}) {
   return record.mood || record.et || "calm";
 }
 
-function rawMoodLevelOf(record = {}) {
-  const explicit = record.moodScore ?? record.ii;
-  if (explicit !== undefined && explicit !== null && explicit !== "") {
-    const parsed = Number(explicit);
-    return Number.isFinite(parsed) ? parsed : null;
-  }
-  const key = record.mood || record.et;
-  return key && MOOD_LEVELS[key] ? MOOD_LEVELS[key] : null;
-}
-
-function rawNumberOf(record, primary, legacy) {
-  const value = record[primary] ?? record[legacy];
-  if (value === undefined || value === null || value === "") return null;
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : null;
-}
-
-export function signalValueOf(record = {}, key) {
-  if (key === "mood") return rawMoodLevelOf(record);
-  if (key === "sleep") return rawNumberOf(record, "sleepHours", "sleep");
-  if (key === "steps") return rawNumberOf(record, "steps", "step");
-  if (key === "social") return rawNumberOf(record, "socialScore", "sc");
-  return null;
-}
-
-export function signalPresent(record = {}, key) {
-  const presence = record.signalPresence;
-  if (presence && Object.prototype.hasOwnProperty.call(presence, key)) {
-    return Boolean(presence[key]);
-  }
-  const value = signalValueOf(record, key);
-  if (value === null || value === undefined || !Number.isFinite(Number(value))) return false;
-  if (key === "mood") return Number(value) >= 1 && Number(value) <= 5;
-  return Number(value) >= 0;
-}
-
-export function signalSourceOf(record = {}, key) {
-  const sourceMaps = [record.signalSources, record.dataSources, record.sources];
-  for (const sourceMap of sourceMaps) {
-    if (sourceMap && typeof sourceMap === "object" && sourceMap[key]) {
-      return String(sourceMap[key]);
-    }
-  }
-  if (record.dataInputMode === "manual-web") return "manual";
-  if (record.entryType === "device") return "device";
-  if (record.dataSource) return String(record.dataSource);
-  if (record.entryType === "instant" || record.entryType === "daily") return "self-report";
-  return "unknown";
-}
-
-export function signalSnapshot(record = {}) {
-  return SIGNAL_KEYS.reduce((snapshot, key) => {
-    snapshot[key] = {
-      value: signalValueOf(record, key),
-      present: signalPresent(record, key),
-      source: signalSourceOf(record, key),
-      label: SIGNAL_LABELS[key]
-    };
-    return snapshot;
-  }, {});
-}
-
-export function dataCompletenessOf(record = {}) {
-  const signals = signalSnapshot(record);
-  const available = SIGNAL_KEYS.filter((key) => signals[key].present);
-  const missing = SIGNAL_KEYS.filter((key) => !signals[key].present);
-  const ratio = SIGNAL_KEYS.length ? available.length / SIGNAL_KEYS.length : 0;
-  return {
-    available: available.length,
-    required: SIGNAL_KEYS.length,
-    ratio,
-    percent: Math.round(ratio * 100),
-    missing,
-    sources: SIGNAL_KEYS.reduce((sources, key) => {
-      sources[key] = signals[key].source;
-      return sources;
-    }, {}),
-    signals
-  };
-}
-
 export function moodLevelOf(record = {}) {
-  return toNumber(rawMoodLevelOf(record), 3);
+  return toNumber(record.moodScore ?? record.ii ?? MOOD_LEVELS[moodOf(record)], 3);
 }
 
 export function sleepOf(record = {}) {
-  return toNumber(signalValueOf(record, "sleep"), 0);
+  return toNumber(record.sleepHours ?? record.sleep, 0);
 }
 
 export function stepsOf(record = {}) {
-  return toNumber(signalValueOf(record, "steps"), 0);
+  return toNumber(record.steps ?? record.step, 0);
 }
 
 export function socialOf(record = {}) {
-  return toNumber(signalValueOf(record, "social"), 0);
+  return toNumber(record.socialScore ?? record.sc, 0);
 }
 
 export function normalizeRecords(records) {

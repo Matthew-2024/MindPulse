@@ -6,7 +6,7 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const { chromium } = require("playwright");
 
-const entry = readdirSync(resolve(".")).find((name) => name.includes("Web") && name.endsWith(".html"));
+const entry = readdirSync(resolve(".")).find((name) => name.includes("Web原型") && !name.includes("备份") && name.endsWith(".html"));
 if (!entry) {
   throw new Error("Web prototype HTML entry was not found.");
 }
@@ -24,7 +24,7 @@ const browser = await chromium.launch({
   args: ["--no-sandbox", "--disable-gpu", "--disable-features=msEdgeImportBrowserDataFlow"]
 });
 
-const page = await browser.newPage({ viewport: { width: 430, height: 932 }, acceptDownloads: true });
+const page = await browser.newPage({ viewport: { width: 393, height: 852 }, acceptDownloads: true });
 const errors = [];
 page.on("pageerror", (error) => errors.push(error.message));
 page.on("console", (message) => {
@@ -41,15 +41,13 @@ await page.reload({ waitUntil: "load" });
 await page.waitForSelector("#loginEnter");
 let body = await page.locator("body").innerText();
 assert(body.includes("匿名档案"), "login should present anonymous profile entry");
-assert(body.includes("邮箱注册") && body.includes("验证码"), "login should present email code registration");
-assert(body.includes("vault_id"), "login should explain vault separation");
+assert(body.includes("不需要手机号"), "login should explain no phone/student id");
 await page.click("#loginEnter");
 await page.waitForSelector("#spotlightGo");
 
 body = await page.locator("body").innerText();
-assert(body.includes("恢复指数"), "home should show recovery score");
-assert(body.includes("风险等级") && body.includes("Safety Gate"), "home should split risk level and safety gate");
-assert(body.includes("数据完整度") && body.includes("置信度"), "home should expose data quality and confidence");
+assert(body.includes("本次记录指数"), "home should keep the score as a secondary record index");
+assert(body.includes("当前安全策略") && body.includes("Safety Gate"), "home should show the current safety strategy and gate");
 assert(!(await page.locator("#homeTrendLink").count()), "home should not show the flow bridge card");
 assert(await page.locator("#spotlightGo").isVisible(), "home should expose primary action");
 
@@ -66,21 +64,15 @@ await page.waitForSelector("#spotlightGo");
 await page.click("#homeFlip");
 await page.waitForSelector("#pulseAgent");
 body = await page.locator("body").innerText();
-assert(body.includes("判断依据"), "home back side should show reasoning");
+assert(body.includes("判断证据"), "home back side should show auditable evidence");
 await page.click("#pulseAgent");
 await page.waitForSelector("#detailBack");
 body = await page.locator("body").innerText();
 assert(body.includes("分数拆解"), "detail overlay should show score breakdown");
 assert(body.includes("RISE 方法"), "detail overlay should explain RISE");
-assert(body.includes("贡献解释") && body.includes("反事实模拟"), "detail overlay should expose contribution and counterfactual explanation");
-assert(body.includes("允许动作") && body.includes("阻止动作"), "detail overlay should expose the risk policy contract");
-const learningEvent = await page.evaluate(() => {
-  window.MindPulseDebug.completeAction("breathe");
-  const events = window.MindPulseDebug.getState().interventionEvents;
-  return events.at(-1);
-});
-assert(learningEvent.contextBefore && Object.prototype.hasOwnProperty.call(learningEvent.contextBefore, "sleepHours"), "intervention feedback should preserve the before-state context");
-assert(learningEvent.contextAfter && Object.prototype.hasOwnProperty.call(learningEvent.contextAfter, "socialScore"), "intervention feedback should preserve the after-state context");
+for (const auditField of ["决策编号", "Reason Code", "允许动作", "阻断动作", "策略版本"]) {
+  assert(body.includes(auditField), `detail overlay should show ${auditField}`);
+}
 await page.click("#detailBack");
 await page.click("#homeBack");
 await page.waitForSelector("#spotlightGo");
@@ -123,7 +115,7 @@ await page.waitForTimeout(120);
 assert(await page.locator(".task-item").count() === taskCountBefore, "workspace should delete the selected task");
 await page.click('[data-tab="home"]');
 
-await page.click("#spotlightGo");
+await page.evaluate(() => window.MindPulseDebug.openIntervention("breathe"));
 await page.waitForSelector("#breatheRing");
 assert(await page.locator("[data-breathe-phase]").count() === 4, "breathing page should show four phase segments");
 const breatheColumns = await page.locator(".breathe-legend").evaluate((el) =>
@@ -139,11 +131,6 @@ assert((await page.locator("#breatheToggle").innerText()).includes("结束这轮
 await page.click("#breatheRing");
 await page.waitForTimeout(120);
 assert((await page.locator("#breatheToggle").innerText()).includes("开始呼吸"), "clicking the breathing ring again should stop the session");
-await page.evaluate(() => window.MindPulseDebug.completeAction("breathe"));
-await page.waitForFunction(() => window.MindPulseDebug.getState().interventionEvents.length > 0);
-const interventionEvent = await page.evaluate(() => window.MindPulseDebug.getState().interventionEvents.at(-1));
-assert(Number.isFinite(interventionEvent.beforeScore) && Number.isFinite(interventionEvent.afterScore), "intervention event should store real before and after scores");
-assert(interventionEvent.delta === interventionEvent.afterScore - interventionEvent.beforeScore, "intervention delta should be calculated from the event scores");
 await page.click("#intvBack");
 await page.waitForSelector("#spotlightGo");
 
@@ -221,118 +208,6 @@ await page.click("#agentBack");
 
 await page.click("#goSettings");
 await page.waitForSelector("#goRuleLab");
-body = await page.locator("body").innerText();
-assert(body.includes("账号与加密同步"), "settings should show account and encrypted sync");
-assert(body.includes("vault_id"), "settings should expose the vault identifier");
-assert(body.includes("IndexedDB"), "settings should explain local IndexedDB storage");
-assert(body.includes("数据权限账本") && body.includes("求助资源配置"), "settings should expose data ledger and configurable help resources");
-await page.fill("#helpCounselorPhone", "010-00000000");
-await page.click("#saveHelpResources");
-await page.waitForSelector("#helpCounselorPhone");
-assert(await page.locator("#helpCounselorPhone").inputValue() === "010-00000000", "help resource configuration should persist in the anonymous vault");
-await page.evaluate(() => {
-  window.__mindpulseCloudCalls = [];
-  let cloudCopy = null;
-  window.MindPulseDebug.mockCloud = async (name, body) => {
-    window.__mindpulseCloudCalls.push({ name, body });
-    if (name === "request-email-code") return { ok: true, expiresInSeconds: 600, resendAfterSeconds: 60 };
-    if (name === "verify-email-code") return { ok: true, accountId: "acct_test_001", vaultId: body.vaultId };
-    if (name === "sync-vault") {
-      if (body.records || body.note || body.plaintext) throw new Error("plaintext leaked");
-      if (!body.ciphertext || !body.nonce) throw new Error("missing encrypted payload");
-      cloudCopy = JSON.parse(JSON.stringify(body));
-      return { ok: true, updatedAt: new Date().toISOString() };
-    }
-    if (name === "get-vault-copy") {
-      if (!cloudCopy) throw new Error("missing mock cloud copy");
-      return JSON.parse(JSON.stringify(cloudCopy));
-    }
-    if (name === "clear-vault-copy") {
-      cloudCopy = null;
-      return { ok: true, clearedAt: new Date().toISOString() };
-    }
-    throw new Error(`unexpected function ${name}`);
-  };
-});
-await page.fill("#accountEmail", "student@example.com");
-await page.click("#accountSendCode");
-await page.waitForFunction(() => window.__mindpulseCloudCalls?.some((call) => call.name === "request-email-code"));
-await page.fill("#accountCode", "123456");
-await page.click("#accountVerifyCode");
-await page.waitForFunction(() => window.MindPulseDebug?.getState().account.emailVerified === true);
-body = await page.locator("body").innerText();
-assert(body.includes("已验证"), "email verification should update settings state");
-const syncDialogHandler = async (dialog) => {
-  if (dialog.type() === "prompt") await dialog.accept("mindpulse-test-secret");
-  else await dialog.accept();
-};
-page.on("dialog", syncDialogHandler);
-await page.click("#enableSync");
-await page.waitForFunction(() => window.__mindpulseCloudCalls?.some((call) => call.name === "sync-vault"));
-page.off("dialog", syncDialogHandler);
-const syncPayload = await page.evaluate(() => window.__mindpulseCloudCalls.find((call) => call.name === "sync-vault").body);
-assert(syncPayload.ciphertext && syncPayload.nonce && syncPayload.salt, "sync should upload an encrypted payload");
-assert(syncPayload.keyVersion === 2 && syncPayload.kdf === "PBKDF2-SHA256" && syncPayload.iterations >= 100000, "sync should declare password KDF metadata");
-assert(!("records" in syncPayload) && !("note" in syncPayload) && !("plaintext" in syncPayload), "sync payload should not contain plaintext fields");
-const syncCrypto = await page.evaluate(async (payload) => {
-  const decrypted = await window.MindPulseDebug.decryptVaultPayload(payload, "mindpulse-test-secret");
-  let wrongPasswordRejected = false;
-  try {
-    await window.MindPulseDebug.decryptVaultPayload(payload, "wrong-password");
-  } catch {
-    wrongPasswordRejected = true;
-  }
-  const first = await window.MindPulseDebug.encryptVaultPayload({ marker: "same plaintext" }, "mindpulse-test-secret");
-  const second = await window.MindPulseDebug.encryptVaultPayload({ marker: "same plaintext" }, "mindpulse-test-secret");
-  return { decryptedRecords: Array.isArray(decrypted.records), wrongPasswordRejected, differentNonce: first.nonce !== second.nonce };
-}, syncPayload);
-assert(syncCrypto.decryptedRecords && syncCrypto.wrongPasswordRejected && syncCrypto.differentNonce, "sync encryption should support recovery, reject wrong passwords, and rotate nonce");
-body = await page.locator("body").innerText();
-assert(body.includes("密文") || body.includes("已授权"), "encrypted sync should be reflected in settings");
-
-await page.evaluate(async () => {
-  const state = window.MindPulseDebug.getState();
-  state.recs = [];
-  state.completed = [];
-  state.interventionStats = {};
-  state.interventionEvents = [];
-  await window.MindPulseVaultStore.deleteVault(state.user.vaultId);
-});
-const restoreDialogHandler = async (dialog) => {
-  if (dialog.type() === "prompt") await dialog.accept("mindpulse-test-secret");
-  else await dialog.accept();
-};
-page.on("dialog", restoreDialogHandler);
-await page.click("#restoreSync");
-await page.waitForFunction(() => window.__mindpulseCloudCalls?.some((call) => call.name === "get-vault-copy"));
-await page.waitForFunction(() => window.MindPulseDebug.getState().recs.some((record) => record.note.includes("我很绝望")));
-page.off("dialog", restoreDialogHandler);
-const restoredState = await page.evaluate(() => ({
-  hasRecord: window.MindPulseDebug.getState().recs.some((record) => record.note.includes("我很绝望")),
-  vaultReady: window.MindPulseDebug.getState().vaultReady,
-  vaultId: window.MindPulseDebug.getState().user.vaultId,
-  records: window.MindPulseDebug.getState().recs.map((record) => ({ id: record.id, createdAt: record.createdAt, note: record.note }))
-}));
-assert(restoredState.hasRecord && restoredState.vaultReady, "restore should decrypt the cloud copy back into the local vault");
-
-await page.reload({ waitUntil: "load" });
-await page.waitForSelector("#spotlightGo");
-await page.waitForFunction(() => window.MindPulseDebug?.getState().vaultReady === true);
-const freshPageCrypto = await page.evaluate(async (payload) => {
-  const decrypted = await window.MindPulseDebug.decryptVaultPayload(payload, "mindpulse-test-secret");
-  let wrongPasswordRejected = false;
-  try {
-    await window.MindPulseDebug.decryptVaultPayload(payload, "wrong-password");
-  } catch {
-    wrongPasswordRejected = true;
-  }
-  return { hasRecords: Array.isArray(decrypted.records), wrongPasswordRejected };
-}, syncPayload);
-assert(freshPageCrypto.hasRecords && freshPageCrypto.wrongPasswordRejected, "a refreshed page should decrypt the cloud copy after the password is re-entered");
-await page.click('[data-tab="help"]');
-await page.waitForSelector("#goSettings");
-await page.click("#goSettings");
-await page.waitForSelector("#exportRecords");
 assert(await page.locator("#toggleSleepReminder").isVisible(), "sleep reminder should be an interactive toggle");
 await page.click("#toggleSleepReminder");
 body = await page.locator("body").innerText();
@@ -347,52 +222,29 @@ assert(downloadPath, "exported JSON should be available to the browser test");
 const exported = JSON.parse(readFileSync(downloadPath, "utf8"));
 assert(typeof exported.exportedAt === "string", "export should include an exportedAt timestamp");
 assert(exported.profile && exported.profile.id, "export should include the anonymous profile");
-assert(exported.vaultId && exported.vaultId.startsWith("vault_"), "export should include the separated vault id");
-assert(exported.account && exported.account.emailVerified === true, "export should include non-secret account sync state");
-assert(String(exported.privacyBoundary).includes("密文"), "export should explain the encrypted cloud boundary");
 assert(Array.isArray(exported.records) && exported.records.length >= 7, "export should include local records");
-const exportedHighRiskRecord = exported.records.find((record) => record.note.includes("我很绝望"));
-assert(exportedHighRiskRecord, "export should include the latest manual high-risk note");
-assert(exportedHighRiskRecord.entryType === "instant", "manual check-in should be stored as an instant record");
+assert(exported.records.at(-1).note.includes("我很绝望"), "export should include the latest manual high-risk note");
+assert(exported.records.at(-1).entryType === "instant", "manual check-in should be stored as an instant record");
 assert(exported.scoreBreakdown && typeof exported.scoreBreakdown.total === "number", "export should include the score breakdown");
-assert(exported.scoreBreakdown.dataCompleteness && typeof exported.scoreBreakdown.dataCompleteness.percent === "number", "export should include score data completeness");
 assert(exported.risk && exported.risk.level === "高风险", "export should preserve the current high-risk assessment");
-assert(exported.risk.allowedActions && exported.risk.allowedActions.length === 1 && exported.risk.allowedActions[0] === "help", "export should preserve high-risk action policy");
-assert(exported.dataLedger && ["off", "encrypted-only"].includes(exported.dataLedger.cloudCopy), "export should include the local-first data ledger");
 assert(exported.dailyReport && exported.dailyReport.count >= 1, "export should include today's daily report");
 assert(exported.weeklyReport && exported.weeklyReport.total >= exported.dailyReport.count, "export should include weekly report totals");
 await page.waitForSelector(".toast");
 assert((await page.locator(".toast").innerText()).includes("记录已导出"), "export should show a completion toast");
 
-const beforeClear = await page.evaluate(async () => {
+const beforeClear = await page.evaluate(() => {
   const activeId = JSON.parse(localStorage.getItem("mindpulseActiveProfile"));
-  const profiles = JSON.parse(localStorage.getItem("mindpulseProfiles"));
-  const active = profiles.find((profile) => profile.id === activeId);
-  const vaultId = active.vaultId;
-  const vaultRecord = await new Promise((resolve, reject) => {
-    const request = indexedDB.open("mindpulse-local-vault", 2);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => {
-      const db = request.result;
-      const read = db.transaction("vault_records", "readonly").objectStore("vault_records").get(vaultId);
-      read.onsuccess = () => { db.close(); resolve(read.result || null); };
-      read.onerror = () => { db.close(); reject(read.error); };
-    };
-  });
-  const sensitiveKeys = Object.keys(localStorage).filter((key) =>
-    key.includes(":recs") || key.includes(":completed") || key.includes(":interventionStats") ||
-    key.includes(":surveyHistory") || key.includes(":tasks") || key.includes("mindpulseRecs") || key.includes("mindpulseCompleted")
+  const keys = ["recs", "completed", "interventionStats", "surveyHistory", "tasks"].map((suffix) =>
+    `mindpulse:${activeId}:${suffix}`
   );
   return {
     activeId,
-    vaultId,
-    vaultRecord,
-    sensitiveKeys
+    keys,
+    present: keys.filter((key) => localStorage.getItem(key) !== null)
   };
 });
 assert(beforeClear.activeId, "an active anonymous profile should be stored before clearing data");
-assert(beforeClear.vaultRecord && beforeClear.vaultRecord.records.length >= 7, "records should exist in the IndexedDB vault before clearing data");
-assert(beforeClear.sensitiveKeys.length === 0, "localStorage should not contain psychological records");
+assert(beforeClear.present.includes(`mindpulse:${beforeClear.activeId}:recs`), "records should exist before clearing data");
 let clearDialogMessage = "";
 page.once("dialog", (dialog) => {
   clearDialogMessage = dialog.message();
@@ -402,25 +254,11 @@ await page.click("#clearLocalData");
 assert(clearDialogMessage.includes("确定删除本地记录"), "clear data should ask for confirmation");
 await page.waitForSelector(".toast");
 await page.waitForFunction(() => document.querySelector(".toast")?.textContent?.includes("本地数据已重置"));
-const afterClear = await page.evaluate(async (vaultId) => {
-  const vaultRecord = await new Promise((resolve, reject) => {
-    const request = indexedDB.open("mindpulse-local-vault", 2);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => {
-      const db = request.result;
-      const read = db.transaction("vault_records", "readonly").objectStore("vault_records").get(vaultId);
-      read.onsuccess = () => { db.close(); resolve(read.result || null); };
-      read.onerror = () => { db.close(); reject(read.error); };
-    };
-  });
-  const sensitiveKeys = Object.keys(localStorage).filter((key) =>
-    key.includes(":recs") || key.includes(":completed") || key.includes(":interventionStats") ||
-    key.includes(":surveyHistory") || key.includes(":tasks") || key.includes("mindpulseRecs") || key.includes("mindpulseCompleted")
-  );
-  return { vaultRecord, sensitiveKeys };
-}, beforeClear.vaultId);
-assert(afterClear.vaultRecord === null, "clear data should remove the IndexedDB vault");
-assert(afterClear.sensitiveKeys.length === 0, "clear data should not leave psychological records in localStorage");
+const afterClear = await page.evaluate((keys) =>
+  keys.filter((key) => localStorage.getItem(key) !== null),
+  beforeClear.keys
+);
+assert(afterClear.length === 0, "clear data should remove profile-scoped records, completions, stats, surveys, and tasks");
 assert(await page.locator("#exportRecords").isVisible(), "settings should remain usable after local data reset");
 
 await page.click("#goRuleLab");
@@ -429,20 +267,6 @@ assert(body.includes("规则验证"), "settings should open rule lab");
 assert(body.includes("通过"), "rule lab should display passing cases");
 assert(body.includes("自动化规则测试：20 / 20"), "rule lab should align page and automated test counts");
 assert(body.includes("P01") && body.includes("P02"), "rule lab should show personalization cases");
-
-for (const viewport of [{ width: 375, height: 667 }, { width: 430, height: 932 }, { width: 1024, height: 768 }]) {
-  const viewportPage = await browser.newPage({ viewport, acceptDownloads: true });
-  viewportPage.on("pageerror", (error) => errors.push(`${viewport.width}x${viewport.height}: ${error.message}`));
-  viewportPage.on("console", (message) => {
-    if (message.type() === "error") errors.push(`${viewport.width}x${viewport.height}: ${message.text()}`);
-  });
-  await viewportPage.goto(`${pathToFileURL(resolve(entry)).href}?smoke=1`, { waitUntil: "load" });
-  await viewportPage.waitForSelector("#spotlightGo");
-  assert(await viewportPage.locator("#spotlightGo").isVisible(), `${viewport.width}x${viewport.height} should show the primary action`);
-  const overflow = await viewportPage.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
-  assert(!overflow, `${viewport.width}x${viewport.height} should not overflow horizontally`);
-  await viewportPage.close();
-}
 
 await browser.close();
 

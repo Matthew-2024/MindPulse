@@ -37,8 +37,6 @@ struct RootView: View {
 struct ProfileGateView: View {
     @EnvironmentObject private var store: MindPulseStore
     @State private var name = ""
-    @State private var email = ""
-    @State private var code = ""
 
     var body: some View {
         ScrollView {
@@ -53,36 +51,6 @@ struct ProfileGateView: View {
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .lineSpacing(4)
-
-                MPCard {
-                    Text("邮箱注册 / 登录")
-                        .font(.headline)
-                    Text("当前为演示版，验证码固定为 \(MindPulseStore.demoEmailCode)，验证结果只保存到本机。")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                    TextField("输入邮箱", text: $email)
-                        .textInputAutocapitalization(.never)
-                        .keyboardType(.emailAddress)
-                        .textFieldStyle(.roundedBorder)
-                    HStack {
-                        TextField("6 位验证码", text: $code)
-                            .keyboardType(.numberPad)
-                            .textFieldStyle(.roundedBorder)
-                        SecondaryButton(title: "发送验证码", systemImage: "paperplane") {
-                            if store.requestDemoEmailCode(email: email) {
-                                code = MindPulseStore.demoEmailCode
-                            }
-                        }
-                    }
-                    PrimaryButton(title: "验证并进入", systemImage: "checkmark.seal") {
-                        if store.verifyDemoEmail(email: email, code: code) {
-                            store.enter(profile: store.activeProfile)
-                        }
-                    }
-                    Text(store.accountState.lastSyncStatus)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
 
                 MPCard {
                     Text("已有匿名档案")

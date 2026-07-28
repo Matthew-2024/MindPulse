@@ -8,15 +8,12 @@ final class MindPulseStore: ObservableObject {
     @Published var records: [MindPulseRecord]
     @Published var completed: [InterventionID]
     @Published var interventionStats: [InterventionID: InterventionStat]
-    @Published var accountState: DemoAccountState
     @Published var selectedTab: AppTab = .home
     @Published var showingProfileGate = true
 
     private let defaults: UserDefaults
     private let profilesKey = "mindpulse.ios.profiles"
     private let activeProfileKey = "mindpulse.ios.activeProfile"
-    private let accountStateKey = "mindpulse.ios.accountState"
-    static let demoEmailCode = "246810"
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -28,7 +25,6 @@ final class MindPulseStore: ObservableObject {
         self.records = Self.decode([MindPulseRecord].self, from: defaults.data(forKey: Self.recordsKey(for: active.id))) ?? RISEEngine.demoRecords()
         self.completed = Self.decode([InterventionID].self, from: defaults.data(forKey: Self.completedKey(for: active.id))) ?? []
         self.interventionStats = Self.decode([InterventionID: InterventionStat].self, from: defaults.data(forKey: Self.statsKey(for: active.id))) ?? [:]
-        self.accountState = Self.decode(DemoAccountState.self, from: defaults.data(forKey: accountStateKey)) ?? DemoAccountState()
     }
 
     var latestRecord: MindPulseRecord {
@@ -55,14 +51,6 @@ final class MindPulseStore: ObservableObject {
         RISEEngine.validationReport(records: records, completed: completed)
     }
 
-    var dailyReport: DailyReport {
-        RISEEngine.dailyReport(records: records, for: Date())
-    }
-
-    var weeklyReport: WeeklyReport {
-        RISEEngine.weeklyReport(records: records)
-    }
-
     func enter(profile: AnonymousProfile) {
         switchProfile(profile)
         showingProfileGate = false
@@ -73,8 +61,7 @@ final class MindPulseStore: ObservableObject {
         let profile = AnonymousProfile(
             id: "mpu_\(UUID().uuidString.prefix(8).lowercased())",
             name: trimmed.isEmpty ? "匿名同学 \(profiles.count + 1)" : trimmed,
-            createdAt: Date(),
-            vaultID: "vault_\(UUID().uuidString.lowercased())"
+            createdAt: Date()
         )
         profiles.append(profile)
         activeProfile = profile
@@ -104,79 +91,25 @@ final class MindPulseStore: ObservableObject {
     }
 
     func saveCheckIn(mood: Mood, sleepHours: Double, steps: Int, socialScore: Int, energy: EnergyLevel, connection: ConnectionNeed, note: String) {
-        let updated = MindPulseRecord(
-            date: Date(),
-            entryType: "instant",
-            mood: mood,
-            sleepHours: min(12, max(0, sleepHours)),
-            steps: min(40000, max(0, steps)),
-            socialScore: min(100, max(0, socialScore)),
-            energyLevel: energy,
-            connectionNeed: connection,
-            note: note,
-            dataInputMode: "swiftui-instant",
-            completedInterventions: []
-        )
-        records.append(updated)
+        var updated = latestRecord
+        updated.date = Date()
+        updated.mood = mood
+        updated.sleepHours = min(12, max(0, sleepHours))
+        updated.steps = min(40000, max(0, steps))
+        updated.socialScore = min(100, max(0, socialScore))
+        updated.energyLevel = energy
+        updated.connectionNeed = connection
+        updated.note = note
+        updated.dataInputMode = "swiftui-manual"
+        updated.completedInterventions = []
+
+        if records.isEmpty {
+            records = [updated]
+        } else {
+            records[records.count - 1] = updated
+        }
         completed = []
         persistCurrentProfileData()
-    }
-
-    func requestDemoEmailCode(email: String) -> Bool {
-        let normalized = email.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        guard Self.isPlausibleEmail(normalized) else {
-            accountState.lastSyncStatus = "请输入有效邮箱后再获取演示验证码。"
-            persistAccountState()
-            return false
-        }
-        if normalized != accountState.email {
-            accountState.emailVerified = false
-            accountState.syncEnabled = false
-            accountState.lastSyncAt = nil
-        }
-        accountState.pendingEmail = normalized
-        accountState.email = normalized
-        accountState.lastSyncStatus = "演示验证码：\(Self.demoEmailCode)。输入后只保存本地已验证状态。"
-        persistAccountState()
-        return true
-    }
-
-    func verifyDemoEmail(email: String, code: String) -> Bool {
-        let normalized = email.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        guard Self.isPlausibleEmail(normalized) else {
-            accountState.lastSyncStatus = "请输入有效邮箱后再验证。"
-            persistAccountState()
-            return false
-        }
-        guard code.trimmingCharacters(in: .whitespacesAndNewlines) == Self.demoEmailCode else {
-            accountState.lastSyncStatus = "演示验证码不正确，请输入 \(Self.demoEmailCode)"
-            persistAccountState()
-            return false
-        }
-        accountState.email = normalized
-        accountState.pendingEmail = ""
-        accountState.emailVerified = true
-        accountState.lastSyncStatus = "邮箱已验证，心理记录仍保留在本地。"
-        persistAccountState()
-        return true
-    }
-
-    func enableDemoSync() {
-        guard accountState.emailVerified else {
-            accountState.lastSyncStatus = "请先完成邮箱演示验证，再开启加密同步开关。"
-            persistAccountState()
-            return
-        }
-        accountState.syncEnabled = true
-        accountState.lastSyncAt = Date()
-        accountState.lastSyncStatus = "演示版已生成本地加密同步状态，未上传明文心理文本。"
-        persistAccountState()
-    }
-
-    func disableDemoSync() {
-        accountState.syncEnabled = false
-        accountState.lastSyncStatus = "已关闭演示同步，本地记录保留。"
-        persistAccountState()
     }
 
     func complete(_ intervention: InterventionID) {
@@ -245,7 +178,6 @@ final class MindPulseStore: ObservableObject {
     private func persistAll() {
         Self.encode(profiles, key: profilesKey, defaults: defaults)
         defaults.set(activeProfile.id, forKey: activeProfileKey)
-        persistAccountState()
         persistCurrentProfileData()
     }
 
@@ -255,19 +187,9 @@ final class MindPulseStore: ObservableObject {
         Self.encode(interventionStats, key: Self.statsKey(for: activeProfile.id), defaults: defaults)
     }
 
-    private func persistAccountState() {
-        Self.encode(accountState, key: accountStateKey, defaults: defaults)
-    }
-
     private static func recordsKey(for id: String) -> String { "mindpulse.ios.\(id).records" }
     private static func completedKey(for id: String) -> String { "mindpulse.ios.\(id).completed" }
     private static func statsKey(for id: String) -> String { "mindpulse.ios.\(id).stats" }
-
-    private static func isPlausibleEmail(_ email: String) -> Bool {
-        let parts = email.split(separator: "@", omittingEmptySubsequences: false)
-        guard parts.count == 2 else { return false }
-        return !parts[0].isEmpty && parts[1].contains(".") && !parts[1].hasSuffix(".")
-    }
 
     private static func encode<T: Encodable>(_ value: T, key: String, defaults: UserDefaults) {
         if let data = try? JSONEncoder.mindPulse.encode(value) {
@@ -294,7 +216,7 @@ enum AppTab: String, CaseIterable, Identifiable, Hashable {
     var title: String {
         switch self {
         case .home: return "首页"
-        case .trend: return "日报"
+        case .trend: return "趋势"
         case .checkIn: return "记录"
         case .companion: return "陪伴"
         case .help: return "求助"
@@ -305,7 +227,7 @@ enum AppTab: String, CaseIterable, Identifiable, Hashable {
     var symbol: String {
         switch self {
         case .home: return "house.fill"
-        case .trend: return "calendar"
+        case .trend: return "chart.line.uptrend.xyaxis"
         case .checkIn: return "plus.circle.fill"
         case .companion: return "heart.fill"
         case .help: return "questionmark.circle.fill"
