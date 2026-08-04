@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createRequire } from "node:module";
@@ -65,7 +65,22 @@ await page.click("#detailBack");
 await page.click("#homeBack");
 await page.waitForSelector("#spotlightGo");
 
-await page.evaluate(() => window.MindPulseDebug.openIntervention("breathe"));
+await page.click("#tabCheckin");
+await page.waitForSelector(".sheet");
+await page.click('[data-em="anxious"]');
+await page.click("#checkNext");
+await page.click('[data-check-field="ciSleep"][data-check-value="ok"]');
+await page.click('[data-check-field="ciEnergy"][data-check-value="mid"]');
+await page.click('[data-check-field="ciConnect"][data-check-value="ok"]');
+await page.click("#checkNext2");
+await page.click("#checkNext3");
+await page.fill("#checkInput", "最近学习压力有点大，但我想先缓一缓");
+await page.click("#checkSave");
+await page.waitForSelector("#checkClose");
+await page.click("#checkClose");
+await page.click('[data-tab="companion"]');
+await page.waitForSelector("#currentStep");
+await page.click("#currentStep");
 await page.waitForSelector("#breatheRing");
 body = await pageText();
 assert(body.includes("4-4-4-4") && body.includes("不需要立刻改变状态"), "demo should show a low-burden intervention without cure promises");
@@ -73,7 +88,7 @@ await page.click("#breatheRing");
 await page.waitForTimeout(120);
 assert((await page.locator("#breatheToggle").innerText()).includes("结束这轮"), "demo should be able to start the breathing interaction");
 await page.click("#intvBack");
-await page.waitForSelector("#spotlightGo");
+await page.waitForSelector("#currentStep");
 
 await page.click('[data-tab="map"]');
 await page.waitForSelector("#todayReport");
@@ -116,24 +131,10 @@ body = await pageText();
 assert(body.includes("话术草稿") && body.includes("很需要支持"), "demo help draft should use supportive wording");
 assert(!body.includes("状态比较危险") && !body.includes("不太安全"), "demo help draft should avoid panic-amplifying wording");
 await page.click("#agentBack");
-
+await page.waitForSelector("#quickHelp");
 await page.click("#goSettings");
-await page.waitForSelector("#exportRecords");
-const downloadPromise = page.waitForEvent("download");
-await page.click("#exportRecords");
-const download = await downloadPromise;
-assert(download.suggestedFilename() === "mindpulse-records.json", "demo should export the expected JSON file");
-const downloadPath = await download.path();
-const exported = JSON.parse(readFileSync(downloadPath, "utf8"));
-assert(exported.profile && exported.profile.id, "demo export should include anonymous profile");
-assert(exported.risk && exported.risk.level === "高风险", "demo export should preserve the high-risk result");
-assert(exported.scoreBreakdown && typeof exported.scoreBreakdown.total === "number", "demo export should include the recovery score breakdown");
-assert(exported.dailyReport && exported.dailyReport.count >= 1, "demo export should include the daily report");
-assert(exported.weeklyReport && exported.weeklyReport.total >= exported.dailyReport.count, "demo export should include the weekly report");
-
-await page.click("#goRuleLab");
-body = await pageText();
-assert(body.includes("规则验证") && body.includes("自动化规则测试：20 / 20"), "demo should end with reproducible rule evidence");
+await page.waitForSelector("#quickHelp");
+assert((await pageText()).includes("普通自助建议不会作为主路径"), "high-risk state must block the settings route and preserve help");
 
 await browser.close();
 
@@ -141,4 +142,4 @@ if (errors.length) {
   throw new Error(`Browser errors detected: ${errors.join(" | ")}`);
 }
 
-console.log("Demo flow smoke passed: score, explanation, intervention, high-risk help, export, and rule evidence.");
+console.log("Demo flow smoke passed: score, explanation, intervention, high-risk help, and supportive draft.");

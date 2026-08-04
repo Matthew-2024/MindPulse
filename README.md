@@ -4,6 +4,14 @@
 
 国赛版本的核心目标：把心晴从“高保真心理健康 App 原型”升级为一个端侧匿名、可运行、可解释、可验证、可自我审查，并始终把心理安全边界放在普通推荐逻辑之上的计算机设计作品。
 
+## Canonical Product Entry
+
+The release product is the React/Vite application rooted at `src/main.tsx`. Run it with `npm.cmd run dev:react`, build it with `npm.cmd run build`, and use `npm.cmd run test:react:canonical` for the canonical browser regression suite. The React app, its domain modules, and its current test matrix are the authoritative implementation boundary.
+
+The current release baseline is documented in `docs/release-baseline-2026-08-04.md`; the interaction and Safety Gate contract is documented in `docs/action-policy-matrix-2026-08-04.md`.
+
+The standalone `心晴MindPulse_Web原型.html` and its standalone HTML smoke tests are retained as a legacy reference package only. They are not a second release product, are not maintained for silent parity with React, and are not release evidence for the canonical app. New behavior belongs in the React/Vite entry and its canonical tests.
+
 ## 作品定位
 
 - 目标用户：有压力、焦虑、低落、睡眠紊乱，但尚未主动求助的大学生。
@@ -69,7 +77,7 @@
 
 | 模块 | 当前状态 | 说明 |
 |---|---|---|
-| Web 交互原型 | 已实现 | 单 HTML，可直接在移动端浏览器运行 |
+| Web 交互原型包 | 已实现 | 通过入口 HTML 运行，需保留同目录的 `src/` 脚本与资源 |
 | 匿名用户档案 | 已实现 | 首屏匿名档案页 + 端侧匿名 ID，支持创建、切换、删除档案，不收集手机号/学号 |
 | 情绪记录 | 已实现 | 支持情绪、睡眠、精力、连接意愿和文本备注 |
 | 即时记录 | 已实现 | 同一日可追加多条带时间戳的即时记录，保留日内情绪变化 |
@@ -101,7 +109,7 @@
 
 ## 如何运行
 
-直接用浏览器打开：
+在保留 `src/` 与 `assets/` 同目录的前提下，用浏览器打开入口：
 
 ```text
 心晴MindPulse_Web原型.html

@@ -33,6 +33,13 @@ export function recommendPath(record, risk) {
       reasons: ["出现危机信号"]
     };
   }
+  if (risk && (risk.mode === "ask" || risk.riskCode === "insufficient" || risk.level === "数据不足")) {
+    return {
+      path: ["ask"],
+      reason: "记录还不够，先补充一条记录再判断下一步。",
+      reasons: ["个人基线仍在建立"]
+    };
+  }
 
   const mood = moodOf(record);
   const sleepHours = sleepOf(record);

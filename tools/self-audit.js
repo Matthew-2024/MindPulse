@@ -18,8 +18,12 @@ const requiredFiles = [
   "docs/review-evidence/README.md",
   "tests/rule-cases.json",
   "tests/run-rule-tests.js",
-  "tests/ui-smoke.js",
-  "tests/demo-flow-smoke.js",
+  "tests/react-ui-smoke.js",
+  "tests/react-security-smoke.js",
+  "tests/react-storage-smoke.js",
+  "tests/react-bottle-smoke.js",
+  "tests/help-warm-handoff-smoke.js",
+  "tools/run-react-canonical-tests.js",
   "tests/capture-review-evidence.js",
   "tools/copy-safety-audit.js",
   "tools/docx-consistency-audit.py",
@@ -51,7 +55,8 @@ const textFiles = [
 ];
 
 const requiredText = [
-  ["README.md", ["不做心理诊断", "Safety Gate", "合成演示数据", "日报", "周报", "docs/review-evidence/", "npm.cmd run preflight", "npm.cmd run audit:docx"]],
+  ["README.md", ["不做心理诊断", "Safety Gate", "合成演示数据", "日报", "周报", "docs/review-evidence/", "npm.cmd run preflight", "npm.cmd run audit:docx", "Canonical Product Entry", "src/main.tsx", "legacy reference package", "npm.cmd run test:react:canonical"]],
+  ["package.json", ["dev:react", "test:react:canonical", "test:legacy:ui", "demo:legacy"]],
   ["docs/自我审查项目.md", ["A07 | 是否有真实用户研究结果 | 待执行", "A08 | 是否有专业审核意见 | 待执行", "20 条规则测试"]],
   ["docs/数据使用说明.md", ["合成演示数据", "公开数据集验证", "真实用户研究"]],
   ["docs/user-study-evidence/README.md", ["A07 自查状态 | 待执行", "participant-ledger.csv", "是否可写“已完成真实用户研究” | 否", "不作为诊断、治疗或医学有效性证明"]],
@@ -61,8 +66,11 @@ const requiredText = [
   ["docs/提交前自查矩阵.md", ["npm.cmd run preflight", "npm run audit:docx", "即时记录", "今日/周报", "A07 真实用户研究 | 待执行", "A08 专业审核 | 待执行", "不能写成已完成", "合成演示数据用于演示和测试规则链路"]],
   ["docs/演示视频录制脚本.md", ["3 分钟以内", "npm.cmd run demo:smoke", "不做心理诊断", "规则验证 20 / 20"]],
   ["docs/review-evidence/README.md", ["05-high-risk-feedback.png", "08-rule-lab-20of20.png"]],
-  ["tests/ui-smoke.js", ["mindpulse-records.json", "exported.risk", "exported.dailyReport", "exported.weeklyReport", "clearDialogMessage", "afterClear.length === 0"]],
-  ["tests/demo-flow-smoke.js", ["Demo flow smoke passed", "今日记录", "周报", "很需要支持", "mindpulse-records.json", "自动化规则测试：20 / 20"]],
+  ["tests/react-ui-smoke.js", ["React UI smoke passed", "/help", "dataMode"]],
+  ["tests/react-security-smoke.js", ["React security smoke passed", "safetyHold", "safetyEvents"]],
+  ["tests/react-storage-smoke.js", ["React storage smoke passed", "mindpulse-records.json"]],
+  ["tests/react-bottle-smoke.js", ["React bottle smoke passed", "本机演示海域"]],
+  ["tests/help-warm-handoff-smoke.js", ["Warm Handoff smoke passed", "privacyReceiptEvents", "safetyEvents"]],
   ["tools/copy-safety-audit.js", ["panic-amplifying", "诊断化程度标签", "即时改善承诺"]],
   ["tools/docx-consistency-audit.py", ["CRITICAL_DOCX", "正式 docx 口径审查", "已完成真实用户研究", "已完成专业审核"]]
 ];
@@ -94,6 +102,7 @@ const allowedForbiddenContexts = [
   "是否可写“已完成真实用户研究” | 否",
   "是否可写“已完成专业审核” | 否",
   "高风险优先求助，普通练习不作为主路径"
+  ,"| 临床验证、疗效证明"
 ];
 
 const failures = [];

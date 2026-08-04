@@ -4,6 +4,9 @@ import {
   personalizeRecommendation,
   recordSafeFeedback
 } from "../src/rules/personalization.js";
+import { assessRisk, hasDangerSignal } from "../src/rules/risk-assessment.js";
+
+globalThis.MindPulseRules = { assessRisk };
 
 await import("../src/domain/decision-policy.js");
 
@@ -61,7 +64,7 @@ for (const trace of [insufficient, crisis, stable]) {
   assert(Array.isArray(trace.allowedActions));
   assert(Array.isArray(trace.blockedActions));
   assert(Array.isArray(trace.evidence));
-  assert.equal(trace.policyVersion, "mindpulse-policy-2.0");
+  assert.equal(trace.policyVersion, policy.POLICY_VERSION);
 }
 
 assert.equal(policy.strategyLabel(insufficient), "补充一条记录");
@@ -76,6 +79,43 @@ assert.equal(moderate.mode, "MODERATE");
 assert.doesNotThrow(() => policy.assertActionAllowed(moderate, "breathe"));
 assert.equal(policy.strategyLabel(moderate), "连接一个可信任的人");
 
+const windowNow = "2026-07-27T12:00:00.000Z";
+const currentRecord = {
+  mood: "calm",
+  sleepHours: 7,
+  steps: 6000,
+  socialScore: 60,
+  note: "今天平稳",
+  createdAt: windowNow
+};
+assert.equal(
+  assessRisk([{ ...currentRecord, note: "自杀", createdAt: "2026-07-20T12:00:00.000Z" }, currentRecord], "", { now: windowNow }).mode,
+  "help",
+  "a crisis signal exactly seven days old must remain in the historical window"
+);
+assert.notEqual(
+  assessRisk([{ ...currentRecord, note: "自杀", createdAt: "2026-07-20T11:59:59.999Z" }, currentRecord], "", { now: windowNow }).mode,
+  "help",
+  "a crisis signal older than seven days must not keep the gate open"
+);
+assert.notEqual(
+  assessRisk([{ ...currentRecord, note: "自杀", createdAt: "2026-07-27T12:00:00.001Z" }, currentRecord], "", { now: windowNow }).mode,
+  "help",
+  "future timestamps must not count as historical crisis evidence"
+);
+assert.notEqual(
+  assessRisk([{ mood: "sad", note: "自杀" }, currentRecord], "", { now: windowNow }).mode,
+  "help",
+  "an untimestamped legacy record must not become historical crisis evidence"
+);
+assert.equal(
+  assessRisk([currentRecord], "自杀", { now: windowNow }).mode,
+  "help",
+  "current free text must always be assessed"
+);
+assert.equal(hasDangerSignal(`不想活在${"x".repeat(15)}里`).hasDanger, false);
+assert.equal(hasDangerSignal(`不想活在${"x".repeat(16)}里`).hasDanger, true);
+
 const basePath = ["breathe", "walk", "journal"];
 assert.deepEqual(
   personalizeRecommendation(basePath, { journal: { count: 2, totalDelta: 20 } }),
@@ -83,20 +123,21 @@ assert.deepEqual(
   "fewer than three safe feedback events must not reorder the path"
 );
 assert.equal(
-  personalizeRecommendation(basePath, { journal: { count: 3, totalDelta: 27 } })[0],
+  personalizeRecommendation(basePath, { __meta: { learningSource: "subjective-outcome" }, journal: { count: 5, totalOutcome: 5, eligible: true } })[0],
   "journal"
 );
 assert.deepEqual(personalizationStatus({ journal: { count: 2 } }), {
   formed: false,
   safeFeedbackCount: 2,
   required: 3,
+  eligibleActionCount: 0,
   excludedHighRisk: 0
 });
 assert.equal(personalizationStatus({ journal: { count: 3 } }).formed, true);
 
 const excluded = recordSafeFeedback({}, {
   actionId: "breathe",
-  delta: 12,
+  outcome: "better",
   riskMode: "HIGH_RISK",
   completedAt: "2026-07-27T12:00:00.000Z"
 });

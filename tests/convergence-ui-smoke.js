@@ -32,7 +32,7 @@ await page.reload({ waitUntil: "load" });
 await page.waitForSelector("#spotlightGo");
 
 let body = await page.locator("body").innerText();
-for (const copy of ["个人节奏偏移", "数据完整度", "当前安全策略", "当前策略允许的下一步"]) {
+for (const copy of ["个人节奏偏移", "字段完整度", "当前安全策略", "当前策略允许的下一步"]) {
   assert(body.includes(copy), `home should show ${copy}`);
 }
 assert(await page.locator("#homeMemo").isVisible(), "home should expose memo entry");
@@ -139,17 +139,8 @@ await page.goto(url, { waitUntil: "load" });
 await page.waitForSelector("#spotlightGo");
 body = await page.locator("body").innerText();
 assert(body.includes("只允许求助"));
-const blockedMessage = await page.evaluate(() => {
-  try {
-    window.MindPulseDebug.openIntervention("breathe");
-    return "allowed";
-  } catch (error) {
-    return error.message;
-  }
-});
-assert(blockedMessage.includes("SAFETY_GATE_BLOCKED"));
 await page.click('[data-tab="companion"]');
-await page.waitForTimeout(100);
+await page.waitForSelector("#quickHelp");
 body = await page.locator("body").innerText();
 assert(body.includes("求助") && body.includes("暂停普通"));
 

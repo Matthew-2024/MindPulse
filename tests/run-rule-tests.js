@@ -55,10 +55,13 @@ if (baseline.level !== "明显偏离" || baseline.flags.length < 2) {
 }
 console.log(`[PASS] P01 personal baseline deviation | level=${baseline.level}`);
 
-const personalizedPath = personalizeRecommendation(["breathe", "walk", "journal"], {
-  journal: { count: 3, totalDelta: 27 },
-  walk: { count: 1, totalDelta: 1 }
-});
+const personalizedPath = personalizeRecommendation(["breathe", "walk", "journal"], {}, [
+  { interventionId: "journal", eventType: "outcome-feedback", outcome: "better", riskCode: "normal", riskMode: "action", eligibleForLearning: true, feedbackTimingValid: true, feedbackCompletionEventId: "completion-p02-1", feedbackContext: { dataMode: "real-trial" } },
+  { interventionId: "journal", eventType: "outcome-feedback", outcome: "better", riskCode: "normal", riskMode: "action", eligibleForLearning: true, feedbackTimingValid: true, feedbackCompletionEventId: "completion-p02-2", feedbackContext: { dataMode: "real-trial" } },
+  { interventionId: "journal", eventType: "outcome-feedback", outcome: "better", riskCode: "normal", riskMode: "action", eligibleForLearning: true, feedbackTimingValid: true, feedbackCompletionEventId: "completion-p02-3", feedbackContext: { dataMode: "real-trial" } },
+  { interventionId: "journal", eventType: "outcome-feedback", outcome: "better", riskCode: "normal", riskMode: "action", eligibleForLearning: true, feedbackTimingValid: true, feedbackCompletionEventId: "completion-p02-4", feedbackContext: { dataMode: "real-trial" } },
+  { interventionId: "journal", eventType: "outcome-feedback", outcome: "better", riskCode: "normal", riskMode: "action", eligibleForLearning: true, feedbackTimingValid: true, feedbackCompletionEventId: "completion-p02-5", feedbackContext: { dataMode: "real-trial" } }
+]);
 if (personalizedPath[0] !== "journal") {
   console.error("[FAIL] P02 adaptive recommendation");
   console.error(`  expected journal first, got ${personalizedPath.join(" -> ")}`);

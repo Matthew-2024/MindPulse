@@ -440,7 +440,7 @@ def build():
 
     snapshot_rows = [
         ("维度", "当前实现"),
-        ("主要载体", "单 HTML Web 原型，可直接在移动端浏览器运行；另有独立 SwiftUI 原型代码。"),
+        ("主要载体", "Web 原型包，通过入口 HTML 运行，需保留同目录 src 脚本与资源；另有独立 SwiftUI 原型代码。"),
         ("数据方式", "Web 使用 localStorage；iOS 原型使用 UserDefaults。均以本机匿名档案隔离记录。"),
         ("判断方式", "MindPulse-RISE 可解释规则 + 个人基线 + Safety Gate 风险闸门。"),
         ("服务边界", "早期觉察、轻干预、求助表达与资源转接；不诊断、不治疗、不自动上报。"),

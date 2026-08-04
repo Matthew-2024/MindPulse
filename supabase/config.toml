@@ -1,0 +1,25 @@
+project_id = "mindpulse"
+
+[functions.mindpulse-api]
+verify_jwt = false
+
+[functions.request-email-code]
+verify_jwt = false
+
+[functions.verify-email-code]
+verify_jwt = false
+
+[functions.sync-vault]
+verify_jwt = false
+
+[functions.get-vault-copy]
+verify_jwt = false
+
+[functions.clear-vault-copy]
+verify_jwt = false
+
+[functions.resource-admin]
+verify_jwt = false
+
+[functions.revoke-device]
+verify_jwt = false

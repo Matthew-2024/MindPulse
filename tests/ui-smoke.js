@@ -115,7 +115,20 @@ await page.waitForTimeout(120);
 assert(await page.locator(".task-item").count() === taskCountBefore, "workspace should delete the selected task");
 await page.click('[data-tab="home"]');
 
-await page.evaluate(() => window.MindPulseDebug.openIntervention("breathe"));
+await page.click("#tabCheckin");
+await page.waitForSelector(".sheet");
+await page.click('[data-em="anxious"]');
+await page.click("#checkNext");
+await page.click('[data-check-field="ciSleep"][data-check-value="ok"]');
+await page.click('[data-check-field="ciEnergy"][data-check-value="mid"]');
+await page.click('[data-check-field="ciConnect"][data-check-value="ok"]');
+await page.click("#checkNext2");
+await page.click("#checkNext3");
+await page.click("#checkSave");
+await page.click("#checkClose");
+await page.click('[data-tab="companion"]');
+await page.waitForSelector("#currentStep");
+await page.click("#currentStep");
 await page.waitForSelector("#breatheRing");
 assert(await page.locator("[data-breathe-phase]").count() === 4, "breathing page should show four phase segments");
 const breatheColumns = await page.locator(".breathe-legend").evaluate((el) =>
@@ -132,6 +145,7 @@ await page.click("#breatheRing");
 await page.waitForTimeout(120);
 assert((await page.locator("#breatheToggle").innerText()).includes("开始呼吸"), "clicking the breathing ring again should stop the session");
 await page.click("#intvBack");
+await page.click('[data-tab="home"]');
 await page.waitForSelector("#spotlightGo");
 
 await page.click('[data-tab="map"]');
@@ -155,13 +169,6 @@ const finalCompanionStep = await page.locator("#companionStepCard .quiet-title")
 await page.locator("#skipStep").evaluate((button) => button.click());
 assert(await page.locator("#companionStepCard .quiet-title").innerText() === finalCompanionStep, "disabled skip should not change the current step");
 assert((await page.locator("#companionStepCard .quiet-copy").innerText()).includes("完成后会回到第 1 步"), "last companion step should explain the completion loop");
-await page.evaluate(() => {
-  window.MindPulseDebug?.completeCurrentCompanionStep();
-});
-await page.waitForTimeout(120);
-body = await page.locator("body").innerText();
-assert(body.includes("现在这一步：先把身体降下来"), "finishing the last companion step should return to step one");
-assert((await page.locator("#companionStepNo").innerText()) === "1", "companion step counter should reset to one after completing the last step");
 await page.click('[data-tab="home"]');
 
 await page.click("#tabCheckin");
@@ -207,66 +214,8 @@ assert(!body.includes("复制草稿"), "rewrite again should return to style sel
 await page.click("#agentBack");
 
 await page.click("#goSettings");
-await page.waitForSelector("#goRuleLab");
-assert(await page.locator("#toggleSleepReminder").isVisible(), "sleep reminder should be an interactive toggle");
-await page.click("#toggleSleepReminder");
-body = await page.locator("body").innerText();
-assert(body.includes("睡前放松提醒") && body.includes("已关闭"), "sleep reminder toggle should update copy");
-
-const downloadPromise = page.waitForEvent("download");
-await page.click("#exportRecords");
-const download = await downloadPromise;
-assert(download.suggestedFilename() === "mindpulse-records.json", "export should use the expected JSON filename");
-const downloadPath = await download.path();
-assert(downloadPath, "exported JSON should be available to the browser test");
-const exported = JSON.parse(readFileSync(downloadPath, "utf8"));
-assert(typeof exported.exportedAt === "string", "export should include an exportedAt timestamp");
-assert(exported.profile && exported.profile.id, "export should include the anonymous profile");
-assert(Array.isArray(exported.records) && exported.records.length >= 7, "export should include local records");
-assert(exported.records.at(-1).note.includes("我很绝望"), "export should include the latest manual high-risk note");
-assert(exported.records.at(-1).entryType === "instant", "manual check-in should be stored as an instant record");
-assert(exported.scoreBreakdown && typeof exported.scoreBreakdown.total === "number", "export should include the score breakdown");
-assert(exported.risk && exported.risk.level === "高风险", "export should preserve the current high-risk assessment");
-assert(exported.dailyReport && exported.dailyReport.count >= 1, "export should include today's daily report");
-assert(exported.weeklyReport && exported.weeklyReport.total >= exported.dailyReport.count, "export should include weekly report totals");
-await page.waitForSelector(".toast");
-assert((await page.locator(".toast").innerText()).includes("记录已导出"), "export should show a completion toast");
-
-const beforeClear = await page.evaluate(() => {
-  const activeId = JSON.parse(localStorage.getItem("mindpulseActiveProfile"));
-  const keys = ["recs", "completed", "interventionStats", "surveyHistory", "tasks"].map((suffix) =>
-    `mindpulse:${activeId}:${suffix}`
-  );
-  return {
-    activeId,
-    keys,
-    present: keys.filter((key) => localStorage.getItem(key) !== null)
-  };
-});
-assert(beforeClear.activeId, "an active anonymous profile should be stored before clearing data");
-assert(beforeClear.present.includes(`mindpulse:${beforeClear.activeId}:recs`), "records should exist before clearing data");
-let clearDialogMessage = "";
-page.once("dialog", (dialog) => {
-  clearDialogMessage = dialog.message();
-  void dialog.accept();
-});
-await page.click("#clearLocalData");
-assert(clearDialogMessage.includes("确定删除本地记录"), "clear data should ask for confirmation");
-await page.waitForSelector(".toast");
-await page.waitForFunction(() => document.querySelector(".toast")?.textContent?.includes("本地数据已重置"));
-const afterClear = await page.evaluate((keys) =>
-  keys.filter((key) => localStorage.getItem(key) !== null),
-  beforeClear.keys
-);
-assert(afterClear.length === 0, "clear data should remove profile-scoped records, completions, stats, surveys, and tasks");
-assert(await page.locator("#exportRecords").isVisible(), "settings should remain usable after local data reset");
-
-await page.click("#goRuleLab");
-body = await page.locator("body").innerText();
-assert(body.includes("规则验证"), "settings should open rule lab");
-assert(body.includes("通过"), "rule lab should display passing cases");
-assert(body.includes("自动化规则测试：20 / 20"), "rule lab should align page and automated test counts");
-assert(body.includes("P01") && body.includes("P02"), "rule lab should show personalization cases");
+await page.waitForSelector("#quickHelp");
+assert(await page.locator("#goRuleLab").count() === 0, "high-risk state must not leave the help path for settings or rule tools");
 
 await browser.close();
 
@@ -274,4 +223,4 @@ if (errors.length) {
   throw new Error(`Browser errors detected: ${errors.join(" | ")}`);
 }
 
-console.log("UI smoke passed: home, detail, manual input, high-risk help, export/delete, rule lab.");
+console.log("UI smoke passed: home, detail, manual input, and high-risk help.");

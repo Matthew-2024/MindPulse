@@ -17,6 +17,15 @@ export const SCORE_LIMITS = {
   intervention: 8
 };
 
+export const SIGNAL_KEYS = ["mood", "sleep", "steps", "social"];
+
+export const SIGNAL_LABELS = {
+  mood: "情绪",
+  sleep: "睡眠",
+  steps: "活动",
+  social: "连接"
+};
+
 export const DANGER_PATTERNS = [
   { re: /自[杀傷伤]|自杀/, level: "critical", tag: "direct-self-harm" },
   { re: /伤害\s*(自己|自身|我)/, level: "critical", tag: "self-harm-ideation" },
@@ -32,11 +41,11 @@ export const DANGER_PATTERNS = [
 ];
 
 export const SAFE_PHRASES = [
-  /不想活在.*里/,
-  /不想活[着得].*但是/,
-  /不想活[着得].*不过/,
-  /活着.*[但虽].*还/,
-  /撑不住.*[但虽].*还是/,
+  /不想活在.{0,15}里/,
+  /不想活[着得].{0,15}但是/,
+  /不想活[着得].{0,15}不过/,
+  /活着.{0,15}[但虽].{0,15}还/,
+  /撑不住.{0,15}[但虽].{0,15}还是/,
   /(?:没有|并无|无)\s*(?:自杀|自伤|自残|伤害\s*(?:自己|自身|我))(?:的)?\s*(?:想法|念头|计划|冲动)/,
   /(?:没有|并无|无)\s*想过\s*(?:自杀|自伤|自残|伤害\s*(?:自己|自身|我))/
 ];
@@ -72,6 +81,63 @@ export function stepsOf(record = {}) {
 
 export function socialOf(record = {}) {
   return toNumber(record.socialScore ?? record.sc, 0);
+}
+
+export function signalValueOf(record = {}, key) {
+  if (key === "mood") return moodLevelOf(record);
+  if (key === "sleep") return sleepOf(record);
+  if (key === "steps") return stepsOf(record);
+  if (key === "social") return socialOf(record);
+  return null;
+}
+
+export function signalPresent(record = {}, key) {
+  if (key === "mood") return record.mood != null || record.et != null || record.moodScore != null || record.ii != null;
+  if (key === "sleep") return record.sleepHours != null || record.sleep != null;
+  if (key === "steps") return record.steps != null || record.step != null;
+  if (key === "social") return record.socialScore != null || record.sc != null;
+  return false;
+}
+
+export function signalSourceOf(record = {}, key) {
+  const source = record.signalSources?.[key] || record.dataSources?.[key];
+  if (source) return source;
+  if (record.entryType === "device" || record.dataInputMode === "device") return "device";
+  if (record.dataInputMode === "manual-web" || record.dataInputMode === "manual") return "manual";
+  return record.dataSource || "self-report";
+}
+
+export function dataCompletenessOf(record = {}) {
+  const missing = [];
+  const sources = {};
+  let available = 0;
+  SIGNAL_KEYS.forEach((key) => {
+    if (signalPresent(record, key)) available += 1;
+    else missing.push(key);
+    sources[key] = signalSourceOf(record, key);
+  });
+  const required = SIGNAL_KEYS.length;
+  const ratio = required ? available / required : 0;
+  return {
+    available,
+    required,
+    ratio,
+    percent: Math.round(ratio * 100),
+    missing,
+    sources
+  };
+}
+
+export function signalSnapshot(record = {}) {
+  return Object.fromEntries(SIGNAL_KEYS.map((key) => {
+    const item = {
+      signal: key,
+      value: signalPresent(record, key) ? signalValueOf(record, key) : null,
+      present: signalPresent(record, key),
+      source: signalSourceOf(record, key)
+    };
+    return [key, item];
+  }));
 }
 
 export function normalizeRecords(records) {

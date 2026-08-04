@@ -1,0 +1,369 @@
+(function (global) {
+  global.MindPulseRuleCases = [
+  {
+    "id": "R01",
+    "name": "anxious path",
+    "input": {
+      "mood": "anxious",
+      "sleepHours": 6.2,
+      "steps": 4200,
+      "socialScore": 45,
+      "note": "想到考试有点紧张"
+    },
+    "expectedRisk": "普通波动",
+    "expectedPath": [
+      "breathe",
+      "walk",
+      "journal"
+    ]
+  },
+  {
+    "id": "R02",
+    "name": "sad path",
+    "input": {
+      "mood": "sad",
+      "sleepHours": 6,
+      "steps": 3000,
+      "socialScore": 30,
+      "note": "今天有点低落"
+    },
+    "expectedRisk": "普通波动",
+    "expectedPath": [
+      "breathe",
+      "friend",
+      "sleep"
+    ]
+  },
+  {
+    "id": "R03",
+    "name": "tired path",
+    "input": {
+      "mood": "tired",
+      "sleepHours": 5.5,
+      "steps": 2600,
+      "socialScore": 40,
+      "note": "很累"
+    },
+    "expectedRisk": "普通波动",
+    "expectedPath": [
+      "sleep",
+      "breathe",
+      "focus"
+    ]
+  },
+  {
+    "id": "R04",
+    "name": "danger word",
+    "input": {
+      "mood": "sad",
+      "sleepHours": 3.8,
+      "steps": 900,
+      "socialScore": 10,
+      "note": "我很绝望"
+    },
+    "expectedRisk": "高风险",
+    "expectedPath": [
+      "help"
+    ]
+  },
+  {
+    "id": "R05",
+    "name": "self harm phrase",
+    "input": {
+      "mood": "sad",
+      "sleepHours": 4.5,
+      "steps": 1200,
+      "socialScore": 20,
+      "note": "有伤害自己的想法"
+    },
+    "expectedRisk": "高风险",
+    "expectedPath": [
+      "help"
+    ]
+  },
+  {
+    "id": "R06",
+    "name": "stable observation",
+    "input": {
+      "mood": "happy",
+      "sleepHours": 7.5,
+      "steps": 8500,
+      "socialScore": 70,
+      "note": "今天状态不错"
+    },
+    "expectedRisk": "稳定观察",
+    "expectedPath": [
+      "focus",
+      "journal",
+      "walk"
+    ]
+  },
+  {
+    "id": "R07",
+    "name": "false positive - safe phrase",
+    "input": {
+      "mood": "anxious",
+      "sleepHours": 6,
+      "steps": 4000,
+      "socialScore": 50,
+      "note": "我不想活在焦虑里，但是还能撑住"
+    },
+    "expectedRisk": "普通波动",
+    "expectedPath": [
+      "breathe",
+      "walk",
+      "journal"
+    ]
+  },
+  {
+    "id": "R08",
+    "name": "variant - want to disappear",
+    "input": {
+      "mood": "sad",
+      "sleepHours": 4,
+      "steps": 1000,
+      "socialScore": 15,
+      "note": "想从这个世界上消失"
+    },
+    "expectedRisk": "高风险",
+    "expectedPath": [
+      "help"
+    ]
+  },
+  {
+    "id": "R09",
+    "name": "consecutive low sleep",
+    "input": {
+      "mood": "tired",
+      "sleepHours": 5,
+      "steps": 2000,
+      "socialScore": 30,
+      "note": "又没睡好"
+    },
+    "expectedRecords": [
+      {
+        "mood": "sad",
+        "sleepHours": 4.5,
+        "steps": 1500,
+        "socialScore": 20,
+        "note": "昨天"
+      },
+      {
+        "mood": "anxious",
+        "sleepHours": 5,
+        "steps": 2000,
+        "socialScore": 25,
+        "note": "前天"
+      },
+      {
+        "mood": "tired",
+        "sleepHours": 5,
+        "steps": 2000,
+        "socialScore": 30,
+        "note": "今天"
+      }
+    ],
+    "expectedRisk": "中度关注",
+    "expectedPath": [
+      "sleep",
+      "breathe",
+      "journal"
+    ]
+  },
+  {
+    "id": "R10",
+    "name": "empty text safety",
+    "input": {
+      "mood": "calm",
+      "sleepHours": 7,
+      "steps": 6000,
+      "socialScore": 60,
+      "note": ""
+    },
+    "expectedRisk": "稳定观察",
+    "expectedPath": [
+      "focus",
+      "journal",
+      "walk"
+    ]
+  },
+  {
+    "id": "R11",
+    "name": "boundary - sleep exactly 6h",
+    "input": {
+      "mood": "tired",
+      "sleepHours": 6,
+      "steps": 3000,
+      "socialScore": 40,
+      "note": "刚好6小时"
+    },
+    "expectedRisk": "普通波动",
+    "expectedPath": [
+      "sleep",
+      "breathe",
+      "focus"
+    ]
+  },
+  {
+    "id": "R12",
+    "name": "low social connection prioritizes friend",
+    "input": {
+      "mood": "anxious",
+      "sleepHours": 6.5,
+      "steps": 4200,
+      "socialScore": 12,
+      "note": "最近不太想说话"
+    },
+    "expectedRisk": "普通波动",
+    "expectedPath": [
+      "friend",
+      "breathe",
+      "walk"
+    ]
+  },
+  {
+    "id": "R13",
+    "name": "very low sleep keeps three-step path",
+    "input": {
+      "mood": "tired",
+      "sleepHours": 4.8,
+      "steps": 2200,
+      "socialScore": 40,
+      "note": "昨晚几乎没睡"
+    },
+    "expectedRisk": "普通波动",
+    "expectedPath": [
+      "sleep",
+      "breathe",
+      "journal"
+    ]
+  },
+  {
+    "id": "R14",
+    "name": "isolation phrase routes to help",
+    "input": {
+      "mood": "sad",
+      "sleepHours": 5.7,
+      "steps": 1400,
+      "socialScore": 8,
+      "note": "感觉没有人在乎，像是留不住了"
+    },
+    "expectedRisk": "高风险",
+    "expectedPath": [
+      "help"
+    ]
+  },
+  {
+    "id": "R15",
+    "name": "negated self-harm phrase is not crisis",
+    "input": {
+      "mood": "sad",
+      "sleepHours": 6.2,
+      "steps": 3600,
+      "socialScore": 42,
+      "note": "这几天很低落，但我没有伤害自己的想法，也愿意找人聊聊"
+    },
+    "expectedRisk": "普通波动",
+    "expectedPath": [
+      "breathe",
+      "friend",
+      "sleep"
+    ]
+  },
+  {
+    "id": "R16",
+    "name": "safe phrase does not suppress explicit crisis",
+    "input": {
+      "mood": "sad",
+      "sleepHours": 4.8,
+      "steps": 1200,
+      "socialScore": 12,
+      "note": "我不想活在焦虑里，但是今天真的想死"
+    },
+    "expectedRisk": "高风险",
+    "expectedPath": [
+      "help"
+    ]
+  },
+  {
+    "id": "R17",
+    "name": "continuous social disconnection",
+    "input": {
+      "mood": "calm",
+      "sleepHours": 6.7,
+      "steps": 5200,
+      "socialScore": 12,
+      "note": "还是不太想跟人说话"
+    },
+    "expectedRecords": [
+      {
+        "mood": "calm",
+        "sleepHours": 6.6,
+        "steps": 5000,
+        "socialScore": 18,
+        "note": "这两天想独处"
+      },
+      {
+        "mood": "calm",
+        "sleepHours": 6.8,
+        "steps": 5400,
+        "socialScore": 15,
+        "note": "没怎么联系别人"
+      },
+      {
+        "mood": "calm",
+        "sleepHours": 6.7,
+        "steps": 5200,
+        "socialScore": 12,
+        "note": "还是不太想跟人说话"
+      }
+    ],
+    "expectedRisk": "稳定观察",
+    "expectedPath": [
+      "friend",
+      "focus",
+      "journal"
+    ]
+  },
+  {
+    "id": "R18",
+    "name": "continuous negative mood without danger words",
+    "input": {
+      "mood": "angry",
+      "sleepHours": 6.2,
+      "steps": 4200,
+      "socialScore": 38,
+      "note": "还是很烦"
+    },
+    "expectedRecords": [
+      {
+        "mood": "sad",
+        "sleepHours": 6.4,
+        "steps": 3900,
+        "socialScore": 40,
+        "note": "有点低落"
+      },
+      {
+        "mood": "anxious",
+        "sleepHours": 6.1,
+        "steps": 4300,
+        "socialScore": 36,
+        "note": "担心很多事"
+      },
+      {
+        "mood": "angry",
+        "sleepHours": 6.2,
+        "steps": 4200,
+        "socialScore": 38,
+        "note": "还是很烦"
+      }
+    ],
+    "expectedRisk": "中度关注",
+    "expectedPath": [
+      "walk",
+      "breathe",
+      "friend"
+    ]
+  }
+];
+})(window);

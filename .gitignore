@@ -8,3 +8,14 @@ review_*.png
 .DS_Store
 Thumbs.db
 npm-debug.log*
+
+supabase/.env
+supabase/.temp/
+
+# Generated local build, browser, and regression evidence
+dist/
+output/
+.playwright-cli/
+.preflight*.log
+.react-*.log
+vite-*.log
